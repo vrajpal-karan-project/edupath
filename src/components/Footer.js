@@ -1,17 +1,17 @@
 import React from 'react';
-import { Grid, Container, IconButton, Typography } from "@material-ui/core";
+import { Grid, Container, IconButton, Typography, Tooltip } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import logo from "../assets/logo.png";
 import { NavLink } from "react-router-dom";
-
 
 const Footer = (props) => {
     const useStyles = makeStyles((theme) => ({
 
         active: {
-            fontWeight: "750 !important"
+            fontWeight: "550 !important",
+            color: "#5CDB94 !important"
         },
-        white: {
+        footericon: {
             transition: "all 0.3s linear",
             color: "rgba(255,255,255,0.7)",
             "&:hover": {
@@ -24,6 +24,7 @@ const Footer = (props) => {
                 listStyle: "none",
                 padding: "0",
                 "& li a": {
+                    transition: "all 0.3s linear",
                     color: "white",
                     textDecoration: "none",
                     lineHeight: 1.5,
@@ -38,15 +39,17 @@ const Footer = (props) => {
     const classes = useStyles();
 
     const Link = ({ link, label }) =>
-        <NavLink exact activeClassName={classes.active} to={link} >
+        <NavLink exact activeClassName={classes.active} to={link}>
             {label}
         </NavLink>;
 
     return (
-        <Container maxWidth="xl" disableGutters style={{ background: "#19202a", color: "white" }} >
+        <Container maxWidth="xl" disableGutters style={{ background: "#25274D", color: "white" }} >
             <Container fixed>
                 <Grid container>
+                    {/* Footer #ROW1 with bottomBorder as Divider */}
                     <Grid container item xs={12} className={classes.footerlist}>
+                        {/* Page Links */}
                         <Grid item xs={6} md={3}>
                             <ul>
                                 <li>
@@ -60,6 +63,7 @@ const Footer = (props) => {
                                 </li>
                             </ul>
                         </Grid>
+                        {/* Feature Links */}
                         <Grid item xs={6} md={3}>
                             <ul>
                                 <li>
@@ -73,6 +77,7 @@ const Footer = (props) => {
                                 </li>
                             </ul>
                         </Grid>
+                        {/* Connect With Section */}
                         <Grid container item xs={12} md={6} alignItems="center" justify="center">
                             <Grid container item xs={12} md={4} justify="center">
                                 <Grid item>
@@ -81,17 +86,28 @@ const Footer = (props) => {
                             </Grid>
                             <Grid container item xs={12} md={8} justify="center" alignContent="space-around">
                                 <Grid item>
-                                    <IconButton className={classes.white} aria-label="Twitter" target="_blank" href="https://twitter.com/jhala_vrajpal"><i className="fa fa-twitter fa-2x"></i></IconButton>
-                                    <IconButton className={classes.white} aria-label="github" target="_blank" href="https://github.com/vrajpal-karan-project/edupath"><i className="fa fa-github fa-2x"></i></IconButton>
+                                    <Tooltip title="connect on Twitter" arrow>
+                                        <IconButton className={classes.footericon} aria-label="Twitter" target="_blank" href="https://twitter.com/jhala_vrajpal"><i className="fa fa-twitter fa-2x"></i></IconButton>
+                                    </Tooltip>
+                                    <Tooltip title="connect on GitHub" arrow>
+                                        <IconButton className={classes.footericon} aria-label="github" target="_blank" href="https://github.com/vrajpal-karan-project/edupath"><i className="fa fa-github fa-2x"></i></IconButton>
+                                    </Tooltip>
                                 </Grid>
                                 <Grid item>
-                                    <IconButton className={classes.white} aria-label="facebook" target="_blank" href="https://www.facebook.com/jvrajpalk.jvrajpalk"><i className="fa fa-facebook fa-2x"></i></IconButton>
-                                    <IconButton className={classes.white} aria-label="linkedin" target="_blank" href="https://in.linkedin.com/in/karanparmar1"><i className="fa fa-linkedin fa-2x"></i></IconButton>
-                                    <IconButton className={classes.white} aria-label="instagram" target="_blank" href="https://www.instagram.com/vkjhala"><i className="fa fa-instagram fa-2x"></i></IconButton>
+                                    <Tooltip title="connect on Facebook" arrow>
+                                        <IconButton className={classes.footericon} aria-label="facebook" target="_blank" href="https://www.facebook.com/jvrajpalk.jvrajpalk"><i className="fa fa-facebook fa-2x"></i></IconButton>
+                                    </Tooltip>
+                                    <Tooltip title="connect on LinkedIn" arrow>
+                                        <IconButton className={classes.footericon} aria-label="linkedin" target="_blank" href="https://in.linkedin.com/in/karanparmar1"><i className="fa fa-linkedin fa-2x"></i></IconButton>
+                                    </Tooltip>
+                                    <Tooltip title="connect on Instagram" arrow>
+                                        <IconButton className={classes.footericon} aria-label="instagram" target="_blank" href="https://www.instagram.com/vkjhala"><i className="fa fa-instagram fa-2x"></i></IconButton>
+                                    </Tooltip>
                                 </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
+                    {/* Footer #ROW2 */}
                     <Grid container item xs={12} alignItems="center">
                         <Grid container item xs justify="flex-start" >
                             <img src={logo} alt="logo" />

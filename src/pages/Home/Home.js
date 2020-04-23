@@ -1,6 +1,7 @@
 import React from 'react';
 import Footer from '../../components/Footer';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import ItemCard from '../../components/ItemCard';
 
 
 const Home = () => {
@@ -22,8 +23,15 @@ const Home = () => {
             This is ACCOUNT page.
          </Route>
           <Route exact path="/courses">
-            This is COURSES page.
-         </Route>
+            <div>
+              <p>
+                This is COURSES page.
+            </p>
+              <div>
+                <ItemCard />
+              </div>
+            </div>
+          </Route>
           <Route exact path="/instructors">
             This is instructors page.
          </Route>

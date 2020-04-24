@@ -1,0 +1,4 @@
+@font-face {font-family: "walsheim"; src:url("GT-Walsheim-Pro.ttf") format("truetype");} /*<link rel="stylesheet" type="text/css"  href="./font/walsheim.css" />*/
+body{
+    letter-spacing: 0.2px;
+}

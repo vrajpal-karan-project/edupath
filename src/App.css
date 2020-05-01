@@ -33,7 +33,7 @@
   content: " ";
   position: absolute;
   top: 50%;
-  left: 100%; /* To the left of the tooltip */
+  left: 100%; /*  To the left of the tooltip */
   margin-top: -10px;
   border-width: 10px;
   border-style: solid;

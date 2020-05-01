@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconButton, Chip, Card, CardActions, CardContent, CardMedia, Button, Link } from "@material-ui/core";
+import { Chip, Card, CardActions, CardContent, CardMedia, Link } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 // import { Link } from 'react-router-dom';
 import logo from "../assets/logo.png";
@@ -54,17 +54,12 @@ const useStyles = makeStyles((theme) => ({
         color: 'dimgrey'
     },
     tooltip: {
-        // boxShadow: "0 10px 20px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.15)",
-        // background: "white",
-        // color: "#25274D",
-        // lineHeight: "1.2em",
-        // fontSize: "100%",
-        // padding: "16px",
         "& .tooltiptext": {
-            // making left sided
+            // making ToolTip right sided
             right: "auto",
             left: "105%",
             "&::after": {
+                // arrow to the left
                 left: "auto",
                 right: "100%",
                 borderColor: "transparent white transparent transparent",
@@ -150,11 +145,14 @@ const ItemCard = (props) => {
         lectureCount: 16, /* Total Lectures */
         language: "English",
         duration: 3, /* Hrs of duration */
-        discount: 100, /* % off */
+        discount: 50, /* % off */
         description: "Python is the language for people wanting to start their careers as programmers, data analysts, machine learning specialists, or AI developers.",
-        price: 1000, //This is Discounted Amount
+        price: 200, //This is Discounted Amount
         updated: Date.now(),
     });
+
+    let orginalPrice = course.price;
+    course.price = course.price - (course.price * (course.discount / 100))
 
     const isFree = course.price === 0 || course.discount === 100;
 
@@ -242,7 +240,7 @@ const ItemCard = (props) => {
                             <span className={classes.price}>
                                 <span className="priceAmount"> {isFree ? "FREE" : "$" + course.price}</span>
                             </span>
-                            <span style={{ position: "absolute", color: "navy", fontWeight: "bolder", fontSize: "110%", right: 16 }}><del>${(course.price / (1 - (course.discount / 100))).toFixed(2)}</del><br />-{course.discount}%</span>
+                            <span style={{ position: "absolute", color: "navy", fontWeight: "bolder", fontSize: "110%", right: 16 }}><del>${orginalPrice.toFixed(2)}</del><br />-{course.discount}%</span>
                         </CardActions>
                     </Card>
                 </Tilt >

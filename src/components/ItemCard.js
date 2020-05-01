@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
         transformStyle: "preserve-3d",
         maxWidth: "fit-content",
         display: "flex",
-        borderRadius:"10px",
+        borderRadius: "10px",
         "& .itemCard": {
             boxShadow: "0 10px 20px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.15)",
         },
@@ -88,7 +88,6 @@ const useStyles = makeStyles((theme) => ({
     },
     price: {
         position: "relative",
-        padding: 0,
         width: "50%",
         padding: "10px 20px 10px 10px",
         color: "#5CDB94",
@@ -144,21 +143,26 @@ const ItemCard = (props) => {
         title: "Dummy Title For Some course & some long name for 3 lines more and more content is here",
         instructor: "Instructor Name, some long name here is trunctaed with magic",
         featured: true,
-        enrolled: false,
+        enrolled: false,  /*If user enrolled */
         rating: 4.0,
-        ratingCount: 250,
-        duration: 3,
-        discount: 20,
+        ratingCount: 250, /* Total Ratings */
+        studentCount: 21550, /* Total students Who Enrolled this */
+        lectureCount: 16, /* Total Lectures */
+        language: "English",
+        duration: 3, /* Hrs of duration */
+        discount: 100, /* % off */
         description: "Python is the language for people wanting to start their careers as programmers, data analysts, machine learning specialists, or AI developers.",
-        price: 2.5,
+        price: 1000, //This is Discounted Amount
         updated: Date.now(),
     });
+
+    const isFree = course.price === 0 || course.discount === 100;
 
     const classes = useStyles();
     const Chips = () => {
         let labels = [];
         course.featured && labels.push("Featured");
-        course.price === 0 && labels.push("FREE");
+        isFree && labels.push("FREE");
         course.discount > 0 && labels.push(course.discount + "% off");
 
         return labels.length && labels.map((label, i) =>
@@ -236,7 +240,7 @@ const ItemCard = (props) => {
                                 <b>Enroll Now</b>
                             </Button> */}
                             <span className={classes.price}>
-                                <span className="priceAmount"> ${course.price}</span>
+                                <span className="priceAmount"> {isFree ? "FREE" : "$" + course.price}</span>
                             </span>
                             <span style={{ position: "absolute", color: "navy", fontWeight: "bolder", fontSize: "110%", right: 16 }}><del>${(course.price / (1 - (course.discount / 100))).toFixed(2)}</del><br />-{course.discount}%</span>
                         </CardActions>

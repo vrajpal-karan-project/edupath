@@ -5,14 +5,19 @@ import ItemCard from '../../components/ItemCard';
 const Home = () => {
   return (
     <Container maxWidth="xl" style={{ background: "silver" }}>
-      <Grid container spacing={3} className="coursesContainer">
-        {
-          [1, 2, 3, 4, 5, 6, 7].map((value) =>
-            <Grid item xs={12} sm={6} md={4} lg={3} key={value}>
-              <ItemCard />
-            </Grid>
-          )
-        }
+      <Grid container>
+        <Grid item xs={12} sm={12} md={12} lg={12}>
+          This is HOME page.
+        </Grid>
+        <Grid item container spacing={3} className="coursesContainer">
+          {
+            [1, 2, 3, 4, 5, 6, 7].map((value) =>
+              <Grid item xs={12} sm={6} md={4} lg={3} key={value}>
+                <ItemCard />
+              </Grid>
+            )
+          }
+        </Grid>
       </Grid>
     </Container>
   );

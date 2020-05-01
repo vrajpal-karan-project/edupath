@@ -14,6 +14,7 @@ import {
   createMuiTheme,
   ThemeProvider
 } from '@material-ui/core';
+import { NavLink } from 'react-router-dom';
 
 const defaultTheme = createMuiTheme();
 
@@ -30,7 +31,7 @@ const theme = createMuiTheme({
         paddingBottom: 0,
         margin: `${defaultTheme.spacing(1)}px 0px`,
         color: defaultTheme.palette.text.primary,
-        '&:hover': {
+        '&:hover, &.active': {
           backgroundColor: '#F2F2F2',
         },
       },
@@ -44,6 +45,9 @@ const useStyle = makeStyles({
   },
   logoWrapper: {
     paddingLeft: theme.spacing(2),
+  },
+  logo: {
+    display: 'block',
   },
   userInfoWrapper: {
     paddingTop: theme.spacing(2),
@@ -64,7 +68,9 @@ const Drawer = ({ drawer, setDrawer, handleDialog }) => {
       classes={{ paper: classes.drawer }}
     >
       <Box className={classes.logoWrapper}>
-        <img src={logo} alt="logo" height={64} />
+        <NavLink exact to="/">
+          <img className={classes.logo} src={logo} alt="logo" height={64} />
+        </NavLink>
       </Box>
       {
         false &&
@@ -92,13 +98,13 @@ const Drawer = ({ drawer, setDrawer, handleDialog }) => {
             false
               ?
               <>
-                <ListItem component="a" href="#">
+                <ListItem component={NavLink} exact to="/profile" onClick={() => setDrawer(false)}>
                   <ListItemIcon>
                     <span className="fa fa-user-circle-o"></span>
                   </ListItemIcon>
                   <ListItemText>Profile</ListItemText>
                 </ListItem>
-                <ListItem component="a" href="#">
+                <ListItem component={NavLink} exact to="/mycourses" onClick={() => setDrawer(false)}>
                   <ListItemIcon>
                     <span className="fa fa-file"></span>
                   </ListItemIcon>
@@ -107,14 +113,14 @@ const Drawer = ({ drawer, setDrawer, handleDialog }) => {
                 {
                   true
                     ?
-                    <ListItem component="a" href="#">
+                    <ListItem component={NavLink} exact to="/becomeaninstructor" onClick={() => setDrawer(false)}>
                       <ListItemIcon>
                         <span className="fa fa-pencil-square-o"></span>
                       </ListItemIcon>
                       <ListItemText>Beacome an Instructor</ListItemText>
                     </ListItem>
                     :
-                    <ListItem component="a" href="#">
+                    <ListItem component={NavLink} exact to="uploadcourse" onClick={() => setDrawer(false)}>
                       <ListItemIcon>
                         <span className="fa fa-upload"></span>
                       </ListItemIcon>
@@ -142,26 +148,26 @@ const Drawer = ({ drawer, setDrawer, handleDialog }) => {
           <ListItem className={classes.listHeader}>
             <ListItemText>Browse</ListItemText>
           </ListItem>
-          <ListItem component="a" href="#">
+          <ListItem component={NavLink} exact to="/courses" onClick={() => setDrawer(false)}>
             <ListItemIcon>
               <span className="fa fa-list-alt"></span>
             </ListItemIcon>
             <ListItemText>All Courses</ListItemText>
           </ListItem>
-          <ListItem component="a" href="#">
+          <ListItem component={NavLink} exact to="/instructors" onClick={() => setDrawer(false)}>
             <ListItemIcon>
               <span className="fa fa-users"></span>
             </ListItemIcon>
             <ListItemText>Insturctors</ListItemText>
           </ListItem>
           <Divider />
-          <ListItem component="a" href="#">
+          <ListItem component={NavLink} exact to="/about" onClick={() => setDrawer(false)}>
             <ListItemIcon>
               <span className="fa fa-info"></span>
             </ListItemIcon>
             <ListItemText>About Us</ListItemText>
           </ListItem>
-          <ListItem component="a" href="#">
+          <ListItem component={NavLink} exact to="/contact" onClick={() => setDrawer(false)}>
             <ListItemIcon>
               <span className="fa fa-phone"></span>
             </ListItemIcon>

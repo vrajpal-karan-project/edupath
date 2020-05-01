@@ -17,6 +17,7 @@ import {
 } from '@material-ui/core';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
+import { NavLink } from 'react-router-dom';
 
 const useStyle = makeStyles(theme => ({
   closeButton: {
@@ -34,6 +35,13 @@ const useStyle = makeStyles(theme => ({
     borderRadius: theme.shape.borderRadius,
     border: '1px solid #25274D',
     padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
+  },
+  link: {
+    textDecoration: 'none',
+    color: '#3F51B5',
+    '&:hover': {
+      textDecoration: 'underline',
+    },
   },
   formButton: {
     backgroundColor: '#5CDB94',
@@ -141,7 +149,7 @@ const LoginDialog = ({ dialog, handleDialog }) => {
               {errors.password && errors.password.message}
             </FormHelperText>
           </Box>
-          <Link href="#">Forgot Password?</Link>
+          <NavLink className={classes.link} exact to="/forgotpassword" onClick={() => handleDialog('login', false)}>Forgot Password?</NavLink>
           <Button className={classes.formButton} type="submit" fullWidth>Log In</Button>
           <Divider />
           <Box className={classes.footerText}>

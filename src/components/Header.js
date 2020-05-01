@@ -13,7 +13,6 @@ import {
   ListItem,
   ListItemText,
   InputBase,
-  Link,
   Grid,
   Hidden,
   useTheme,
@@ -23,8 +22,10 @@ import {
   Divider,
   createMuiTheme,
   ThemeProvider,
+  Box,
 } from '@material-ui/core';
 import logo from '../assets/logo.png';
+import { NavLink } from 'react-router-dom';
 
 const defaultTheme = createMuiTheme();
 
@@ -58,6 +59,18 @@ const useStyle = makeStyles(theme => ({
     backgroundColor: '#25274D',
     color: '#5CDB94',
   },
+  logo: {
+    display: 'block',
+  },
+  navItem: {
+    color: 'inherit',
+    textDecoration: 'none',
+    borderRadius: theme.shape.borderRadius,
+    padding: `${theme.spacing(1)}px ${theme.spacing(1)}px`,
+    '&:hover, &.active': {
+      backgroundColor: fade(theme.palette.common.white, 0.1),
+    },
+  },
   navItemMargin: {
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
@@ -80,14 +93,18 @@ const useStyle = makeStyles(theme => ({
   courseNestedMenu: {
     display: 'none',
   },
+  seeAllWrapper: {
+    margin: theme.spacing(2),
+  },
   seeAllCourse: {
+    display: 'block',
+    textDecoration: 'none',
     width: '100%',
     fontWeight: "bold",
     backgroundColor: '#5CDB94',
     color: 'white',
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-    padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`,
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
     textAlign: 'center',
     borderRadius: theme.shape.borderRadius,
     '&:hover': {
@@ -106,6 +123,9 @@ const useStyle = makeStyles(theme => ({
     marginLeft: theme.spacing(1),
   },
   searchPopup: {
+    [theme.breakpoints.up("md")]: {
+      flexGrow: 1,
+    },
     [theme.breakpoints.down("xs")]: {
       display: 'flex',
       alignItems: 'center',
@@ -199,10 +219,6 @@ const Header = ({ setDrawer, searching, setSearching, handleDialog }) => {
     setMenuAnchorEl({});
   };
 
-  const handleClickAway = () => {
-    handleMenuClose();
-  }
-
   return (
     <ThemeProvider theme={newTheme}>
       <AppBar position="static" className={classes.header}>
@@ -214,9 +230,11 @@ const Header = ({ setDrawer, searching, setSearching, handleDialog }) => {
                   <span className="fa fa-bars"></span>
                 </IconButton>
               </Hidden>
-              <img src={logo} alt="logo" height={matches ? 48 : 64} />
+              <NavLink exact to="/">
+                <img className={classes.logo} src={logo} alt="logo" height={matches ? 48 : 64} />
+              </NavLink>
             </Grid>
-            <Grid item md={6} sm={8} xs={2} container alignItems="center" justify={matches ? "flex-end" : "flex-start"}>
+            <Grid item lg={5} md={6} sm={8} xs={2} container alignItems="center" justify={matches ? "flex-end" : "flex-start"}>
               <Hidden smDown>
                 <Button
                   className={`${classes.navItemMargin} ${classes.navDropdown}`}
@@ -233,40 +251,56 @@ const Header = ({ setDrawer, searching, setSearching, handleDialog }) => {
                   className={classes.dropdownPopper}
                 >
                   <ClickAwayListener
-                    onClickAway={handleClickAway}
+                    onClickAway={handleMenuClose}
                   >
-                    <List disablePadding>
-                      {["1", "2", "3", "4"].map((value) =>
-                        <React.Fragment key={value}>
-                          <ListItem>
-                            <ListItemText
-                              primary={`This is some long text of Course Name ${value}`}
-                            />
-                            <span className="fa fa-angle-right"></span>
-                            <List disablePadding className={`${classes.courseNestedMenu}`}>
-                              {["1", "2", "3", "4"].map((value) =>
-                                <React.Fragment key={value}>
-                                  <ListItem
-                                    component="a"
-                                    href="#"
-                                  >
-                                    <ListItemText primary={`This is some long text of Topic Name ${value}`}></ListItemText>
-                                  </ListItem>
-                                </React.Fragment>
-                              )}
-                              <Divider />
-                              <ListItem component="a" href="#">
-                                <ListItemText className={classes.seeAllTopics}>See All In Field</ListItemText>
-                              </ListItem>
-                            </List>
-                          </ListItem>
-                        </React.Fragment>
-                      )}
+                    <Box>
+                      <List disablePadding>
+                        {["1", "2", "3", "4"].map((value) =>
+                          <React.Fragment key={value}>
+                            <ListItem>
+                              <ListItemText
+                                primary={`This is some long text of Course Name ${value}`}
+                              />
+                              <span className="fa fa-angle-right"></span>
+                              <List disablePadding className={`${classes.courseNestedMenu}`}>
+                                {["1", "2", "3", "4"].map((value) =>
+                                  <React.Fragment key={value}>
+                                    <ListItem
+                                      component={NavLink}
+                                      exact
+                                      to={`/${value}`}
+                                      onClick={handleMenuClose}
+                                    >
+                                      <ListItemText primary={`This is some long text of Topic Name ${value}`}></ListItemText>
+                                    </ListItem>
+                                  </React.Fragment>
+                                )}
+                                <Divider />
+                                <ListItem
+                                  component={NavLink}
+                                  exact
+                                  to={`/${value}`}
+                                  onClick={handleMenuClose}
+                                >
+                                  <ListItemText className={classes.seeAllTopics}>See All In Field</ListItemText>
+                                </ListItem>
+                              </List>
+                            </ListItem>
+                          </React.Fragment>
+                        )}
+                      </List>
                       <Divider />
-                      <ListItem>
-                        <Link href="#" className={classes.seeAllCourse} underline="none">All Categories</Link>
-                      </ListItem>
-                    </List>
+                      <Box className={classes.seeAllWrapper}>
+                        <NavLink
+                          exact
+                          className={classes.seeAllCourse}
+                          to="/courses"
+                          onClick={handleMenuClose}
+                        >
+                          All Categories
+                        </NavLink>
+                      </Box>
+                    </Box>
                   </ClickAwayListener>
                 </Popper>
               </Hidden>
@@ -295,12 +329,12 @@ const Header = ({ setDrawer, searching, setSearching, handleDialog }) => {
               }
             </Grid>
             <Hidden smDown>
-              <Grid item md={4} container alignItems="center" justify="flex-end">
-                <Link href="#" color="inherit" className={classes.navItemMargin}>
+              <Grid item lg={5} md={4} container alignItems="center" justify="flex-end">
+                <NavLink exact to="/instructors" className={`${classes.navItem} ${classes.navItemMargin}`}>
                   Instructors
-              </Link>
+                </NavLink>
                 {
-                  true
+                  false
                     ?
                     <>
                       <Button color="inherit" className={`${classes.loginButton} ${classes.navItemMargin}`} onClick={() => handleDialog('login')}>Log In</Button>
@@ -319,26 +353,27 @@ const Header = ({ setDrawer, searching, setSearching, handleDialog }) => {
                         </Hidden>
                       </Button>
                       <Popper
+                        placement="bottom-end"
                         anchorEl={menuAnchorEl['account']}
                         open={Boolean(menuAnchorEl['account'])}
                         className={classes.dropdownPopper}
                       >
                         <ClickAwayListener onClickAway={handleMenuClose}>
-                          <List>
-                            <ListItem component="a" href="#">
+                          <List disablePadding>
+                            <ListItem component={NavLink} exact to="/profile" onClick={handleMenuClose}>
                               <ListItemText primary="Profile" />
                             </ListItem>
-                            <ListItem component="a" href="#">
+                            <ListItem component={NavLink} exact to="/mycourses" onClick={handleMenuClose}>
                               <ListItemText primary="My Courses" />
                             </ListItem>
                             {
                               true
                                 ?
-                                <ListItem component="a" href="#">
+                                <ListItem component={NavLink} exact to="/becomeaninstructor" onClick={handleMenuClose}>
                                   <ListItemText primary="Beacome an Instructor" />
                                 </ListItem>
                                 :
-                                <ListItem component="a" href="#">
+                                <ListItem component={NavLink} exact to="/uploadcourse" onClick={handleMenuClose}>
                                   <ListItemText primary="Upload New Course" />
                                 </ListItem>
                             }
@@ -355,7 +390,7 @@ const Header = ({ setDrawer, searching, setSearching, handleDialog }) => {
           </Grid>
         </Toolbar >
       </AppBar >
-    </ThemeProvider>
+    </ThemeProvider >
   );
 };
 

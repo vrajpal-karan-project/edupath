@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Backdrop } from '@material-ui/core';
+import { Backdrop, makeStyles } from '@material-ui/core';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Header from './components/Header';
 import Drawer from './components/Drawer';
@@ -9,7 +9,15 @@ import Footer from './components/Footer';
 import Home from './pages/Home/Home';
 import './App.css';
 
+const useStyle = makeStyles(theme => ({
+  backdrop: {
+    zIndex: theme.zIndex.appBar,
+  },
+}));
+
 const App = () => {
+  const classes = useStyle();
+
   const [searching, setSearching] = useState(false);
   const [dialog, setDialog] = useState({});
   const [drawer, setDrawer] = useState(false);
@@ -23,7 +31,7 @@ const App = () => {
   return (
     <div style={{ background: "#F2F2F2" }}>
       <Router>
-        <Backdrop open={searching} onClick={() => setSearching(false)} />
+        <Backdrop className={classes.backdrop} open={searching} onClick={() => setSearching(false)} />
         <Header setDrawer={setDrawer} searching={searching} setSearching={setSearching} handleDialog={handleDialog} />
         <Drawer drawer={drawer} setDrawer={setDrawer} handleDialog={handleDialog} />
         <LoginDialog dialog={dialog['login']} handleDialog={handleDialog} />

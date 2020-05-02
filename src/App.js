@@ -7,6 +7,7 @@ import LoginDialog from './components/LoginDialog';
 import RegisterDialog from './components/RegisterDialog';
 import Footer from './components/Footer';
 import Home from './pages/Home/Home';
+import Courses from "./pages/Courses/Courses";
 import './App.css';
 
 const useStyle = makeStyles(theme => ({
@@ -53,7 +54,7 @@ const App = () => {
             This is ACCOUNT page.
          </Route>
           <Route exact path="/courses">
-            This is COURSES page.
+            <Courses />
           </Route>
           <Route exact path="/instructors">
             This is INSTRUCTORS page.

@@ -13,6 +13,9 @@ const useStyle = makeStyles(theme => ({
   backdrop: {
     zIndex: theme.zIndex.appBar,
   },
+  root: {
+    background: theme.palette.background.default,
+  },
 }));
 
 const App = () => {
@@ -29,7 +32,7 @@ const App = () => {
   };
 
   return (
-    <div style={{ background: "#F2F2F2" }}>
+    <div className={classes.root}>
       <Router>
         <Backdrop className={classes.backdrop} open={searching} onClick={() => setSearching(false)} />
         <Header setDrawer={setDrawer} searching={searching} setSearching={setSearching} handleDialog={handleDialog} />
@@ -54,7 +57,13 @@ const App = () => {
           </Route>
           <Route exact path="/instructors">
             This is INSTRUCTORS page.
-         </Route>
+          </Route>
+          <Route>
+            <div style={{ textAlign: "center" }}>
+              <h1>404 PAGE NOT FOUND</h1>
+              <p>Go back to <a href="/">Home Page</a></p>
+            </div>
+          </Route>
         </Switch>
         <Footer />
       </Router>

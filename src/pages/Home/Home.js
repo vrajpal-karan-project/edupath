@@ -4,7 +4,7 @@ import ItemCard from '../../components/ItemCard';
 
 const Home = () => {
   return (
-    <Container maxWidth="xl" style={{ background: "silver" }}>
+    <Container maxWidth="xl">
       <Grid container>
         <Grid item xs={12} sm={12} md={12} lg={12}>
           This is HOME page.

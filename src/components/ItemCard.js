@@ -83,7 +83,7 @@ const useStyles = makeStyles((theme) => ({
     },
     price: {
         position: "relative",
-        width: "50%",
+        width: "40%",
         padding: "10px 20px 10px 10px",
         color: "#5CDB94",
         background: "#25274D",

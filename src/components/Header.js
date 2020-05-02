@@ -221,7 +221,7 @@ const Header = ({ setDrawer, searching, setSearching, handleDialog }) => {
 
   return (
     <ThemeProvider theme={newTheme}>
-      <AppBar position="static" className={classes.header}>
+      <AppBar position="sticky" className={classes.header}>
         <Toolbar variant={matches ? "dense" : "regular"}>
           <Grid container alignItems="center">
             <Grid item md={2} sm={4} xs={10} container alignItems="center">

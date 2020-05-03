@@ -1,19 +1,12 @@
-import React, { useState } from 'react';
-import { Backdrop, makeStyles } from '@material-ui/core';
+import React from 'react';
+import {  makeStyles } from '@material-ui/core';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Header from './components/Header';
-import Drawer from './components/Drawer';
-import LoginDialog from './components/LoginDialog';
-import RegisterDialog from './components/RegisterDialog';
 import Footer from './components/Footer';
 import Home from './pages/Home/Home';
-import Courses from "./pages/Courses/Courses";
 import './App.css';
 
 const useStyle = makeStyles(theme => ({
-  backdrop: {
-    zIndex: theme.zIndex.appBar,
-  },
+ 
   root: {
     background: "#e8e8e8",
   },
@@ -22,24 +15,10 @@ const useStyle = makeStyles(theme => ({
 const App = () => {
   const classes = useStyle();
 
-  const [searching, setSearching] = useState(false);
-  const [dialog, setDialog] = useState({});
-  const [drawer, setDrawer] = useState(false);
-
-  const handleDialog = (type, open = true) => {
-    setDialog({ [type]: open });
-    if (drawer)
-      setDrawer(false);
-  };
-
   return (
     <div className={classes.root}>
       <Router>
-        <Backdrop className={classes.backdrop} open={searching} onClick={() => setSearching(false)} />
-        <Header setDrawer={setDrawer} searching={searching} setSearching={setSearching} handleDialog={handleDialog} />
-        <Drawer drawer={drawer} setDrawer={setDrawer} handleDialog={handleDialog} />
-        <LoginDialog dialog={dialog['login']} handleDialog={handleDialog} />
-        <RegisterDialog dialog={dialog['register']} handleDialog={handleDialog} />
+       
         <Switch>
           <Route exact path="/">
             <Home />
@@ -54,7 +33,7 @@ const App = () => {
             This is ACCOUNT page.
          </Route>
           <Route exact path="/courses">
-            <Courses />
+            This is Courses page.
           </Route>
           <Route exact path="/instructors">
             This is INSTRUCTORS page.

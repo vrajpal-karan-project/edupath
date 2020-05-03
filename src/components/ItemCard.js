@@ -4,9 +4,22 @@ import { makeStyles } from "@material-ui/core/styles";
 // import { Link } from 'react-router-dom';
 import logo from "../assets/logo.png";
 import Rating from "@material-ui/lab/Rating";
-import Tilt from "react-parallax-tilt";
+import Tilt from "react-tilt";
 
 const useStyles = makeStyles((theme) => ({
+    tooltip: {
+        margin: "24px 12px 0 12px",
+        "& .tooltiptext": {
+            [theme.breakpoints.down("sm")]: {
+                display: "none !important",
+                opacity: "0 !important",
+                visibilty: "hidden !important",
+            },
+        },
+        [theme.breakpoints.down("sm")]: {
+            marginRight: "24px"
+        }
+    },
     Card: {
         background: "transparent",
         transformStyle: "preserve-3d",
@@ -42,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
     },
 
     title: {
+        height: "2.4em",
         maxHeight: "2.4em",
         fontWeight: "650",
         color: "#25274D",
@@ -53,24 +67,7 @@ const useStyles = makeStyles((theme) => ({
         maxHeight: "3.6em",
         color: 'dimgrey'
     },
-    tooltip: {
-        "& .tooltiptext": {
-            // making ToolTip right sided
-            right: "auto",
-            left: "105%",
-            "&::after": {
-                // arrow to the left
-                left: "auto",
-                right: "100%",
-                borderColor: "transparent white transparent transparent",
-            },
-            [theme.breakpoints.down("sm")]: {
-                display: "none !important",
-                opacity: "0 !important",
-                visibilty: "hidden !important",
-            },
-        }
-    },
+
     instructor: {
         color: "grey",
         margin: "8px 0",
@@ -164,7 +161,7 @@ const ItemCard = (props) => {
         course.discount > 0 && labels.push(course.discount + "% off");
 
         return labels.length && labels.map((label, i) =>
-            <Chip key={i} className="chip" style={{ margin: "8px 8px", borderRadius: "8px", fontWeight: "550", fontSize: "90%" }}
+            <Chip key={i} className="chip" style={{ transform: "scale(0.9)", borderRadius: "8px", fontWeight: "550" }}
                 color={label.toLowerCase() === "featured" ? "secondary" : "primary"} label={label} />
         );
     };
@@ -183,16 +180,16 @@ const ItemCard = (props) => {
             <span className="tooltiptext">{tooltipContent}</span>
             <Link href={`/courses/${course.id}`} underline="none" component="a">
                 <Tilt
-                    className={`parallax-effect-glare-scale ${classes.Card}`}
-                    perspective={900} /* bydef its1000, lower=extreme effect */
-                    glareEnable={true}
-                    glareMaxOpacity={0.8}
-                    tiltMaxAngleX={10}
-                    tiltMaxAngleY={10}
-                    scale={1.04}
-                // tiltReverse={true}
+                    className={`Tilt ${classes.Card}`}
+                    options={{
+                        perspective: 800,
+                        reset: true,
+                        glareMaxOpacity: 0.8,
+                        max: 15,
+                        scale: 1.04,
+                    }}
                 >
-                    <Card className={`itemCard ${classes.itemCard}`}>
+                    <Card className={`itemCard Tilt-inner ${classes.itemCard}`}>
 
                         <div style={{ position: "relative" }}>
                             <div style={{ position: "absolute", top: "8px", left: "8px", zIndex: "101", }}>
@@ -206,11 +203,11 @@ const ItemCard = (props) => {
                                 title="LOGO"
                                 className={classes.media}
                             />
-                            <Chip size="small" style={{
-                                zIndex: "101", background: "rgba(0,0,0,0.4)", color: "white",
-                                position: "absolute", bottom: "4px", right: "4px", cursor: "pointer"
-                            }}
-                                label={`${course.duration} hrs`}
+                            <Chip size="small" label={`${course.duration} hrs`}
+                                style={{
+                                    zIndex: "101", background: "rgba(0,0,0,0.4)", color: "white",
+                                    position: "absolute", bottom: "4px", right: "4px", cursor: "pointer"
+                                }}
                                 icon={<i className="fa fa-clock-o" style={{ color: "white", height: "auto", marginLeft: "6px", marginRight: "-10px" }}></i>} />
                             <div className="overlay" style={{ zIndex: "99" }}>
                                 <div>Goto Course</div>
@@ -245,7 +242,7 @@ const ItemCard = (props) => {
                     </Card>
                 </Tilt >
             </Link>
-        </div>
+        </div >
 
     );
 };

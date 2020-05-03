@@ -1,35 +1,52 @@
 import React from 'react';
-import { Grid, Container } from '@material-ui/core';
+import { Grid, Container, Select, MenuItem } from '@material-ui/core';
 import ItemCard from '../../components/ItemCard';
+import Category from "./Category";
 
 const Courses = (props) => {
+    const [sortBy,setSortBy] = React.useState("alpha");
+    const handleSortBy=(e)=>{
+        setSortBy(e.target.value);
+    }
     return (
-        <Container maxWidth="xl">
+        <Container maxWidth="xl" style={{ margin: "24px auto" }}>
             <Grid container>
                 <Grid item xs={12}>
-                    This is Couorses page.
+                    This is Courses page.
                 </Grid>
                 <Grid item container xs={12} justify="center">
-                    <Grid container item xs={12} md={3}>
-                        <Grid item>
+                    <Grid container item xs={12} md={3}  style={{ padding:"12px" }}>
+                        <Grid item xs={12}>
                             CATEGORIES
+                            {
+                                ["IT","Programming","Software","Hardware","Android"].map((cat,i)=>
+                                    <Category category={cat} selected={["IT","Software"]} key={i}/>
+                                )
+                            }
                         </Grid>
                     </Grid>
-                    <Grid container item xs={12} md={9} container justify="center">
-                        <Grid container justify="flex-end">
+                    <Grid container item xs={12} md={9} justify="center" style={{paddingLeft:"16px"}}>
+                        <Grid container item xs={12} justify="flex-end" style={{ padding: "12px" }}>
                             <Grid item>
                                 SORT BY:
-                                 <select>
-                                    <option>A-Z</option>
-                                    <option>Date Uploaded</option>
-                                    <option>Date Created</option>
-                                </select>
+                              
+                                <Select
+                                    value={sortBy}
+                                    displayEmpty
+                                    inputProps={{ 'aria-label': 'Sort B' }}
+                                    onChange={handleSortBy} 
+                                     style={{minWidth:"18ch", textAlign:"right"}}
+                                >
+                                    <MenuItem value={"alpha"}>A-Z</MenuItem>
+                                    <MenuItem value={"date"}>Date Uploaded</MenuItem>
+                                    <MenuItem value={"price"}>Price Low To High</MenuItem>
+                                </Select>
                             </Grid>
                         </Grid>
-                        <Grid container item spacing={3} xs={12} className="coursesContainer">
+                        <Grid container item xs={12} className="coursesContainer">
                             {
                                 [1, 2, 3, 4, 5, 6, 7].map((value) =>
-                                    <Grid item xs={12} sm={6} md={4} lg={3} key={value}>
+                                    <Grid item xs={12} sm={6} md={4} key={value}>
                                         <ItemCard />
                                     </Grid>
                                 )

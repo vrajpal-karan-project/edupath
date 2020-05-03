@@ -15,7 +15,7 @@ const useStyle = makeStyles(theme => ({
     zIndex: theme.zIndex.appBar,
   },
   root: {
-    background: theme.palette.background.default,
+    background: "#e8e8e8",
   },
 }));
 

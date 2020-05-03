@@ -9,10 +9,10 @@ const Home = () => {
         <Grid item xs={12} sm={12} md={12} lg={12}>
           This is HOME page.
         </Grid>
-        <Grid item container spacing={3} className="coursesContainer">
+        <Grid container item className="coursesContainer">
           {
             [1, 2, 3, 4, 5, 6, 7].map((value) =>
-              <Grid item xs={12} sm={6} md={4} lg={3} key={value}>
+              <Grid item xs={12} sm={6} md={4} key={value}>
                 <ItemCard />
               </Grid>
             )

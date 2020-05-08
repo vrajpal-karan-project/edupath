@@ -23,6 +23,7 @@ import {
   createMuiTheme,
   ThemeProvider,
   Box,
+  Backdrop,
 } from '@material-ui/core';
 import logo from '../assets/logo.png';
 import { NavLink } from 'react-router-dom';
@@ -85,7 +86,6 @@ const useStyle = makeStyles(theme => ({
     zIndex: theme.zIndex.appBar + 1,
     backgroundColor: 'white',
     boxShadow: '2px 3px 7px #CCC',
-    color: fade('#000', 0.8),
     '& .fa': {
       marginLeft: theme.spacing(2),
     },
@@ -116,11 +116,17 @@ const useStyle = makeStyles(theme => ({
     textDecoration: 'underline',
     textAlign: 'center',
   },
-  menuButton: {
+  drawerButton: {
     marginRight: theme.spacing(2),
+    '&:hover': {
+      backgroundColor: fade(theme.palette.common.white, 0.1),
+    },
   },
   courseMenuIcon: {
     marginLeft: theme.spacing(1),
+  },
+  searchBackdrop: {
+    zIndex: theme.zIndex.appBar,
   },
   searchPopup: {
     [theme.breakpoints.up("md")]: {
@@ -223,10 +229,10 @@ const Header = ({ setDrawer, searching, setSearching, handleDialog }) => {
     <ThemeProvider theme={newTheme}>
       <AppBar position="sticky" className={classes.header}>
         <Toolbar variant={matches ? "dense" : "regular"}>
-          <Grid container alignItems="center">
+          <Grid container>
             <Grid item md={2} sm={4} xs={10} container alignItems="center">
               <Hidden mdUp>
-                <IconButton edge="start" color="inherit" className={classes.menuButton} onClick={() => setDrawer(true)}>
+                <IconButton edge="start" color="inherit" className={classes.drawerButton} onClick={() => setDrawer(true)}>
                   <span className="fa fa-bars"></span>
                 </IconButton>
               </Hidden>
@@ -305,6 +311,7 @@ const Header = ({ setDrawer, searching, setSearching, handleDialog }) => {
                 </Popper>
               </Hidden>
               <Hidden smUp>
+                <Backdrop className={classes.searchBackdrop} open={searching} onClick={() => setSearching(false)} />
                 <span className={classes.searchButton} onClick={() => setSearching(!searching)}>
                   <span className={`fa fa-${searching ? 'close' : 'search'} fa-fw ${classes.searchIcon}`}></span>
                 </span>
@@ -348,9 +355,7 @@ const Header = ({ setDrawer, searching, setSearching, handleDialog }) => {
                         color="inherit"
                       >
                         <Avatar src="" className={classes.avatar} />
-                        <Hidden xsDown>
-                          <Typography>Account</Typography>
-                        </Hidden>
+                        <Typography>Account</Typography>
                       </Button>
                       <Popper
                         placement="bottom-end"

@@ -9,6 +9,8 @@ import Header from '../components/Header';
 import Drawer from '../components/Drawer';
 
 import Dashboard from './Dashboard/Dashboard';
+import AddUser from './User/AddUser';
+import ManageUsers from './User/ManageUsers';
 
 const drawerWidth = 275;
 
@@ -36,19 +38,22 @@ export const Layout = ({ match: { url } }) => {
       <Drawer style={classes.drawer} baseUrl={url} drawer={drawer} setDrawer={setDrawer} />
       <Container className={classes.content}>
         <Switch>
-          <Route exact path={`${url}/`}>
+          <Route exact path={`${url}`}>
             <Dashboard />
           </Route>
-          <Route exact path={`${url}/add-user`}>
-            This is ADD USER page.
+          <Route exact path={`${url}/user/add`}>
+            <AddUser />
           </Route>
-          <Route exact path={`${url}/manage-user`}>
-            This is MANAGE USER page.
+          <Route exact path={`${url}/user/update/:userId`}>
+            <AddUser />
+          </Route>
+          <Route exact path={`${url}/users`}>
+            <ManageUsers />
           </Route>
           <Route exact path={`${url}/*`}>
             <div style={{ textAlign: "center" }}>
               <h1>404 PAGE NOT FOUND</h1>
-              <p>Go back to <a href={`${url}/`}>Dashboard</a></p>
+              <p>Go back to <a href={`${url}`}>Dashboard</a></p>
             </div>
           </Route>
         </Switch>

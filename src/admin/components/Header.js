@@ -102,7 +102,7 @@ const Header = ({ baseUrl, setDrawer }) => {
               </Grid>
             </Hidden>
             <Grid item className={classes.grow}>
-              <NavLink exact to={`${baseUrl}/`}>
+              <NavLink exact to={`${baseUrl}`}>
                 <img className={classes.logo} src={logo} alt="logo" height={matches ? 48 : 64} />
               </NavLink>
             </Grid>

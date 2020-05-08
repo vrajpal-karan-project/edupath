@@ -65,7 +65,7 @@ const Drawer = ({ style, baseUrl, drawer, setDrawer }) => {
       classes={{ paper: style }}
     >
       <Box className={classes.logoWrapper}>
-        <NavLink exact to={`${baseUrl}/`}>
+        <NavLink exact to={`${baseUrl}`}>
           <img className={classes.logo} src={logo} alt="logo" height={64} />
         </NavLink>
       </Box>
@@ -75,13 +75,13 @@ const Drawer = ({ style, baseUrl, drawer, setDrawer }) => {
           <ListItem className={classes.listHeader}>
             <ListItemText>User Management</ListItemText>
           </ListItem>
-          <ListItem component={NavLink} exact to={`${baseUrl}/add-user`} onClick={() => setDrawer(false)}>
+          <ListItem component={NavLink} exact to={`${baseUrl}/user/add`} onClick={() => setDrawer(false)}>
             <ListItemIcon>
               <span className="fa fa-plus"></span>
             </ListItemIcon>
             <ListItemText>Add User</ListItemText>
           </ListItem>
-          <ListItem component={NavLink} exact to={`${baseUrl}/manage-user`} onClick={() => setDrawer(false)}>
+          <ListItem component={NavLink} exact to={`${baseUrl}/users`} onClick={() => setDrawer(false)}>
             <ListItemIcon>
               <span className="fa fa-list"></span>
             </ListItemIcon>

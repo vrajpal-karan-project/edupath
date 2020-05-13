@@ -19,6 +19,7 @@ const useStyle = makeStyles(theme => ({
     width: drawerWidth,
   },
   content: {
+    background: '#F2F2F2',
     padding: theme.spacing(2),
     [theme.breakpoints.up("md")]: {
       marginLeft: drawerWidth,
@@ -42,10 +43,10 @@ export const Layout = ({ match: { url } }) => {
             <Dashboard />
           </Route>
           <Route exact path={`${url}/user/add`}>
-            <AddUser />
+            <AddUser baseUrl={url} />
           </Route>
           <Route exact path={`${url}/user/update/:userId`}>
-            <AddUser />
+            <AddUser baseUrl={url} />
           </Route>
           <Route exact path={`${url}/users`}>
             <ManageUsers />

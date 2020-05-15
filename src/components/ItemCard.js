@@ -243,7 +243,7 @@ const ItemCard = (props) => {
                             <span style={{ position: "absolute", color: "navy", fontWeight: "bolder", fontSize: "110%", right: 16 }}><del>${orginalPrice.toFixed(2)}</del><br />-{course.discount}%</span>
                         </CardActions>
                     </Card>
-                </Tilt >
+                </Tilt>
             </Link>
         </div>
 

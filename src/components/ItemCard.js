@@ -1,7 +1,7 @@
 import React from 'react';
-import { Chip, Card, CardActions, CardContent, CardMedia, Link } from "@material-ui/core";
+import { Chip, Card, CardActions, CardContent, CardMedia } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import logo from "../assets/logo.png";
 import Rating from "@material-ui/lab/Rating";
 import Tilt from "react-tilt";
@@ -130,6 +130,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ItemCard = (props) => {
+    // PASS tilt={true}  tooltip={true} as props to enable effect
+    let tilt = props.tilt === true;
+    let tooltip = props.tooltip === true;
     let course = props.course || ({
         id: Math.ceil(Math.random() * 10000),
         title: "Dummy Title For Some course & some long name for 3 lines more and more content is here",
@@ -177,15 +180,15 @@ const ItemCard = (props) => {
     return (
 
         <div className={`tooltip ${classes.tooltip}`}>
-            <span className="tooltiptext">{tooltipContent}</span>
-            <Link href={`/courses/${course.id}`} underline="none" component="a">
+            {tooltip && <span className="tooltiptext">{tooltipContent}</span>}
+            <Link to={`/courses/${course.id}`} style={{ textDecoration: "none" }}>
                 <Tilt
                     className={`Tilt ${classes.Card}`}
                     options={{
                         perspective: 800,
                         reset: true,
                         glareMaxOpacity: 0.8,
-                        max: 15,
+                        max: tilt ? 15 : 0,
                         scale: 1.04,
                     }}
                 >
@@ -240,9 +243,9 @@ const ItemCard = (props) => {
                             <span style={{ position: "absolute", color: "navy", fontWeight: "bolder", fontSize: "110%", right: 16 }}><del>${orginalPrice.toFixed(2)}</del><br />-{course.discount}%</span>
                         </CardActions>
                     </Card>
-                </Tilt >
+                </Tilt>
             </Link>
-        </div >
+        </div>
 
     );
 };

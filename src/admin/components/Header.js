@@ -21,7 +21,7 @@ import {
   fade,
   ThemeProvider,
 } from '@material-ui/core';
-import logo from '../assets/logo.png';
+import logo from '../../assets/admin-logo.png';
 
 const newTheme = createMuiTheme({
   overrides: {

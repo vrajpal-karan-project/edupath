@@ -14,7 +14,7 @@ import {
   useTheme,
   useMediaQuery,
 } from '@material-ui/core';
-import logo from '../assets/logo.png';
+import logo from '../../assets/admin-logo.png';
 
 const defaultTheme = createMuiTheme();
 

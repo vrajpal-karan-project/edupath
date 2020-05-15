@@ -39,7 +39,7 @@ export const Layout = ({ match: { url } }) => {
       <Drawer style={classes.drawer} baseUrl={url} drawer={drawer} setDrawer={setDrawer} />
       <Container className={classes.content}>
         <Switch>
-          <Route exact path={`${url}`}>
+          <Route exact path={[`${url}`, `${url}/dashboard`]}>
             <Dashboard />
           </Route>
           <Route exact path={`${url}/user/add`}>

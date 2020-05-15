@@ -130,6 +130,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ItemCard = (props) => {
+    // PASS tilt={true}  tooltip={true} as props to enable effect
     let tilt = props.tilt === true;
     let tooltip = props.tooltip === true;
     let course = props.course || ({

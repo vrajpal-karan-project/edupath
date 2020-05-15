@@ -1,9 +1,8 @@
 import React from 'react';
 import { makeStyles } from "@material-ui/core/styles";
-import "./banner-style.css";
 import { Button, darken } from '@material-ui/core';
 import { NavLink } from "react-router-dom";
-import Tilt from "react-tilt";
+import "./banner-style.css";
 
 const Banner = () => {
     const useStyles = makeStyles(theme => ({
@@ -36,13 +35,21 @@ const Banner = () => {
             fontWeight: "bolder",
             margin: "20px auto",
             padding: "4px 16px",
+            transition: "all 0.4s linear",
+
             "& a": {
+                transition: "all 0.2s linear",
                 textDecoration: "none",
                 color: '#25274D',
                 letterSpacing: "0px",
             },
             '&:hover': {
-                backgroundColor: darken('#5CDB94', 0.15),
+                padding: "4px 24px",
+                backgroundColor: 'transparent',
+                "& a": {
+                    color: "#5CDB94",
+                    transform: "scale(1.1)"
+                }
             },
         },
 

@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/edupath/static/css/main.2eccedd0.chunk.css",
+    "main.css": "/edupath/static/css/main.425a3716.chunk.css",
     "main.js": "/edupath/static/js/main.c0905c7f.chunk.js",
     "main.js.map": "/edupath/static/js/main.c0905c7f.chunk.js.map",
     "runtime-main.js": "/edupath/static/js/runtime-main.49eae978.js",
@@ -9,10 +9,10 @@
     "static/js/2.992e53ed.chunk.js": "/edupath/static/js/2.992e53ed.chunk.js",
     "static/js/2.992e53ed.chunk.js.map": "/edupath/static/js/2.992e53ed.chunk.js.map",
     "index.html": "/edupath/index.html",
-    "precache-manifest.981c5274916cd9e5c2363adfba37acd1.js": "/edupath/precache-manifest.981c5274916cd9e5c2363adfba37acd1.js",
+    "precache-manifest.8d48a1d55e485ca1e8909c5939b03082.js": "/edupath/precache-manifest.8d48a1d55e485ca1e8909c5939b03082.js",
     "service-worker.js": "/edupath/service-worker.js",
     "static/css/2.6f4da57f.chunk.css.map": "/edupath/static/css/2.6f4da57f.chunk.css.map",
-    "static/css/main.2eccedd0.chunk.css.map": "/edupath/static/css/main.2eccedd0.chunk.css.map",
+    "static/css/main.425a3716.chunk.css.map": "/edupath/static/css/main.425a3716.chunk.css.map",
     "static/js/2.992e53ed.chunk.js.LICENSE.txt": "/edupath/static/js/2.992e53ed.chunk.js.LICENSE.txt",
     "static/media/walsheim.css": "/edupath/static/media/GT-Walsheim-Pro.0abeb247.ttf",
     "static/media/font-awesome.min.css": "/edupath/static/media/fontawesome-webfont.fee66e71.woff"
@@ -21,7 +21,7 @@
     "static/js/runtime-main.49eae978.js",
     "static/css/2.6f4da57f.chunk.css",
     "static/js/2.992e53ed.chunk.js",
-    "static/css/main.2eccedd0.chunk.css",
+    "static/css/main.425a3716.chunk.css",
     "static/js/main.c0905c7f.chunk.js"
   ]
 }

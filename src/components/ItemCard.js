@@ -130,6 +130,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ItemCard = (props) => {
+    let tilt = props.tilt === true;
+    let tooltip = props.tooltip === true;
     let course = props.course || ({
         id: Math.ceil(Math.random() * 10000),
         title: "Dummy Title For Some course & some long name for 3 lines more and more content is here",
@@ -177,7 +179,7 @@ const ItemCard = (props) => {
     return (
 
         <div className={`tooltip ${classes.tooltip}`}>
-            <span className="tooltiptext">{tooltipContent}</span>
+            {tooltip && <span className="tooltiptext">{tooltipContent}</span>}
             <Link href={`/courses/${course.id}`} underline="none" component="a">
                 <Tilt
                     className={`Tilt ${classes.Card}`}
@@ -185,7 +187,7 @@ const ItemCard = (props) => {
                         perspective: 800,
                         reset: true,
                         glareMaxOpacity: 0.8,
-                        max: 15,
+                        max: tilt ? 15 : 0,
                         scale: 1.04,
                     }}
                 >

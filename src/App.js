@@ -14,7 +14,7 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <Router>
         <Switch>
-          <Route path="/admin" component={AdminLayout} />
+          <Route path={["/edupath/admin", "/admin"]} component={AdminLayout} />
           <Route path="" component={UserLayout} />
         </Switch>
       </Router>

@@ -37,7 +37,7 @@ export const Layout = () => {
       <LoginDialog dialog={dialog['login']} handleDialog={handleDialog} />
       <RegisterDialog dialog={dialog['register']} handleDialog={handleDialog} />
       <Switch>
-        <Route exact path="/">
+        <Route exact path={["/", "/edupath", "/home"]}>
           <Home />
         </Route>
         <Route exact path="/about">

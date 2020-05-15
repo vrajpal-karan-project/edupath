@@ -13,7 +13,7 @@ const Home = () => {
           {
             [1, 2, 3, 4, 5, 6, 7].map((value) =>
               <Grid item xs={12} sm={6} md={4} key={value}>
-                <ItemCard />
+                <ItemCard tilt={true} tooltip={true} />
               </Grid>
             )
           }

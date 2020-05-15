@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "72dfb36d8c4167a73f61bf5264ee3c4f",
+    "revision": "412fb473a0e21faeb5851e48697e4fd0",
     "url": "/edupath/index.html"
   },
   {
-    "revision": "5b0f8c84ede04084f71a",
+    "revision": "e9f700c39481870d8bcc",
     "url": "/edupath/static/css/2.6f4da57f.chunk.css"
   },
   {
-    "revision": "5ed116774957261542c3",
-    "url": "/edupath/static/css/main.7913bf5b.chunk.css"
+    "revision": "956a3eacf5e3f3e12c77",
+    "url": "/edupath/static/css/main.6d382762.chunk.css"
   },
   {
-    "revision": "5b0f8c84ede04084f71a",
-    "url": "/edupath/static/js/2.31dc8aca.chunk.js"
+    "revision": "e9f700c39481870d8bcc",
+    "url": "/edupath/static/js/2.78762a76.chunk.js"
   },
   {
     "revision": "4d7ef388ded4c46d8f17e43a588896c3",
-    "url": "/edupath/static/js/2.31dc8aca.chunk.js.LICENSE.txt"
+    "url": "/edupath/static/js/2.78762a76.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "5ed116774957261542c3",
-    "url": "/edupath/static/js/main.1437fc6b.chunk.js"
+    "revision": "956a3eacf5e3f3e12c77",
+    "url": "/edupath/static/js/main.50183a8c.chunk.js"
   },
   {
     "revision": "f2f4afb67a8b8b1e3650",

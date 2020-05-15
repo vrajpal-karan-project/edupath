@@ -1,7 +1,7 @@
 import React from 'react';
-import { Chip, Card, CardActions, CardContent, CardMedia, Link } from "@material-ui/core";
+import { Chip, Card, CardActions, CardContent, CardMedia } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import logo from "../assets/logo.png";
 import Rating from "@material-ui/lab/Rating";
 import Tilt from "react-tilt";
@@ -181,7 +181,7 @@ const ItemCard = (props) => {
 
         <div className={`tooltip ${classes.tooltip}`}>
             {tooltip && <span className="tooltiptext">{tooltipContent}</span>}
-            <Link href={`/courses/${course.id}`} underline="none" component="a">
+            <Link to={`/courses/${course.id}`} style={{ textDecoration: "none" }}>
                 <Tilt
                     className={`Tilt ${classes.Card}`}
                     options={{
@@ -243,9 +243,9 @@ const ItemCard = (props) => {
                             <span style={{ position: "absolute", color: "navy", fontWeight: "bolder", fontSize: "110%", right: 16 }}><del>${orginalPrice.toFixed(2)}</del><br />-{course.discount}%</span>
                         </CardActions>
                     </Card>
-                </Tilt >
+                </Tilt>
             </Link>
-        </div >
+        </div>
 
     );
 };

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, NavLink } from 'react-router-dom';
 import {
   makeStyles,
   Container
@@ -19,6 +19,7 @@ const useStyle = makeStyles(theme => ({
     width: drawerWidth,
   },
   content: {
+    background: '#F2F2F2',
     padding: theme.spacing(2),
     [theme.breakpoints.up("md")]: {
       marginLeft: drawerWidth,
@@ -42,10 +43,10 @@ export const Layout = ({ match: { url } }) => {
             <Dashboard />
           </Route>
           <Route exact path={`${url}/user/add`}>
-            <AddUser />
+            <AddUser baseUrl={url} />
           </Route>
           <Route exact path={`${url}/user/update/:userId`}>
-            <AddUser />
+            <AddUser baseUrl={url} />
           </Route>
           <Route exact path={`${url}/users`}>
             <ManageUsers />
@@ -53,7 +54,7 @@ export const Layout = ({ match: { url } }) => {
           <Route exact path={`${url}/*`}>
             <div style={{ textAlign: "center" }}>
               <h1>404 PAGE NOT FOUND</h1>
-              <p>Go back to <a href={`${url}`}>Dashboard</a></p>
+              <p>Go back to <NavLink to={`${url}`}>Dashboard</NavLink></p>
             </div>
           </Route>
         </Switch>

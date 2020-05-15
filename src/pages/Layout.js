@@ -34,6 +34,7 @@ export const Layout = () => {
     <div className={classes.root}>
       <Header setDrawer={setDrawer} searching={searching} setSearching={setSearching} handleDialog={handleDialog} />
       <Drawer drawer={drawer} setDrawer={setDrawer} handleDialog={handleDialog} />
+      
       <LoginDialog dialog={dialog['login']} handleDialog={handleDialog} />
       <RegisterDialog dialog={dialog['register']} handleDialog={handleDialog} />
       <Switch>

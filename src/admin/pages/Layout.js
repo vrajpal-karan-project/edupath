@@ -7,10 +7,10 @@ import {
 
 import Header from '../components/Header';
 import Drawer from '../components/Drawer';
-
 import Dashboard from './Dashboard/Dashboard';
 import AddUser from './User/AddUser';
 import ManageUsers from './User/ManageUsers';
+import SideDrawer from '../components/SideDrawer';
 
 const drawerWidth = 275;
 
@@ -36,7 +36,9 @@ export const Layout = ({ match: { url } }) => {
   return (
     <>
       <Header baseUrl={url} setDrawer={setDrawer} />
-      <Drawer style={classes.drawer} baseUrl={url} drawer={drawer} setDrawer={setDrawer} />
+      {/* <Drawer style={classes.drawer} baseUrl={url} drawer={drawer} setDrawer={setDrawer} /> */}
+      
+      <SideDrawer open={drawer} handleDrawerOpen={setDrawer} handleDrawerClose={setDrawer} />
       <Container className={classes.content}>
         <Switch>
           <Route exact path={[`${url}`, `${url}/dashboard`]}>

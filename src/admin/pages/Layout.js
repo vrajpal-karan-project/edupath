@@ -48,7 +48,7 @@ export const Layout = ({ match: { url } }) => {
             <AddUser />
           </Route>
           <Route exact path={`${url}/users`}>
-            <ManageUsers />
+            <ManageUsers baseUrl={url} />
           </Route>
           <Route exact path={`${url}/*`}>
             <div style={{ textAlign: "center" }}>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, NavLink } from 'react-router-dom';
 
 import Header from '../components/Header';
 import Drawer from '../components/Drawer';
@@ -58,7 +58,7 @@ export const Layout = () => {
         <Route>
           <div style={{ textAlign: "center" }}>
             <h1>404 PAGE NOT FOUND</h1>
-            <p>Go back to <a href="/">Home Page</a></p>
+            <p>Go back to <NavLink to="/">Home Page</NavLink></p>
           </div>
         </Route>
       </Switch>

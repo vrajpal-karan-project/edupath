@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, NavLink } from 'react-router-dom';
 import {
   Grid,
@@ -69,9 +69,25 @@ const AddUser = ({ baseUrl }) => {
 
   const { userId } = useParams();
 
+  const [selectedAvatar, setSelectedAvatar] = useState(undefined);
+
+  const handleUpload = ({ target }) => {
+    const { files } = target;
+    setSelectedAvatar(files[0]);
+  }
+
+  const handleRemove = (event, removing) => {
+    event.target.value = null;
+    setSelectedAvatar(undefined);
+
+    if (removing)
+      event.preventDefault();
+  }
+
   const { register, handleSubmit, errors } = useForm();
 
   const onSubmit = data => {
+    data.avatar = selectedAvatar;
     console.log(data);
     axios({
       method: 'POST',
@@ -103,12 +119,9 @@ const AddUser = ({ baseUrl }) => {
               <FormField
                 type="file"
                 name="avatar"
-                validate={register({
-                  required: {
-                    value: true,
-                    message: "This field is required"
-                  },
-                })}
+                selectedAvatar={selectedAvatar}
+                handleUpload={handleUpload}
+                handleRemove={handleRemove}
                 errors={errors}
               />
               <FormField

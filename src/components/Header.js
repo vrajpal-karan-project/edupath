@@ -209,7 +209,7 @@ const useStyle = makeStyles(theme => ({
   },
 }));
 
-const Header = ({ setDrawer, searching, setSearching, handleDialog }) => {
+const Header = ({ setDrawer, searching, setSearching, handleDialog, isAuthenticated }) => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.only('xs'));
 
@@ -261,16 +261,16 @@ const Header = ({ setDrawer, searching, setSearching, handleDialog }) => {
                   >
                     <Box>
                       <List disablePadding>
-                        {["1", "2", "3", "4"].map((value) =>
-                          <React.Fragment key={value}>
+                        {["1", "2", "3", "4"].map((value, index) =>
+                          <React.Fragment key={index}>
                             <ListItem>
                               <ListItemText
                                 primary={`This is some long text of Course Name ${value}`}
                               />
                               <span className="fa fa-angle-right"></span>
                               <List disablePadding className={`${classes.courseNestedMenu}`}>
-                                {["1", "2", "3", "4"].map((value) =>
-                                  <React.Fragment key={value}>
+                                {["1", "2", "3", "4"].map((value, index) =>
+                                  <React.Fragment key={index}>
                                     <ListItem
                                       component={NavLink}
                                       exact
@@ -341,13 +341,8 @@ const Header = ({ setDrawer, searching, setSearching, handleDialog }) => {
                   Instructors
                 </NavLink>
                 {
-                  false
+                  isAuthenticated
                     ?
-                    <>
-                      <Button color="inherit" className={`${classes.loginButton} ${classes.navItemMargin}`} onClick={() => handleDialog('login')}>Log In</Button>
-                      <Button className={classes.signUpButton} onClick={() => handleDialog('register')}>Sign Up</Button>
-                    </>
-                    :
                     <>
                       <Button
                         className={classes.navDropdown}
@@ -388,6 +383,11 @@ const Header = ({ setDrawer, searching, setSearching, handleDialog }) => {
                           </List>
                         </ClickAwayListener>
                       </Popper>
+                    </>
+                    :
+                    <>
+                      <Button color="inherit" className={`${classes.loginButton} ${classes.navItemMargin}`} onClick={() => handleDialog('login')}>Log In</Button>
+                      <Button className={classes.signUpButton} onClick={() => handleDialog('register')}>Sign Up</Button>
                     </>
                 }
               </Grid>

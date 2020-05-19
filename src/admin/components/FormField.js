@@ -6,13 +6,40 @@ import {
   FormHelperText,
   RadioGroup,
   FormControlLabel,
-  Radio
+  Radio,
+  Avatar,
+  fade,
 } from '@material-ui/core';
 
 const useStyle = makeStyles(theme => ({
   formField: {
-    textAlign: 'right',
     marginBottom: theme.spacing(2),
+  },
+  avatarWrapper: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  avatarOverlay: {
+    cursor: 'pointer',
+    position: 'absolute',
+    opacity: 0,
+    transition: '.3s ease',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: theme.palette.background.paper,
+    backgroundColor: fade('#25274D', 0.6),
+    height: theme.spacing(8),
+    width: theme.spacing(8),
+    borderRadius: '50%',
+    '&:hover': {
+      opacity: 1,
+    },
+  },
+  formAvatar: {
+    backgroundColor: '#25274D',
+    height: theme.spacing(8),
+    width: theme.spacing(8),
   },
   formInput: {
     borderRadius: theme.shape.borderRadius,
@@ -30,7 +57,21 @@ const useStyle = makeStyles(theme => ({
   }
 }));
 
-const FormField = ({ type = "text", multiline = false, rows = 1, inline = false, values = [], name, placeholder = "", inputProps = {}, validate, errors }) => {
+const FormField = ({
+  type = "text",
+  multiline = false,
+  rows = 1,
+  inline = false,
+  values = [],
+  selectedAvatar,
+  handleUpload,
+  handleRemove,
+  name,
+  placeholder = "",
+  inputProps = {},
+  validate,
+  errors
+}) => {
   const classes = useStyle();
 
   return (
@@ -41,6 +82,7 @@ const FormField = ({ type = "text", multiline = false, rows = 1, inline = false,
             {
               values.map(({ value, label }) =>
                 <FormControlLabel
+                  key={value}
                   value={value}
                   control={
                     <Radio
@@ -55,11 +97,25 @@ const FormField = ({ type = "text", multiline = false, rows = 1, inline = false,
             }
           </RadioGroup> :
           type === "file" ?
-            <input
-              type={type}
-              name={name}
-              ref={inputProps}
-            /> :
+            <>
+              <Box className={classes.avatarWrapper}>
+                <Avatar
+                  className={classes.formAvatar}
+                  src={selectedAvatar && URL.createObjectURL(selectedAvatar)}
+                />
+                <label htmlFor="formAvatar" className={classes.avatarOverlay}>
+                  <span className={`fa fa-${selectedAvatar ? 'trash' : 'pencil'}`} />
+                </label>
+                <input
+                  id="formAvatar"
+                  type={type}
+                  name={name}
+                  onClick={(event) => handleRemove(event, selectedAvatar)}
+                  onChange={handleUpload}
+                  hidden
+                />
+              </Box>
+            </> :
             <InputBase
               className={`${classes.formInput} ${errors[name] && classes.error}`}
               multiline={multiline}

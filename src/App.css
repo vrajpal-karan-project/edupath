@@ -13,14 +13,14 @@
   visibility: hidden;
   opacity: 0;
   transition: opacity 0.4s;
-  /* Position the tooltip text - right */
+  /* Position the tooltip text */
   position: absolute;
   z-index: 1;
   top: 50%;
   transform: translateY(-50%);
   /* right: 105%; */
-  right: auto;
-  left: 105%;
+  /* right: auto;
+  left: 105%; */
   /* display: none; //can't animate*/
   padding: 16px;
   width: 250px;
@@ -30,18 +30,15 @@
   box-shadow: 5px 10px 20px rgba(0, 0, 0, 0.2), 0px 0px 6px rgba(0, 0, 0, 0.3);
 }
 
-/* Left Arrow */
+/* Toolip Arrow */
 .tooltip .tooltiptext::after {
   content: " ";
   position: absolute;
   top: 50%;
-  /*  To the left of the tooltip */
-  left: auto;
-  right: 100%;
-  margin-top: -10px;
+  transform: translateY(-50%);
   border-width: 10px;
   border-style: solid;
-  border-color: transparent white transparent transparent;
+  border-color: transparent;
 }
 
 /* Show the tooltip text when you mouse over the tooltip container */
@@ -53,14 +50,23 @@
 
 
 @media only screen and (min-width: 960px) {
-  .coursesContainer > div:nth-child(3n) .tooltiptext {
-    left: auto;
-    right: 105%; /* place  To the left of the tooltip */
+  .rightplacement.tooltiptext {
+    right: auto;
+    left: 105%; /* place To the right of the tooltip */
   }
-  .coursesContainer > div:nth-child(3n) .tooltiptext::after {
+  .rightplacement.tooltiptext::after {
+    left: auto;
+    right: 100%; /* Arrow To the left of the tooltip */
+    border-right-color: white;
+  }
+  .leftplacement.tooltiptext {
+    left: auto;
+    right: 105%; /* place To the left of the tooltip */
+  }
+  .leftplacement.tooltiptext::after {
     right: auto;
     left: 100%; /* Arrow To the right of the tooltip */
-    border-color: transparent transparent transparent white;
+    border-left-color: white;
   }
 }
 

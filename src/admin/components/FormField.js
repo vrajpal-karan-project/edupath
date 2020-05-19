@@ -8,7 +8,7 @@ import {
   FormControlLabel,
   Radio,
   Avatar,
-  fade
+  fade,
 } from '@material-ui/core';
 
 const useStyle = makeStyles(theme => ({
@@ -63,6 +63,9 @@ const FormField = ({
   rows = 1,
   inline = false,
   values = [],
+  selectedAvatar,
+  handleUpload,
+  handleRemove,
   name,
   placeholder = "",
   inputProps = {},
@@ -79,6 +82,7 @@ const FormField = ({
             {
               values.map(({ value, label }) =>
                 <FormControlLabel
+                  key={value}
                   value={value}
                   control={
                     <Radio
@@ -97,15 +101,17 @@ const FormField = ({
               <Box className={classes.avatarWrapper}>
                 <Avatar
                   className={classes.formAvatar}
-                  src=""
+                  src={selectedAvatar && URL.createObjectURL(selectedAvatar)}
                 />
                 <label htmlFor="formAvatar" className={classes.avatarOverlay}>
-                  <span className={`fa fa-${true ? 'pencil' : 'trash'}`} />
+                  <span className={`fa fa-${selectedAvatar ? 'trash' : 'pencil'}`} />
                 </label>
                 <input
-                  id="avatar"
+                  id="formAvatar"
                   type={type}
                   name={name}
+                  onClick={(event) => handleRemove(event, selectedAvatar)}
+                  onChange={handleUpload}
                   hidden
                 />
               </Box>

@@ -129,9 +129,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ItemCard = ({ tilt, tooltip = "none", course }) => {
-  // PASS tilt={true} as props to enable effect
-  // PASS tooltip="left || right" for tooltip placement
+const ItemCard = ({ tilt, tooltip, index, course }) => {
+  // PASS tilt={true} and tooltip={true} as props to enable effect
   course = course || ({
     id: Math.ceil(Math.random() * 10000),
     title: "Dummy Title For Some course & some long name for 3 lines more and more content is here",
@@ -179,7 +178,7 @@ const ItemCard = ({ tilt, tooltip = "none", course }) => {
   return (
 
     <div className={`tooltip ${classes.tooltip}`}>
-      {tooltip !== "none" && <span className={`tooltiptext ${tooltip}placement`}>{tooltipContent}</span>}
+      {tooltip && <span className={`tooltiptext ${(index + 1) % 3 === 0 ? "left" : "right"}placement`}>{tooltipContent}</span>}
       <Link to={`/courses/${course.id}`} style={{ textDecoration: "none" }}>
         <Tilt
           className={`Tilt ${classes.Card}`}

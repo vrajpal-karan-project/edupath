@@ -8,19 +8,20 @@ import {
 import { default as SlickSlider } from 'react-slick';
 
 const useStyle = makeStyles(theme => ({
-  slideWrapper: {
-    marginBottom: theme.spacing(6),
-  },
   slide: {
     marginBottom: theme.spacing(2),
   },
   sliderArrowBtn: {
     boxShadow: theme.shadows[1],
+    padding: 0,
     margin: `0px ${theme.spacing(1)}px`,
-    height: theme.spacing(2),
-    width: theme.spacing(2),
+    height: theme.spacing(3),
+    width: theme.spacing(3),
     color: '#5CDB94',
     backgroundColor: theme.palette.background.paper,
+    [theme.breakpoints.down("sm")]: {
+      display: 'none',
+    },
   },
   sliderDots: {
     display: 'flex',
@@ -59,9 +60,32 @@ const Slider = ({ children }) => {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 3,
+    slidesToShow: 4,
+    slidesToScroll: 4,
     dotsClass: classes.sliderDots,
+    responsive: [
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        }
+      },
+      {
+        breakpoint: 960,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+        }
+      },
+      {
+        breakpoint: 1280,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+        }
+      },
+    ],
     appendDots: dots => (
       <div>
         <IconButton className={classes.sliderArrowBtn} onClick={() => slider.current.slickPrev()}>
@@ -79,7 +103,7 @@ const Slider = ({ children }) => {
   };
 
   return (
-    <Grid container className={`${classes.slideWrapper} coursesContainer`}>
+    <Grid container>
       <Grid item xs={12}>
         <SlickSlider ref={c => slider.current = c} {...settings}>
           {

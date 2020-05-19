@@ -101,6 +101,7 @@ const AddUser = ({ baseUrl }) => {
             <Divider />
             <Box className={classes.formBody}>
               <FormField
+                key="avatar"
                 type="file"
                 name="avatar"
                 validate={register({
@@ -112,6 +113,7 @@ const AddUser = ({ baseUrl }) => {
                 errors={errors}
               />
               <FormField
+                key="name"
                 name="fullname"
                 placeholder="Full Name"
                 inputProps={{ maxLength: 40 }}
@@ -127,6 +129,7 @@ const AddUser = ({ baseUrl }) => {
                 errors={errors}
               />
               <FormField
+                key="email"
                 type="email"
                 name="email"
                 placeholder="Email"
@@ -147,6 +150,7 @@ const AddUser = ({ baseUrl }) => {
                 errors={errors}
               />
               <FormField
+                key="password"
                 type="password"
                 name="password"
                 placeholder="Password"
@@ -168,6 +172,7 @@ const AddUser = ({ baseUrl }) => {
                 errors={errors}
               />
               <FormField
+                key="role"
                 type="radio"
                 inline={true}
                 name="role"
@@ -184,6 +189,7 @@ const AddUser = ({ baseUrl }) => {
                 errors={errors}
               />
               <FormField
+                key="about"
                 multiline={true}
                 rows={4}
                 name="about"

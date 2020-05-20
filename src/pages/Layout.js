@@ -17,7 +17,7 @@ const useStyle = makeStyles(theme => ({
   },
 }));
 
-export const Layout = () => {
+export const Layout = ({ match: { url } }) => {
   const classes = useStyle();
 
   const [searching, setSearching] = useState(false);
@@ -38,24 +38,24 @@ export const Layout = () => {
       <LoginDialog dialog={dialog['login']} handleDialog={handleDialog} />
       <RegisterDialog dialog={dialog['register']} handleDialog={handleDialog} />
       <Switch>
-        <Route exact path={["/", "/edupath", "/home"]}>
+        <Route exact path={["/", `${url}`, "/home"]}>
           <Home />
         </Route>
-        <Route exact path="/about">
+        <Route exact path={`${url}/about`}>
           This is ABOUT page.
-      </Route>
-        <Route exact path="/contact">
+        </Route>
+        <Route exact path={`${url}/contact`}>
           This is CONTACT US page.
-      </Route>
-        <Route exact path="/account">
+        </Route>
+        <Route exact path={`${url}/account`}>
           This is ACCOUNT page.
-      </Route>
-        <Route exact path="/courses">
+        </Route>
+        <Route exact path={`${url}/courses`}>
           <Courses />
         </Route>
-        <Route exact path="/instructors">
+        <Route exact path={`${url}/instructors`}>
           This is INSTRUCTORS page.
-      </Route>
+        </Route>
         <Route>
           <div style={{ textAlign: "center" }}>
             <h1>404 PAGE NOT FOUND</h1>

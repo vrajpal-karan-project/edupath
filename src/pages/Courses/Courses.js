@@ -43,11 +43,11 @@ const Courses = (props) => {
                                 </Select>
                             </Grid>
                         </Grid>
-                        <Grid container item xs={12} className="coursesContainer">
+                        <Grid container item xs={12}>
                             {
-                                [1, 2, 3, 4, 5, 6, 7].map((value) =>
-                                    <Grid item xs={12} sm={6} md={4} key={value}>
-                                        <ItemCard />
+                                [1, 2, 3, 4, 5, 6, 7].map((value, index) =>
+                                    <Grid item xs={12} sm={6} md={4} key={index}>
+                                        <ItemCard tilt={true} tooltip={true} index={index} />
                                     </Grid>
                                 )
                             }

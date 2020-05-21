@@ -24,10 +24,10 @@ const theme = createMuiTheme({
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
-      <Router>
+      <Router basename="/edupath">
         <Switch>
-          <Route path={["/edupath/admin", "/admin"]} component={AdminLayout} />
-          <Route path={["/edupath", ""]} component={UserLayout} />
+          <Route path="/admin" component={AdminLayout} />
+          <Route path="" component={UserLayout} />
         </Switch>
       </Router>
     </ThemeProvider>

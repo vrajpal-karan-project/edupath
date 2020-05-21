@@ -61,6 +61,11 @@ const useStyle = makeStyles({
 const Drawer = ({ drawer, setDrawer, handleDialog }) => {
   const classes = useStyle();
 
+  const handleClick = (event, type) => {
+    handleDialog(type);
+    event.preventDefault();
+  }
+
   return (
     <MuiDrawer
       open={drawer}
@@ -120,7 +125,7 @@ const Drawer = ({ drawer, setDrawer, handleDialog }) => {
                       <ListItemText>Beacome an Instructor</ListItemText>
                     </ListItem>
                     :
-                    <ListItem component={NavLink} exact to="uploadcourse" onClick={() => setDrawer(false)}>
+                    <ListItem component={NavLink} exact to="/uploadcourse" onClick={() => setDrawer(false)}>
                       <ListItemIcon>
                         <span className="fa fa-upload"></span>
                       </ListItemIcon>
@@ -130,13 +135,13 @@ const Drawer = ({ drawer, setDrawer, handleDialog }) => {
               </>
               :
               <>
-                <ListItem button onClick={() => handleDialog('login')}>
+                <ListItem component={NavLink} exact to="/login" onClick={(e) => handleClick(e, 'login')}>
                   <ListItemIcon>
                     <span className="fa fa-sign-in"></span>
                   </ListItemIcon>
                   <ListItemText>Log In</ListItemText>
                 </ListItem>
-                <ListItem button onClick={() => handleDialog('register')}>
+                <ListItem component={NavLink} exact to="/register" onClick={(e) => handleClick(e, 'register')}>
                   <ListItemIcon>
                     <span className="fa fa-plus-square"></span>
                   </ListItemIcon>

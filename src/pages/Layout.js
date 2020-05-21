@@ -4,12 +4,15 @@ import { Route, Switch, NavLink } from 'react-router-dom';
 
 import Header from '../components/Header';
 import Drawer from '../components/Drawer';
-import LoginDialog from '../components/LoginDialog';
-import RegisterDialog from '../components/RegisterDialog';
 import Footer from '../components/Footer';
 
+import Register from './Register/Register';
+import Login from './Login/Login';
 import Home from './Home/Home';
 import Courses from './Courses/Courses';
+import Dialog from '../components/Dialog';
+import LoginForm from '../components/LoginForm';
+import RegistrationForm from '../components/RegistrationForm';
 
 const useStyle = makeStyles(theme => ({
   root: {
@@ -17,7 +20,7 @@ const useStyle = makeStyles(theme => ({
   },
 }));
 
-export const Layout = ({ match: { url } }) => {
+export const Layout = () => {
   const classes = useStyle();
 
   const [searching, setSearching] = useState(false);
@@ -34,25 +37,41 @@ export const Layout = ({ match: { url } }) => {
     <div className={classes.root}>
       <Header setDrawer={setDrawer} searching={searching} setSearching={setSearching} handleDialog={handleDialog} />
       <Drawer drawer={drawer} setDrawer={setDrawer} handleDialog={handleDialog} />
-      <LoginDialog dialog={dialog['login']} handleDialog={handleDialog} />
-      <RegisterDialog dialog={dialog['register']} handleDialog={handleDialog} />
+      <Dialog
+        title="Login"
+        content={<LoginForm handleDialog={handleDialog} />}
+        open={Boolean(dialog['login'])}
+        onClose={() => handleDialog('login', false)}
+      />
+      <Dialog
+        title="Register"
+        content={<RegistrationForm handleDialog={handleDialog} />}
+        open={Boolean(dialog['register'])}
+        onClose={() => handleDialog('register', false)}
+      />
       <Switch>
-        <Route exact path={["/", `${url}`, "/home"]}>
+        <Route exact path="/login">
+          <Login />
+        </Route>
+        <Route exact path="/register">
+          <Register />
+        </Route>
+        <Route exact path={["/", "/home"]}>
           <Home />
         </Route>
-        <Route exact path={`${url}/about`}>
+        <Route exact path="/about">
           This is ABOUT page.
         </Route>
-        <Route exact path={`${url}/contact`}>
+        <Route exact path="/contact">
           This is CONTACT US page.
         </Route>
-        <Route exact path={`${url}/account`}>
+        <Route exact path="/account">
           This is ACCOUNT page.
         </Route>
-        <Route exact path={`${url}/courses`}>
+        <Route exact path="/courses">
           <Courses />
         </Route>
-        <Route exact path={`${url}/instructors`}>
+        <Route exact path="/instructors">
           This is INSTRUCTORS page.
         </Route>
         <Route>

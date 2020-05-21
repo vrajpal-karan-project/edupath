@@ -60,7 +60,7 @@ const useStyle = makeStyles(theme => ({
   },
   dropdownPopper: {
     minWidth: '150px',
-    zIndex: theme.zIndex.appBar + 1,
+    zIndex: theme.zIndex.drawer + 1,
     backgroundColor: 'white',
     boxShadow: '2px 3px 7px #CCC',
   },

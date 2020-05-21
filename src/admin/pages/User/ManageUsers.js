@@ -70,10 +70,7 @@ const ManageUsers = ({ baseUrl }) => {
 
   return (
     <Grid container justify="center">
-      <Grid item xs={12} container justify="center">
-        <Box className={classes.title}>User Management</Box>
-      </Grid>
-      <Grid item>
+      <Grid item xs={12}>
         <ThemeProvider theme={theme}>
           <MaterialTable
             components={{

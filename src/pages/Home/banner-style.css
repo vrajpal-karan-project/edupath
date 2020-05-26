@@ -56,6 +56,9 @@
   bottom: -150px;
 }
 
+.circles li:hover {
+  background: #5cdb93CC;
+}
 .circles li:nth-child(1) {
   left: 25%;
   width: 80px;

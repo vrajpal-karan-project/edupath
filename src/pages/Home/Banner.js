@@ -8,14 +8,14 @@ const Banner = () => {
     const useStyles = makeStyles(theme => ({
         banner: {
             height: `calc(100vh - 64px)`,
-            [theme.breakpoints.down("sm")]: {
-                height: `calc(100vh - 48px)`,
-            },
             width: "100%",
             top: 0,
             background: "#25274D",
             color: "white",
-            overflow: "hidden"
+            overflow: "hidden",
+            [theme.breakpoints.down("sm")]: {
+                height: `calc(100vh - 48px)`,
+            },
         },
         // content: {
         //     width: "100%",
@@ -65,7 +65,7 @@ const Banner = () => {
 
                 <div>
                     <Button className={classes.signUpButton}>
-                        <NavLink exact to="/signup"> Get Started for Free </NavLink>
+                        <NavLink exact to="/courses"> Explore Now </NavLink>
                     </Button>
                 </div>
 

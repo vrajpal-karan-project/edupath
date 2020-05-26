@@ -181,7 +181,7 @@ const ItemCard = (props) => {
 
         <div className={`tooltip ${classes.tooltip}`}>
             {tooltip && <span className="tooltiptext">{tooltipContent}</span>}
-            <Link to={`/courses/${course.id}`} style={{ textDecoration: "none" }}>
+            <Link to={`/course/${course.id}`} style={{ textDecoration: "none" }}>
                 <Tilt
                     className={`Tilt ${classes.Card}`}
                     options={{

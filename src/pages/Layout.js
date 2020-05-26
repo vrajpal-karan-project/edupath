@@ -13,6 +13,7 @@ import Courses from './Courses/Courses';
 import Dialog from '../components/Dialog';
 import LoginForm from '../components/LoginForm';
 import RegistrationForm from '../components/RegistrationForm';
+import CourseDetail from './CourseDetail/CourseDetail';
 
 const useStyle = makeStyles(theme => ({
   root: {
@@ -71,6 +72,7 @@ export const Layout = () => {
         <Route exact path="/courses">
           <Courses />
         </Route>
+        <Route exact path="/course/:id" component={CourseDetail} />
         <Route exact path="/instructors">
           This is INSTRUCTORS page.
         </Route>

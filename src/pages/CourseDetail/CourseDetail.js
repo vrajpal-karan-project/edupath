@@ -1,4 +1,7 @@
 import React from 'react';
+import { Grid, Container, Typography } from '@material-ui/core';
+import MiniCard from './MiniCard';
+import ItemCard from '../../components/ItemCard';
 
 const CourseDetail = (props) => {
     const courseId = props.match.params.id;
@@ -21,9 +24,67 @@ const CourseDetail = (props) => {
     });
 
     return (
-        <div>
-            This is Course Detail Page for course : {courseId}
-        </div>
+        <Grid container>
+            <Container maxWidth="xl" disableGutters style={{ background: "#25274D", color: "white" }}>
+
+                <Container maxWidth="xl" fixed>
+                    <Grid container style={{ margin: "24px auto" }}>
+                        <Grid container item xs={12} sm={8}>
+                            <Typography variant="h4" style={{ lineHeight: "1.2" }}>
+                                {course.title}
+                            </Typography>
+                        </Grid>
+                        <Grid container item xs={12} sm={4} style={{ position: "relative", top: "0" }}>
+                            <div style={{ position: "sticky", top: "0" }}>
+                                <MiniCard course={course} />
+                            </div>
+                        </Grid>
+
+                    </Grid>
+                </Container>
+            </Container>
+
+            <Container maxWidth="xl" disableGutters>
+                <Container maxWidth="xl" fixed>
+                    <Grid container>
+                        <Grid container item xs={12} sm={8}>
+                            <Grid item>
+                                <Typography variant="h5">
+                                    Instructor : {course.instructor}
+                                </Typography>
+                                <Typography variant="h6">
+                                    Last updated on : {Date(course.updated)}
+                                </Typography>
+                            </Grid>
+                            <Grid item>
+                                <Typography variant="h6">
+                                    {course.description}
+                                    {course.description}
+                                    {course.description}
+                                    {course.description}
+                                    {course.description}
+                                    {course.description}
+                                    {course.description}
+                                    {course.description}
+                                    {course.description}
+                                    {course.description}
+                                    {course.description}
+                                    {course.description}
+                                    {course.description}
+                                    {course.description}
+                                    {course.description}
+                                    {course.description}
+
+                                </Typography>
+                            </Grid>
+                        </Grid>
+                        <Grid container item xs={12} sm={4}> </Grid>
+                    </Grid>
+                </Container>
+            </Container>
+
+
+        </Grid>
     )
 }
 

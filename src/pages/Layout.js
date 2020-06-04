@@ -14,6 +14,7 @@ import Dialog from '../components/Dialog';
 import LoginForm from '../components/LoginForm';
 import RegistrationForm from '../components/RegistrationForm';
 import CourseDetail from './CourseDetail/CourseDetail';
+import Account from './Account/Account';
 
 const useStyle = makeStyles(theme => ({
   root: {
@@ -36,7 +37,13 @@ export const Layout = () => {
 
   return (
     <div className={classes.root}>
-      <Header setDrawer={setDrawer} searching={searching} setSearching={setSearching} handleDialog={handleDialog} />
+      <Header
+        setDrawer={setDrawer}
+        searching={searching}
+        setSearching={setSearching}
+        handleDialog={handleDialog}
+        isAuthenticated={true}
+      />
       <Drawer drawer={drawer} setDrawer={setDrawer} handleDialog={handleDialog} />
       <Dialog
         title="Login"
@@ -66,9 +73,11 @@ export const Layout = () => {
         <Route exact path="/contact">
           This is CONTACT US page.
         </Route>
-        <Route exact path="/account">
-          This is ACCOUNT page.
-        </Route>
+        <Route
+          exact
+          path={["/profile", "/changepassword", "/mycourses"]}
+          render={({ location }) => (<Account location={location} />)}
+        />
         <Route exact path="/courses">
           <Courses />
         </Route>

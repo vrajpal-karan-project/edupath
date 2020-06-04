@@ -29,15 +29,13 @@ const CourseDetail = (props) => {
 
                 <Container maxWidth="xl" fixed>
                     <Grid container style={{ margin: "24px auto" }}>
-                        <Grid container item xs={12} sm={8}>
+                        <Grid container item xs={12} md={8}>
                             <Typography variant="h4" style={{ lineHeight: "1.2" }}>
                                 {course.title}
                             </Typography>
                         </Grid>
-                        <Grid container item xs={12} sm={4} style={{ position: "relative", top: "0" }}>
-                            <div style={{ position: "sticky", top: "0" }}>
-                                <MiniCard course={course} />
-                            </div>
+                        <Grid container item xs={12} md={4} justify="center">
+                            <MiniCard course={course} />
                         </Grid>
 
                     </Grid>
@@ -47,7 +45,7 @@ const CourseDetail = (props) => {
             <Container maxWidth="xl" disableGutters>
                 <Container maxWidth="xl" fixed>
                     <Grid container>
-                        <Grid container item xs={12} sm={8}>
+                        <Grid container item xs={12} sm={8} style={{ background: "skyblue" }}>
                             <Grid item>
                                 <Typography variant="h5">
                                     Instructor : {course.instructor}
@@ -77,8 +75,11 @@ const CourseDetail = (props) => {
 
                                 </Typography>
                             </Grid>
+
                         </Grid>
-                        <Grid container item xs={12} sm={4}> </Grid>
+                        <Grid item xs={12} style={{ background: 'yellow' }}>
+                            Hi
+                            </Grid>
                     </Grid>
                 </Container>
             </Container>

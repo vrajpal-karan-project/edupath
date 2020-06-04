@@ -1,29 +1,14 @@
 import React from 'react';
-import { Chip, Card, CardActions, CardContent, CardMedia, Grid } from "@material-ui/core";
+import { Chip, Card, CardActions, CardContent, CardMedia, Grid, Typography,CardActionArea } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import logo from "../../assets/logo.png";
 import Rating from "@material-ui/lab/Rating";
 
 const useStyles = makeStyles((theme) => ({
-    tooltip: {
-        margin: "24px 12px 0 12px",
-        "& .tooltiptext": {
-            [theme.breakpoints.down("sm")]: {
-                display: "none !important",
-                opacity: "0 !important",
-                visibilty: "hidden !important",
-            },
-        },
-        [theme.breakpoints.down("sm")]: {
-            marginRight: "24px"
-        }
-    },
-    Card: {
-        background: "transparent",
-        transformStyle: "preserve-3d",
-        maxWidth: "fit-content",
-        display: "flex",
-        borderRadius: "10px",
+
+    card: {
+        maxWidth: "300px",
+        position:"fixed",
         "& .itemCard": {
             boxShadow: "0 10px 20px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.15)",
         },
@@ -45,11 +30,11 @@ const useStyles = makeStyles((theme) => ({
                 transform: "scale(0.955)",
             },
 
+        },
+        [theme.breakpoints.down("sm")]:{
+            position:"relative",
+            marginTop:"24px"
         }
-    },
-    itemCard: {
-        position: "relative",
-        // display:"flex"
     },
 
 
@@ -113,52 +98,75 @@ const MiniCard = ({ course = {} }) => {
     };
 
     return (
-        <div className={classes.Card}>
-
-            <Card className={`itemCard Tilt-inner ${classes.itemCard}`}>
-
-                <div style={{ position: "relative" }}>
-                    <div style={{ position: "absolute", top: "8px", left: "8px", zIndex: "101", }}>
-                        <Chips />
-                    </div>
-                    <CardMedia
-                        component="img"
-                        alt="IMAGE"
-                        height="140"
-                        image={logo}
-                        title="LOGO"
-                    />
-
-                    <div className="overlay" style={{ zIndex: "99" }}>
-                        <div><i className="fa fa-play-circle fa-4x"></i></div>
-                    </div>
-                </div>
+        <Card className={classes.card}>
+            <CardActionArea>
+                <CardMedia
+                    component="img"
+                    alt="ALT LOGO"
+                    height="140"
+                    image={logo}
+                    title="LOGO"
+                />
                 <CardContent>
-                    <div>
-                        <div>
-                            Length : {course.duration} Hrs
-                        </div>
-                        <div>
-                            <div style={{ display: 'flex', alignItems: "center", margin: "8px 0 0" }}>
-                                <div style={{ color: "coral", fontWeight: "bolder" }}><small>{course.rating.toFixed(1)}&nbsp;</small></div>
-                                <Rating value={course.rating} name="rating" size="small" readOnly />
-                                <div style={{ color: 'grey' }}><small> &nbsp;({course.ratingCount})</small> </div>
-                            </div>
-                        </div>
-                    </div>
+                    <Typography gutterBottom variant="h5" component="h2">
+                        Lizard
+          </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                        Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
+                        across all continents except Antarctica
+          </Typography>
                 </CardContent>
+            </CardActionArea>
+            <CardActions>
+                SHARE
+            </CardActions>
+        </Card>
+        // <div className={classes.Card}>
 
-                <CardActions style={{ padding: 0, background: "#5CDB94" }}>
-                    {/* <Button size="large" style={{ background: "#5CDB94", color: "#F2F2F2" }} variant="contained">
-                            <b>Enroll Now</b>
-                        </Button> */}
-                    <span className={classes.price}>
-                        <span className="priceAmount"> {isFree ? "FREE" : "$" + course.price}</span>
-                    </span>
-                    <span style={{ position: "absolute", color: "navy", fontWeight: "bolder", fontSize: "110%", right: 16 }}><del>${orginalPrice.toFixed(2)}</del><br />-{course.discount}%</span>
-                </CardActions>
-            </Card>
-        </div>
+        //     <Card className={`itemCard Tilt-inner ${classes.itemCard}`}>
+
+        //         <div style={{ position: "relative" }}>
+        //             <div style={{ position: "absolute", top: "8px", left: "8px", zIndex: "101", }}>
+        //                 <Chips />
+        //             </div>
+        //             <CardMedia
+        //                 component="img"
+        //                 alt="IMAGE"
+        //                 height="140"
+        //                 image={logo}
+        //                 title="LOGO"
+        //             />
+
+        //             <div className="overlay" style={{ zIndex: "99" }}>
+        //                 <div><i className="fa fa-play-circle fa-4x"></i></div>
+        //             </div>
+        //         </div>
+        //         <CardContent>
+        //             <div>
+        //                 <div>
+        //                     Length : {course.duration} Hrs
+        //                 </div>
+        //                 <div>
+        //                     <div style={{ display: 'flex', alignItems: "center", margin: "8px 0 0" }}>
+        //                         <div style={{ color: "coral", fontWeight: "bolder" }}><small>{course.rating.toFixed(1)}&nbsp;</small></div>
+        //                         <Rating value={course.rating} name="rating" size="small" readOnly />
+        //                         <div style={{ color: 'grey' }}><small> &nbsp;({course.ratingCount})</small> </div>
+        //                     </div>
+        //                 </div>
+        //             </div>
+        //         </CardContent>
+
+        //         <CardActions style={{ padding: 0, background: "#5CDB94" }}>
+        //             {/* <Button size="large" style={{ background: "#5CDB94", color: "#F2F2F2" }} variant="contained">
+        //                     <b>Enroll Now</b>
+        //                 </Button> */}
+        //             <span className={classes.price}>
+        //                 <span className="priceAmount"> {isFree ? "FREE" : "$" + course.price}</span>
+        //             </span>
+        //             <span style={{ position: "absolute", color: "navy", fontWeight: "bolder", fontSize: "110%", right: 16 }}><del>${orginalPrice.toFixed(2)}</del><br />-{course.discount}%</span>
+        //         </CardActions>
+        //     </Card>
+        // </div>
     );
 };
 

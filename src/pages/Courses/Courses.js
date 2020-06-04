@@ -6,41 +6,10 @@ import {
   MenuItem,
   Typography,
   makeStyles,
-  createMuiTheme,
-  ThemeProvider,
-  darken
 } from '@material-ui/core';
-import { Pagination } from '@material-ui/lab';
 import ItemCard from '../../components/ItemCard';
+import Pagination from '../../components/Pagination';
 import Category from "./Category";
-
-const theme = createMuiTheme({
-  overrides: {
-    MuiPagination: {
-      root: {
-        display: 'flex',
-        justifyContent: 'center',
-        padding: `30px 0px 10px 0px`,
-      },
-    },
-    MuiPaginationItem: {
-      root: {
-        color: '#25274D',
-      },
-      page: {
-        '&:hover, &.Mui-focusVisible': {
-          backgroundColor: '#5CDB94',
-        },
-        '&.Mui-selected': {
-          backgroundColor: '#5CDB94',
-          '&:hover, &.Mui-focusVisible': {
-            backgroundColor: `${darken('#5CDB94', .15)} !important`,
-          }
-        },
-      },
-    },
-  }
-});
 
 const useStyle = makeStyles(theme => ({
   pageTitle: {
@@ -117,16 +86,9 @@ const Courses = (props) => {
               }
             </Grid>
             <Grid item xs={12}>
-              <ThemeProvider theme={theme}>
-                <Pagination
-                  className={classes.pagination}
-                  classes={{ ul: classes.paginationItem }}
-                  count={10}
-                  size="large"
-                  showFirstButton
-                  showLastButton
-                />
-              </ThemeProvider>
+              <Pagination
+                count={10}
+              />
             </Grid>
           </Grid>
         </Grid>

@@ -1,13 +1,12 @@
 import React from 'react';
 import {
-  InputBase,
   Button,
   Box,
   makeStyles,
   Divider,
-  FormHelperText,
   darken,
 } from '@material-ui/core';
+import FormField from './FormField';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { NavLink } from 'react-router-dom';
@@ -73,58 +72,49 @@ const LoginForm = ({ handleDialog }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Box className={classes.formField}>
-        <InputBase
-          className={classes.formInput}
-          name="email"
-          inputProps={{ maxLength: 100 }}
-          placeholder="Email"
-          type="email"
-          inputRef={register({
-            required: {
-              value: true,
-              message: "This field is required"
-            },
-            pattern: {
-              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-              message: "Please enter valid email"
-            }, maxLength: {
-              value: 100,
-              message: "Please enter no more than 100 characters"
-            }
-          })}
-          fullWidth
-        />
-        <FormHelperText error>
-          {errors.email && errors.email.message}
-        </FormHelperText>
-      </Box>
-      <Box className={classes.formField}>
-        <InputBase
-          className={classes.formInput}
-          name="password"
-          inputProps={{ maxLength: 20 }}
-          placeholder="Password"
-          type="password"
-          inputRef={register({
-            required: {
-              value: true,
-              message: "This field is required"
-            },
-            minLength: {
-              value: 8,
-              message: "Password should be atleast 8 characters long"
-            },
-            maxLength: {
-              value: 20,
-              message: "Please enter no more than 20 characters"
-            }
-          })}
-          fullWidth />
-        <FormHelperText error>
-          {errors.password && errors.password.message}
-        </FormHelperText>
-      </Box>
+      <FormField
+        key="email"
+        type="email"
+        name="email"
+        placeholder="Email"
+        inputProps={{ maxLength: 100 }}
+        validate={register({
+          required: {
+            value: true,
+            message: "This field is required"
+          },
+          pattern: {
+            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+            message: "Please enter valid email"
+          }, maxLength: {
+            value: 100,
+            message: "Please enter no more than 100 characters"
+          }
+        })}
+        errors={errors}
+      />
+      <FormField
+        key="password"
+        type="password"
+        name="password"
+        placeholder="Password"
+        inputProps={{ maxLength: 20 }}
+        validate={register({
+          required: {
+            value: true,
+            message: "This field is required"
+          },
+          minLength: {
+            value: 8,
+            message: "Password should be atleast 8 characters long"
+          },
+          maxLength: {
+            value: 20,
+            message: "Please enter no more than 20 characters"
+          }
+        })}
+        errors={errors}
+      />
       <NavLink className={classes.link} exact to="/forgotpassword" onClick={() => handleDialog('login', false)}>Forgot Password?</NavLink>
       <Button className={classes.formButton} type="submit" fullWidth>Log In</Button>
       <Divider />
@@ -133,10 +123,7 @@ const LoginForm = ({ handleDialog }) => {
         <NavLink
           className={classes.link}
           exact
-          to={{
-            pathname: "/register",
-            state: { modal: true },
-          }}
+          to="/register"
           onClick={handleClick}
         >
           Sing Up

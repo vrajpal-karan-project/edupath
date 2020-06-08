@@ -6,7 +6,7 @@ import {
   Typography,
   makeStyles,
 } from '@material-ui/core';
-import RegistrationForm from '../../components/RegistrationForm';
+import SignUpForm from '../../components/SignUpForm';
 
 const useStyle = makeStyles(theme => ({
   container: {
@@ -22,7 +22,7 @@ const useStyle = makeStyles(theme => ({
   },
 }));
 
-const Register = () => {
+const SignUp = () => {
   const classes = useStyle();
 
   return (
@@ -31,9 +31,9 @@ const Register = () => {
         <Grid xs={12} sm={8} md={6} lg={5}>
           <Paper className={classes.paper} elevation={4}>
             <Typography className={classes.title} variant="h5">
-              Register
+              SignUp
             </Typography>
-            <RegistrationForm />
+            <SignUpForm />
           </Paper>
         </Grid>
       </Grid>
@@ -41,4 +41,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default SignUp;

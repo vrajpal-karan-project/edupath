@@ -6,13 +6,13 @@ import Header from '../components/Header';
 import Drawer from '../components/Drawer';
 import Footer from '../components/Footer';
 
-import Register from './Register/Register';
+import SignUp from './SignUp/SignUp';
 import Login from './Login/Login';
 import Home from './Home/Home';
 import Courses from './Courses/Courses';
 import Dialog from '../components/Dialog';
 import LoginForm from '../components/LoginForm';
-import RegistrationForm from '../components/RegistrationForm';
+import SignUpForm from '../components/SignUpForm';
 import CourseDetail from './CourseDetail/CourseDetail';
 import Account from './Account/Account';
 
@@ -52,17 +52,17 @@ export const Layout = () => {
         onClose={() => handleDialog('login', false)}
       />
       <Dialog
-        title="Register"
-        content={<RegistrationForm handleDialog={handleDialog} />}
-        open={Boolean(dialog['register'])}
-        onClose={() => handleDialog('register', false)}
+        title="SignUp"
+        content={<SignUpForm handleDialog={handleDialog} />}
+        open={Boolean(dialog['signup'])}
+        onClose={() => handleDialog('signup', false)}
       />
       <Switch>
         <Route exact path="/login">
           <Login />
         </Route>
-        <Route exact path="/register">
-          <Register />
+        <Route exact path="/signup">
+          <SignUp />
         </Route>
         <Route exact path={["/", "/home"]}>
           <Home />

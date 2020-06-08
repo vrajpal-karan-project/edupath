@@ -123,7 +123,7 @@ const LoginForm = ({ handleDialog }) => {
         <NavLink
           className={classes.link}
           exact
-          to="/register"
+          to="/signup"
           onClick={handleClick}
         >
           Sing Up

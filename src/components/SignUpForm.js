@@ -44,7 +44,7 @@ const useStyle = makeStyles(theme => ({
   },
 }));
 
-const RegistrationForm = ({ handleDialog }) => {
+const SignUpForm = ({ handleDialog }) => {
   const classes = useStyle();
 
   const { register, handleSubmit, errors } = useForm();
@@ -145,4 +145,4 @@ const RegistrationForm = ({ handleDialog }) => {
   );
 };
 
-export default RegistrationForm;
+export default SignUpForm;

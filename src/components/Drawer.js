@@ -141,7 +141,7 @@ const Drawer = ({ drawer, setDrawer, handleDialog }) => {
                   </ListItemIcon>
                   <ListItemText>Log In</ListItemText>
                 </ListItem>
-                <ListItem component={NavLink} exact to="/register" onClick={(e) => handleClick(e, 'register')}>
+                <ListItem component={NavLink} exact to="/signup" onClick={(e) => handleClick(e, 'signup')}>
                   <ListItemIcon>
                     <span className="fa fa-plus-square"></span>
                   </ListItemIcon>

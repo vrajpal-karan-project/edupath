@@ -403,10 +403,10 @@ const Header = ({ setDrawer, searching, setSearching, isAuthenticated, handleDia
                       </Button>
                       <Button
                         className={classes.signUpButton}
-                        onClick={(e) => handleClick(e, 'register')}
+                        onClick={(e) => handleClick(e, 'signup')}
                         component={NavLink}
                         exact
-                        to="/register"
+                        to="/signup"
                       >
                         Sign Up
                       </Button>

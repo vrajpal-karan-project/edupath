@@ -179,7 +179,7 @@ const ItemCard = ({ tilt, tooltip, index, course }) => {
 
     <div className={`tooltip ${classes.tooltip}`}>
       {tooltip && <span className={`tooltiptext ${(index + 1) % 3 === 0 ? "left" : "right"}placement`}>{tooltipContent}</span>}
-      <Link to={`/courses/${course.id}`} style={{ textDecoration: "none" }}>
+      <Link to={`/course/${course.id}`} style={{ textDecoration: "none" }}>
         <Tilt
           className={`Tilt ${classes.Card}`}
           options={{

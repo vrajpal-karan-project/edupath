@@ -105,132 +105,133 @@ const AddUser = ({ baseUrl }) => {
 
   return (
     <Grid container justify="center">
-      <Grid item xs={12} container justify="center">
-        <Box className={classes.title}>User Management</Box>
-      </Grid>
-      <Grid item xs={12} sm={10} md={8} lg={6}>
+      <Grid item xs={12}>
         <Paper className={classes.body} elevation={4}>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Box className={classes.formTitle}>
-              {type} User
-            </Box>
-            <Divider />
-            <Box className={classes.formBody}>
-              <FormField
-                key="avatar"
-                type="file"
-                name="avatar"
-                selectedAvatar={selectedAvatar}
-                handleUpload={handleUpload}
-                handleRemove={handleRemove}
-                errors={errors}
-              />
-              <FormField
-                key="name"
-                name="fullname"
-                placeholder="Full Name"
-                inputProps={{ maxLength: 40 }}
-                validate={register({
-                  required: {
-                    value: true,
-                    message: "This field is required"
-                  },
-                  maxLength: {
-                    value: 40, message: "Please enter no more than 40 characters"
-                  }
-                })}
-                errors={errors}
-              />
-              <FormField
-                key="email"
-                type="email"
-                name="email"
-                placeholder="Email"
-                inputProps={{ maxLength: 100 }}
-                validate={register({
-                  required: {
-                    value: true,
-                    message: "This field is required"
-                  },
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                    message: "Please enter valid email"
-                  }, maxLength: {
-                    value: 100,
-                    message: "Please enter no more than 100 characters"
-                  }
-                })}
-                errors={errors}
-              />
-              <FormField
-                key="password"
-                type="password"
-                name="password"
-                placeholder="Password"
-                inputProps={{ maxLength: 20 }}
-                validate={register({
-                  required: {
-                    value: true,
-                    message: "This field is required"
-                  },
-                  minLength: {
-                    value: 8,
-                    message: "Password should be atleast 8 characters long"
-                  },
-                  maxLength: {
-                    value: 20,
-                    message: "Please enter no more than 20 characters"
-                  }
-                })}
-                errors={errors}
-              />
-              <FormField
-                key="role"
-                type="radio"
-                inline={true}
-                name="role"
-                values={[
-                  { label: "Student", value: "student" },
-                  { label: "Instructor", value: "instructor" }
-                ]}
-                validate={register({
-                  required: {
-                    value: true,
-                    message: "This field is required",
-                  },
-                })}
-                errors={errors}
-              />
-              <FormField
-                key="about"
-                multiline={true}
-                rows={4}
-                name="about"
-                placeholder="About"
-                inputProps={{ maxLength: 150 }}
-                validate={register({
-                  minLength: {
-                    value: 5,
-                    message: "About should be atleast 5 characters long"
-                  },
-                  maxLength: {
-                    value: 150,
-                    message: "Please enter no more than 150 characters"
-                  }
-                })}
-                errors={errors}
-              />
-            </Box>
-            <Divider />
-            <Grid className={classes.formFooter} container justify="space-around">
-              <Grid item>
-                <Button className={classes.submitButton} type="submit">{type}</Button>
-              </Grid>
-              <Grid item>
-                <Button className={classes.cancelButton} component={NavLink} to={`${baseUrl}/users`}>Cancel</Button>
-              </Grid>
+          <Grid container justify="center">
+            <Grid item xs={12} sm={10} md={8} lg={6}>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <Box className={classes.formTitle}>
+                  {type} User
+                </Box>
+                <Divider />
+                <Box className={classes.formBody}>
+                  <FormField
+                    key="avatar"
+                    type="file"
+                    name="avatar"
+                    selectedAvatar={selectedAvatar}
+                    handleUpload={handleUpload}
+                    handleRemove={handleRemove}
+                    errors={errors}
+                  />
+                  <FormField
+                    key="name"
+                    name="fullname"
+                    placeholder="Full Name"
+                    inputProps={{ maxLength: 40 }}
+                    validate={register({
+                      required: {
+                        value: true,
+                        message: "This field is required"
+                      },
+                      maxLength: {
+                        value: 40, message: "Please enter no more than 40 characters"
+                      }
+                    })}
+                    errors={errors}
+                  />
+                  <FormField
+                    key="email"
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    inputProps={{ maxLength: 100 }}
+                    validate={register({
+                      required: {
+                        value: true,
+                        message: "This field is required"
+                      },
+                      pattern: {
+                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                        message: "Please enter valid email"
+                      }, maxLength: {
+                        value: 100,
+                        message: "Please enter no more than 100 characters"
+                      }
+                    })}
+                    errors={errors}
+                  />
+                  <FormField
+                    key="password"
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    inputProps={{ maxLength: 20 }}
+                    validate={register({
+                      required: {
+                        value: true,
+                        message: "This field is required"
+                      },
+                      minLength: {
+                        value: 8,
+                        message: "Password should be atleast 8 characters long"
+                      },
+                      maxLength: {
+                        value: 20,
+                        message: "Please enter no more than 20 characters"
+                      }
+                    })}
+                    errors={errors}
+                  />
+                  <FormField
+                    key="role"
+                    type="radio"
+                    inline={true}
+                    name="role"
+                    values={[
+                      { label: "Student", value: "student" },
+                      { label: "Instructor", value: "instructor" }
+                    ]}
+                    validate={register({
+                      required: {
+                        value: true,
+                        message: "This field is required",
+                      },
+                    })}
+                    errors={errors}
+                  />
+                  <FormField
+                    key="about"
+                    multiline={true}
+                    rows={4}
+                    name="about"
+                    placeholder="About"
+                    inputProps={{ maxLength: 150 }}
+                    validate={register({
+                      minLength: {
+                        value: 5,
+                        message: "About should be atleast 5 characters long"
+                      },
+                      maxLength: {
+                        value: 150,
+                        message: "Please enter no more than 150 characters"
+                      }
+                    })}
+                    errors={errors}
+                  />
+                </Box>
+                <Divider />
+                <Grid className={classes.formFooter} container justify="space-around">
+                  <Grid item>
+                    <Button className={classes.submitButton} type="submit">{type}</Button>
+                  </Grid>
+                  <Grid item>
+                    <Button className={classes.cancelButton} component={NavLink} to={`${baseUrl}/users`}>Cancel</Button>
+                  </Grid>
+                </Grid>
+              </form>
             </Grid>
-          </form>
+          </Grid>
         </Paper>
       </Grid>
     </Grid>

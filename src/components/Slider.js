@@ -15,10 +15,20 @@ const useStyle = makeStyles(theme => ({
     boxShadow: theme.shadows[1],
     padding: 0,
     margin: `0px ${theme.spacing(1)}px`,
-    height: theme.spacing(3),
-    width: theme.spacing(3),
+    height: theme.spacing(5.25),
+    width: theme.spacing(5.25),
     color: '#5CDB94',
     backgroundColor: theme.palette.background.paper,
+    '&.arrowLeft': {
+      paddingRight: 2,
+    },
+    '&.arrowRight': {
+      paddingLeft: 2,
+    },
+    '&.fa': {
+      display: 'block',
+      textAlign: 'center',
+    },
     [theme.breakpoints.down("sm")]: {
       display: 'none',
     },
@@ -88,11 +98,11 @@ const Slider = ({ children }) => {
     ],
     appendDots: dots => (
       <div>
-        <IconButton className={classes.sliderArrowBtn} onClick={() => slider.current.slickPrev()}>
+        <IconButton className={`${classes.sliderArrowBtn} arrowLeft`} onClick={() => slider.current.slickPrev()}>
           <span className="fa fa-angle-left" />
         </IconButton>
         <ul> {dots} </ul>
-        <IconButton className={classes.sliderArrowBtn} onClick={() => slider.current.slickNext()}>
+        <IconButton className={`${classes.sliderArrowBtn} arrowRight`} onClick={() => slider.current.slickNext()}>
           <span className="fa fa-angle-right" />
         </IconButton>
       </div>

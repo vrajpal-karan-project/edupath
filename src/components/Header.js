@@ -209,7 +209,7 @@ const useStyle = makeStyles(theme => ({
   },
 }));
 
-const Header = ({ setDrawer, searching, setSearching, handleDialog, isAuthenticated }) => {
+const Header = ({ setDrawer, searching, setSearching, isAuthenticated, handleDialog }) => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.only('xs'));
 
@@ -224,6 +224,11 @@ const Header = ({ setDrawer, searching, setSearching, handleDialog, isAuthentica
   const handleMenuClose = () => {
     setMenuAnchorEl({});
   };
+
+  const handleClick = (event, type) => {
+    handleDialog(type);
+    event.preventDefault();
+  }
 
   return (
     <ThemeProvider theme={newTheme}>
@@ -386,8 +391,25 @@ const Header = ({ setDrawer, searching, setSearching, handleDialog, isAuthentica
                     </>
                     :
                     <>
-                      <Button color="inherit" className={`${classes.loginButton} ${classes.navItemMargin}`} onClick={() => handleDialog('login')}>Log In</Button>
-                      <Button className={classes.signUpButton} onClick={() => handleDialog('register')}>Sign Up</Button>
+                      <Button
+                        color="inherit"
+                        className={`${classes.loginButton} ${classes.navItemMargin}`}
+                        onClick={(e) => handleClick(e, 'login')}
+                        component={NavLink}
+                        exact
+                        to="/login"
+                      >
+                        Log In
+                      </Button>
+                      <Button
+                        className={classes.signUpButton}
+                        onClick={(e) => handleClick(e, 'signup')}
+                        component={NavLink}
+                        exact
+                        to="/signup"
+                      >
+                        Sign Up
+                      </Button>
                     </>
                 }
               </Grid>

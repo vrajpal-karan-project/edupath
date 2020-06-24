@@ -108,12 +108,14 @@ const AddUser = ({ baseUrl }) => {
       <Grid item xs={12}>
         <Paper className={classes.body} elevation={4}>
           <Grid container justify="center">
+            <Grid item xs={12}>
+              <Box className={classes.formTitle}>
+                {type} User
+              </Box>
+              <Divider />
+            </Grid>
             <Grid item xs={12} sm={10} md={8} lg={6}>
               <form onSubmit={handleSubmit(onSubmit)}>
-                <Box className={classes.formTitle}>
-                  {type} User
-                </Box>
-                <Divider />
                 <Box className={classes.formBody}>
                   <FormField
                     key="avatar"
@@ -220,7 +222,13 @@ const AddUser = ({ baseUrl }) => {
                     errors={errors}
                   />
                 </Box>
+              </form>
+            </Grid>
+            <Grid item container justify="center" xs={12}>
+              <Grid item xs={12}>
                 <Divider />
+              </Grid>
+              <Grid item xs={12} sm={10} md={8} lg={6}>
                 <Grid className={classes.formFooter} container justify="space-around">
                   <Grid item>
                     <Button className={classes.submitButton} type="submit">{type}</Button>
@@ -229,7 +237,7 @@ const AddUser = ({ baseUrl }) => {
                     <Button className={classes.cancelButton} component={NavLink} to={`${baseUrl}/users`}>Cancel</Button>
                   </Grid>
                 </Grid>
-              </form>
+              </Grid>
             </Grid>
           </Grid>
         </Paper>

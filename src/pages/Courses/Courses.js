@@ -16,6 +16,11 @@ const useStyle = makeStyles(theme => ({
     color: '#25274D',
     fontWeight: 'bolder',
   },
+  noBg: {
+    '&:focus': {
+      backgroundColor: 'transparent',
+    },
+  }
 }));
 
 const Courses = (props) => {
@@ -69,6 +74,7 @@ const Courses = (props) => {
                   inputProps={{ 'aria-label': 'Sort B' }}
                   onChange={handleSortBy}
                   style={{ minWidth: "18ch", textAlign: "right" }}
+                  classes={{ select: classes.noBg }}
                 >
                   <MenuItem value={"alpha"}>A-Z</MenuItem>
                   <MenuItem value={"date"}>Date Uploaded</MenuItem>

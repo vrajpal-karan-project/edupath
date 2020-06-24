@@ -39,7 +39,7 @@ const newTheme = createMuiTheme({
         '&:hover': {
           '& [class*="courseNestedMenu"]': {
             zIndex: defaultTheme.zIndex.appBar + 1,
-            boxShadow: '-3px 3px 7px #CCC',
+            boxShadow: '-3px 3px 7px #222',
             backgroundColor: defaultTheme.palette.background.paper,
             display: 'block',
             position: 'absolute',
@@ -85,7 +85,7 @@ const useStyle = makeStyles(theme => ({
   dropdownPopper: {
     zIndex: theme.zIndex.appBar + 1,
     backgroundColor: 'white',
-    boxShadow: '2px 3px 7px #CCC',
+    boxShadow: '2px 3px 7px #222',
     '& .fa': {
       marginLeft: theme.spacing(2),
     },

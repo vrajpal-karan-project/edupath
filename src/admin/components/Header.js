@@ -46,9 +46,6 @@ const useStyle = makeStyles(theme => ({
       zIndex: theme.zIndex.drawer + 1,
     },
   },
-  grow: {
-    flexGrow: 1,
-  },
   drawerButton: {
     marginRight: theme.spacing(2),
   },
@@ -75,7 +72,8 @@ const useStyle = makeStyles(theme => ({
 
 const Header = ({ baseUrl, setDrawer }) => {
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.only('xs'));
+  const xs = useMediaQuery(theme.breakpoints.only('xs'));
+  const sm = useMediaQuery(theme.breakpoints.only('sm'));
 
   const classes = useStyle();
 
@@ -92,8 +90,8 @@ const Header = ({ baseUrl, setDrawer }) => {
   return (
     <ThemeProvider theme={newTheme}>
       <AppBar position="sticky" className={classes.header}>
-        <Toolbar variant={matches ? "dense" : "regular"}>
-          <Grid container alignItems="center">
+        <Toolbar variant={xs ? "dense" : "regular"}>
+          <Grid container justify={sm || xs ? "flex-start" : "space-between"} alignItems="center">
             <Hidden mdUp>
               <Grid item>
                 <IconButton edge="start" color="inherit" className={classes.drawerButton} onClick={() => setDrawer(true)}>
@@ -103,7 +101,7 @@ const Header = ({ baseUrl, setDrawer }) => {
             </Hidden>
             <Grid item className={classes.grow}>
               <NavLink exact to={`${baseUrl}`}>
-                <img className={classes.logo} src={logo} alt="logo" height={matches ? 48 : 64} />
+                <img className={classes.logo} src={logo} alt="logo" height={xs ? 48 : 64} />
               </NavLink>
             </Grid>
             <Hidden smDown>

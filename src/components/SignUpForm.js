@@ -6,8 +6,8 @@ import {
   Divider,
   darken
 } from '@material-ui/core';
+import { Alert, AlertTitle } from '@material-ui/lab';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
 import { NavLink } from 'react-router-dom';
 import FormField from './FormField';
 import { signup } from "../helper/auth.helper";
@@ -43,13 +43,18 @@ const useStyle = makeStyles(theme => ({
     textAlign: 'center',
     color: '#25274D',
   },
+  formMessage: {
+    marginBottom: theme.spacing(2),
+  }
 }));
 
 const SignUpForm = ({ handleDialog }) => {
   const classes = useStyle();
 
   const { register, handleSubmit, errors } = useForm();
-  let serverErrors = {};
+
+  const [message, setMessage] = React.useState({ serverErrors: "", success: false });
+  const { serverErrors, success } = message;
 
   const onSubmit = data => {
     // axios({
@@ -65,10 +70,17 @@ const SignUpForm = ({ handleDialog }) => {
     signup(data).then(response => {
       console.log("Response:", response);
       if (response.errors) {
-        serverErrors = response.errors;  
+        setMessage({
+          serverErrors: response.errors,
+          success: false
+        });
         // getting serverErrors.email when duplicate eamail is passed, So have to display it properly as well as success message
         console.log("Errors in signup:", response.errors);
       } else {
+        setMessage({
+          serverErrors: "",
+          success: true
+        });
         console.log("succeswsfully signedUp");
       }
     }).catch(err => console.log("ERROR IN SIGNUP", err));
@@ -80,10 +92,33 @@ const SignUpForm = ({ handleDialog }) => {
       handleDialog('login');
       event.preventDefault();
     }
-  }
+  };
+
+  const SuccessMessage = () => (
+    <Alert severity="success" className={classes.formMessage} style={{ display: success ? "" : "none" }}>
+      <AlertTitle>Success</AlertTitle>
+         Your new account has been created - Please&nbsp;<strong><NavLink to="/login">Login&nbsp;Here</NavLink> </strong>
+    </Alert>
+  );
+
+  const ErrorMessage = ({ errors }) => (
+    <Alert severity="error" className={classes.formMessage} style={{ display: errors.email || errors.fullname || errors.password ? "" : "none" }}>
+      <AlertTitle>Error in Creating new account !</AlertTitle>
+      <strong>
+        <div>{errors.fullname}</div>
+        <div>{errors.email}</div>
+        <div>{errors.password}</div>
+      </strong>
+    </Alert>
+  );
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+
+      <SuccessMessage />
+
+      <ErrorMessage errors={serverErrors} />
+
       <FormField
         key="name"
         name="fullname"

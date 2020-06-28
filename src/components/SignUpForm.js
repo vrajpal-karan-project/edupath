@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { NavLink } from 'react-router-dom';
 import FormField from './FormField';
+import { signup } from "../helper/auth.helper";
 
 const useStyle = makeStyles(theme => ({
   formField: {
@@ -48,18 +49,30 @@ const SignUpForm = ({ handleDialog }) => {
   const classes = useStyle();
 
   const { register, handleSubmit, errors } = useForm();
+  let serverErrors = {};
 
   const onSubmit = data => {
-    axios({
-      method: 'POST',
-      url: '/api/signup',
-      data,
-      responseType: 'JSON'
-    }).then((response) => {
-      console.log(response);
-    }).catch((error) => {
-      console.log(error);
-    });
+    // axios({
+    //   method: 'POST',
+    //   url: '/api/signup',
+    //   data,
+    //   responseType: 'JSON'
+    // }).then((response) => {
+    //   console.log(response);
+    // }).catch((error) => {
+    //   console.log(error);
+    // });
+    signup(data).then(response => {
+      console.log("Response:", response);
+      if (response.errors) {
+        serverErrors = response.errors;  
+        // getting serverErrors.email when duplicate eamail is passed, So have to display it properly as well as success message
+        console.log("Errors in signup:", response.errors);
+      } else {
+        console.log("succeswsfully signedUp");
+      }
+    }).catch(err => console.log("ERROR IN SIGNUP", err));
+
   };
 
   const handleClick = (event) => {

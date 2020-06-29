@@ -26,7 +26,8 @@ import {
   Backdrop,
 } from '@material-ui/core';
 import logo from '../assets/logo.png';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
+import { logout } from '../helper/auth.helper';
 
 const defaultTheme = createMuiTheme();
 
@@ -209,7 +210,7 @@ const useStyle = makeStyles(theme => ({
   },
 }));
 
-const Header = ({ setDrawer, searching, setSearching, isAuthenticated, handleDialog }) => {
+const Header = ({ setDrawer, searching, setSearching, handleDialog, isAuthenticated }) => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.only('xs'));
 
@@ -346,7 +347,7 @@ const Header = ({ setDrawer, searching, setSearching, isAuthenticated, handleDia
                   Instructors
                 </NavLink>
                 {
-                  isAuthenticated
+                  isAuthenticated()
                     ?
                     <>
                       <Button
@@ -371,20 +372,18 @@ const Header = ({ setDrawer, searching, setSearching, isAuthenticated, handleDia
                             <ListItem component={NavLink} exact to="/mycourses" onClick={handleMenuClose}>
                               <ListItemText primary="My Courses" />
                             </ListItem>
-                            {
-                              true
-                                ?
-                                <ListItem component={NavLink} exact to="/becomeaninstructor" onClick={handleMenuClose}>
-                                  <ListItemText primary="Beacome an Instructor" />
-                                </ListItem>
-                                :
-                                <ListItem component={NavLink} exact to="/uploadcourse" onClick={handleMenuClose}>
-                                  <ListItemText primary="Upload New Course" />
-                                </ListItem>
+                            {(isAuthenticated().user.role === 0) ?
+                              <ListItem component={NavLink} exact to="/becomeaninstructor" onClick={handleMenuClose}>
+                                <ListItemText primary="Beacome an Instructor" />
+                              </ListItem>
+                              : <ListItem component={NavLink} exact to="/uploadcourse" onClick={handleMenuClose}>
+                                <ListItemText primary="Upload New Course" />
+                              </ListItem>
                             }
-                            <ListItem component="a" href="/api/logout">
+                            <ListItem onClick={() => logout(() => { handleMenuClose(); return <Redirect to="/" /> })} >
                               <ListItemText primary="Logout" />
                             </ListItem>
+
                           </List>
                         </ClickAwayListener>
                       </Popper>

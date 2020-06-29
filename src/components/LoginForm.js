@@ -6,10 +6,11 @@ import {
   Divider,
   darken,
 } from '@material-ui/core';
+import { Alert, AlertTitle } from '@material-ui/lab';
 import FormField from './FormField';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
+import { login, authenticate, isAuthenticated } from '../helper/auth.helper';
 
 const useStyle = makeStyles(theme => ({
   formField: {
@@ -43,6 +44,9 @@ const useStyle = makeStyles(theme => ({
     textAlign: 'center',
     color: '#25274D',
   },
+  formMessage: {
+    marginBottom: theme.spacing(2),
+  }
 }));
 
 const LoginForm = ({ handleDialog }) => {
@@ -50,17 +54,32 @@ const LoginForm = ({ handleDialog }) => {
 
   const { register, handleSubmit, errors } = useForm();
 
+  const [message, setMessage] = React.useState({ serverErrors: "", loading: false, success: false });
+  const { serverErrors, loading, success } = message;
+  const { user } = isAuthenticated();
+
   const onSubmit = data => {
-    axios({
-      method: 'POST',
-      url: '/api/login',
-      data,
-      responseType: 'JSON'
-    }).then((response) => {
-      console.log(response);
-    }).catch((error) => {
-      console.log(error);
-    });
+    setMessage({ ...message, serverErrors: false, loading: true });
+    login(data).then(response => {
+      console.log("Response:", response);
+      if (response.errors) {
+        setMessage({
+          serverErrors: response.errors,
+          loading: false,
+        });
+        // getting serverErrors.email when duplicate eamail is passed, So have to display it properly as well as success message
+        console.log("Errors in Login:", response.errors);
+      } else {
+        authenticate(response, () => {
+          setMessage({
+            serverErrors: "",
+            success: true
+          });
+          handleDialog("login", false);
+          console.log("successfully LoggedIn");
+        });
+      }
+    }).catch(err => console.log("LogIn REQ Failed", err));
   };
 
   const handleClick = (event) => {
@@ -68,10 +87,55 @@ const LoginForm = ({ handleDialog }) => {
       handleDialog('register');
       event.preventDefault();
     }
-  }
+  };
 
-  return (
+  const performRedirect = () => {
+    if (success) {
+      if (user && user.role === 2) {
+        return <Redirect to="/admin" />
+      }
+      else {
+        return <Redirect to="/profile" />
+      }
+    }
+    if (isAuthenticated()) {
+      return <Redirect to="/" />;
+    }
+  };
+
+  const SuccessMessage = () => (
+    <Alert severity="success" className={classes.formMessage} style={{ display: success ? "" : "none" }}>
+      <AlertTitle>LoggedIn succesfully</AlertTitle>
+         Redirecting to <strong><NavLink to="/home">HomePage</NavLink> </strong>
+    </Alert>
+  );
+
+  const ErrorMessage = ({ errors }) => (
+    <Alert severity="error" className={classes.formMessage} style={{ display: errors.email || errors.password ? "" : "none" }}>
+      <AlertTitle>Log in Failed !</AlertTitle>
+      <strong>
+        <div>{errors.email}</div>
+        <div>{errors.password}</div>
+      </strong>
+    </Alert>
+  );
+
+  const LoadingMessage = () => (
+    <Alert variant="outlined" severity="info" className={classes.formMessage} style={{ display: loading ? "" : "none" }}>
+      Logging In...
+    </Alert>
+  );
+
+
+  return (<>
     <form onSubmit={handleSubmit(onSubmit)}>
+
+      <LoadingMessage />
+
+      <SuccessMessage />
+
+      <ErrorMessage errors={serverErrors} />
+
       <FormField
         key="email"
         type="email"
@@ -130,6 +194,7 @@ const LoginForm = ({ handleDialog }) => {
         </NavLink>
       </Box>
     </form>
+    {performRedirect()}</>
   );
 };
 

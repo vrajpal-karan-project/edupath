@@ -20,3 +20,36 @@ export const signup = data => {
     //         console.log(err);
     //     });
 };
+
+
+export const login = user => {
+    return axios.post(routes.login, user).then(res => res.data).catch(err => err.response.data);
+};
+
+export const authenticate = (data, next) => {
+    if (typeof window !== "undefined") {
+        localStorage.setItem("jwt", JSON.stringify(data));
+        next();
+    }
+};
+
+export const logout = next => {
+    if (typeof window !== "undefined") {
+        localStorage.removeItem("jwt");
+        next();
+
+        return axios.get(routes.logout)
+            .then(res => console.log("Logged Out successfully", res))
+            .catch(err => console.log(err));
+    }
+};
+
+export const isAuthenticated = () => {
+    if (typeof window == "undefined") {
+        return false;
+    }
+    if (localStorage.getItem("jwt")) {
+        return JSON.parse(localStorage.getItem("jwt"));
+    }
+    else { return false; }
+};

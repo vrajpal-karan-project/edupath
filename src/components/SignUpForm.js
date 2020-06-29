@@ -51,7 +51,7 @@ const useStyle = makeStyles(theme => ({
 const SignUpForm = ({ handleDialog }) => {
   const classes = useStyle();
 
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, errors, reset } = useForm();
 
   const [message, setMessage] = React.useState({ serverErrors: "", success: false });
   const { serverErrors, success } = message;
@@ -77,11 +77,13 @@ const SignUpForm = ({ handleDialog }) => {
         // getting serverErrors.email when duplicate eamail is passed, So have to display it properly as well as success message
         console.log("Errors in signup:", response.errors);
       } else {
+        reset();
         setMessage({
           serverErrors: "",
           success: true
         });
-        console.log("succeswsfully signedUp");
+        setTimeout(() => handleDialog('signup', false), 2000);
+        console.log("successfully signedUp");
       }
     }).catch(err => console.log("ERROR IN SIGNUP", err));
 

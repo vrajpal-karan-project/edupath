@@ -8,9 +8,11 @@ import {
   Button,
   Paper
 } from '@material-ui/core';
+import { Alert, AlertTitle } from '@material-ui/lab';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
 import FormField from '../../../components/FormField';
+import { changePassword } from '../../../service/user.service';
+import { isAuthenticated } from '../../../service/auth.service';
 
 const useStyle = makeStyles(theme => ({
   formTitle: {
@@ -40,37 +42,86 @@ const useStyle = makeStyles(theme => ({
       border: `2px solid ${darken('#5CDB94', 0.3)}`,
     }
   },
+  formMessage: {
+    marginBottom: theme.spacing(2),
+  }
 }));
 
 const ChangePassword = () => {
   const classes = useStyle();
 
-  const { register, handleSubmit, errors } = useForm();
+  const { user, token } = isAuthenticated();
+
+  const { register, handleSubmit, errors, reset } = useForm();
+
+  const [message, setMessage] = React.useState({ serverErrors: "", loading: false, success: false });
+  const { serverErrors, loading, success } = message;
 
   const onSubmit = data => {
-    axios({
-      method: 'POST',
-      url: '/api/signup',
-      data,
-      responseType: 'JSON'
-    }).then((response) => {
-      console.log(response);
-    }).catch((error) => {
-      console.log(error);
-    });
+    setMessage({ ...message, serverErrors: false, loading: true });
+
+    changePassword(user._id, token, data)
+      .then(response => {
+        console.log("response:", response);
+        if (response.errors) {
+          setMessage({
+            serverErrors: response.errors,
+            loading: false,
+            success: false
+          });
+          // getting serverErrors.email when duplicate eamail is passed, So have to display it properly as well as success message
+          console.log("Errors in Changing Password:", response.errors);
+        } else {
+          reset();
+          setMessage({
+            serverErrors: "",
+            success: true
+          });
+          console.log("successfully Changed Password");
+        }
+      }).catch(err => console.error("Err in ChangePassword:", err))
   };
+
+  const resetOnChange = event => {
+    const { name } = event.target;
+    serverErrors[name] && serverErrors[name].length && setMessage({ message, serverErrors: { serverErrors, [name]: "" } });
+  }
+
+  const SuccessMessage = () => (
+    <Alert severity="success" className={classes.formMessage} style={{ display: success ? "" : "none" }}>
+      <AlertTitle>Success</AlertTitle>
+         Your Password has been Changed successfully.
+    </Alert>
+  );
+
+  const ErrorMessage = ({ errors }) => (
+    <Alert severity="error" className={classes.formMessage} style={{ display: errors.old_password || errors.password ? "" : "none" }}>
+      <AlertTitle>Failed To Change Password&nbsp;!</AlertTitle>
+      <strong>
+        <div>{errors.old_password}</div>
+        <div>{errors.password}</div>
+      </strong>
+    </Alert>
+  );
+
 
   return (
     <Grid item md={6} sm={12} xs={12}>
       <Paper elevation={4}>
         <form onSubmit={handleSubmit(onSubmit)}>
+
           <Box className={classes.formTitle}>Change Password</Box>
           <Divider />
+
           <Box className={classes.formBody}>
+
+            <SuccessMessage />
+            <ErrorMessage errors={serverErrors} />
+
             <FormField
-              key="password"
+              key="old_password"
               type="password"
-              name="oldPassword"
+              name="old_password"
               placeholder="Old Password"
               inputProps={{ maxLength: 20 }}
               validate={register({
@@ -88,11 +139,13 @@ const ChangePassword = () => {
                 }
               })}
               errors={errors}
+              serverErrors={serverErrors}
+              resetOnChange={resetOnChange}
             />
             <FormField
               key="password"
               type="password"
-              name="newPassword"
+              name="password"
               placeholder="New Password"
               inputProps={{ maxLength: 20 }}
               validate={register({
@@ -110,12 +163,14 @@ const ChangePassword = () => {
                 }
               })}
               errors={errors}
+              serverErrors={serverErrors}
+              resetOnChange={resetOnChange}
             />
           </Box>
           <Divider />
           <Grid className={classes.formFooter} container justify="space-around">
             <Grid item>
-              <Button className={classes.submitButton} type="submit">Update</Button>
+              <Button className={classes.submitButton} type="submit">{loading ? "Updating..." : "Update"}</Button>
             </Grid>
           </Grid>
         </form>

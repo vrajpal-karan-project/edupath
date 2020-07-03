@@ -15,7 +15,7 @@ import LoginForm from '../components/LoginForm';
 import SignUpForm from '../components/SignUpForm';
 import CourseDetail from './CourseDetail/CourseDetail';
 import Account from './Account/Account';
-import { isAuthenticated } from "../helper/auth.helper";
+import { isAuthenticated } from "../service/auth.service";
 
 const useStyle = makeStyles(theme => ({
   root: {

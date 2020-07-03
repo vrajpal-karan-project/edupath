@@ -26,8 +26,8 @@ import {
   Backdrop,
 } from '@material-ui/core';
 import logo from '../assets/logo.png';
-import { NavLink, Redirect } from 'react-router-dom';
-import { logout } from '../helper/auth.helper';
+import { NavLink } from 'react-router-dom';
+import { logout } from '../service/auth.service';
 
 const defaultTheme = createMuiTheme();
 
@@ -380,7 +380,7 @@ const Header = ({ setDrawer, searching, setSearching, handleDialog, isAuthentica
                                 <ListItemText primary="Upload New Course" />
                               </ListItem>
                             }
-                            <ListItem onClick={() => logout(() => { handleMenuClose(); return <Redirect to="/" /> })} >
+                            <ListItem onClick={() => logout(() => handleMenuClose())} >
                               <ListItemText primary="Logout" />
                             </ListItem>
 

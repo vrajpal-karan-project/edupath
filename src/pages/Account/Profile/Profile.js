@@ -8,9 +8,12 @@ import {
   Box,
   Paper,
 } from '@material-ui/core';
+import { Alert, AlertTitle } from '@material-ui/lab';
 import FormField from '../../../components/FormField';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
+import { Redirect } from 'react-router-dom';
+import { updateUser } from '../../../service/user.service';
+import { isAuthenticated } from '../../../service/auth.service';
 
 const useStyle = makeStyles(theme => ({
   formTitle: {
@@ -60,20 +63,62 @@ const Profile = () => {
       event.preventDefault();
   }
 
-  const { register, handleSubmit, errors } = useForm();
+  const { user, token } = isAuthenticated();
+
+  const { register, handleSubmit, errors, reset } = useForm();
+
+  const [message, setMessage] = React.useState({ serverErrors: "", loading: false, success: false });
+  const { serverErrors, loading, success } = message;
 
   const onSubmit = data => {
-    axios({
-      method: 'POST',
-      url: '/api/signup',
-      data,
-      responseType: 'JSON'
-    }).then((response) => {
-      console.log(response);
-    }).catch((error) => {
-      console.log(error);
-    });
+    setMessage({ ...message, serverErrors: false, loading: true });
+
+    updateUser(user._id, token, data)
+      .then(response => {
+        console.log("Response:", response);
+        if (response.errors) {
+          setMessage({
+            serverErrors: response.errors,
+            loading: false,
+            success: false
+          });
+          // getting serverErrors.email when duplicate eamail is passed, So have to display it properly as well as success message
+          console.log("Errors in Profile Update:", response.errors);
+        } else {
+          reset();
+          setMessage({
+            serverErrors: "",
+            success: true
+          });
+          setTimeout(() => <Redirect to="/" />, 2000);
+          console.log("successfully Updated Profile");
+        }
+      }).catch(err => console.log("ERROR IN Profile Update", err));
+
   };
+
+  const resetOnChange = event => {
+    const { name } = event.target;
+    serverErrors[name] && serverErrors[name].length && setMessage({ message, serverErrors: { serverErrors, [name]: "" } });
+  }
+
+  const SuccessMessage = () => (
+    <Alert severity="success" className={classes.formMessage} style={{ display: success ? "" : "none" }}>
+      <AlertTitle>Success</AlertTitle>
+         Your Profile has been Updated.
+    </Alert>
+  );
+
+  const ErrorMessage = ({ errors }) => (
+    <Alert severity="error" className={classes.formMessage} style={{ display: errors.email || errors.fullname || errors.password ? "" : "none" }}>
+      <AlertTitle>Error in Updating the Profile&nbsp;!</AlertTitle>
+      <strong>
+        <div>{errors.fullname}</div>
+        <div>{errors.email}</div>
+        <div>{errors.password}</div>
+      </strong>
+    </Alert>
+  );
 
   return (
     <Grid item md={6} sm={12} xs={12}>
@@ -90,9 +135,12 @@ const Profile = () => {
               handleUpload={handleUpload}
               handleRemove={handleRemove}
               errors={errors}
+              serverErrors={serverErrors}
+              resetOnChange={resetOnChange}
+              defaultValue={user.avatar}
             />
             <FormField
-              key="name"
+              key="fullname"
               name="fullname"
               placeholder="Full Name"
               inputProps={{ maxLength: 40 }}
@@ -106,6 +154,9 @@ const Profile = () => {
                 }
               })}
               errors={errors}
+              serverErrors={serverErrors}
+              resetOnChange={resetOnChange}
+              defaultValue={user.fullname}
             />
             <FormField
               key="email"
@@ -127,6 +178,9 @@ const Profile = () => {
                 }
               })}
               errors={errors}
+              serverErrors={serverErrors}
+              resetOnChange={resetOnChange}
+              defaultValue={user.email}
             />
             <FormField
               key="about"
@@ -146,12 +200,15 @@ const Profile = () => {
                 }
               })}
               errors={errors}
+              serverErrors={serverErrors}
+              resetOnChange={resetOnChange}
+              defaultValue={user.about}
             />
           </Box>
           <Divider />
           <Grid className={classes.formFooter} container justify="space-around">
             <Grid item>
-              <Button className={classes.submitButton} type="submit">Update</Button>
+              <Button className={classes.submitButton} type="submit">{loading ? "Updating..." : "Update"}</Button>
             </Grid>
           </Grid>
         </form>

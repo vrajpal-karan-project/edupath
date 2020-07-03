@@ -10,7 +10,7 @@ import { Alert, AlertTitle } from '@material-ui/lab';
 import FormField from './FormField';
 import { useForm } from 'react-hook-form';
 import { NavLink, Redirect } from 'react-router-dom';
-import { login, authenticate, isAuthenticated } from '../helper/auth.helper';
+import { login, authenticate, isAuthenticated } from '../service/auth.service';
 
 const useStyle = makeStyles(theme => ({
   formField: {
@@ -57,6 +57,11 @@ const LoginForm = ({ handleDialog }) => {
   const [message, setMessage] = React.useState({ serverErrors: "", loading: false, success: false });
   const { serverErrors, loading, success } = message;
   const { user } = isAuthenticated();
+
+  const resetOnChange = event => {
+    const { name } = event.target;
+    serverErrors[name] && serverErrors[name].length && setMessage({ message, serverErrors: { serverErrors, [name]: "" } });
+  }
 
   const onSubmit = data => {
     setMessage({ ...message, serverErrors: false, loading: true });
@@ -156,6 +161,8 @@ const LoginForm = ({ handleDialog }) => {
           }
         })}
         errors={errors}
+        serverErrors={serverErrors}
+        resetOnChange={resetOnChange}
       />
       <FormField
         key="password"
@@ -178,9 +185,11 @@ const LoginForm = ({ handleDialog }) => {
           }
         })}
         errors={errors}
+        serverErrors={serverErrors}
+        resetOnChange={resetOnChange}
       />
       <NavLink className={classes.link} exact to="/forgotpassword" onClick={() => handleDialog('login', false)}>Forgot Password?</NavLink>
-      <Button className={classes.formButton} type="submit" fullWidth>Log In</Button>
+      <Button className={classes.formButton} type="submit" fullWidth disabled={loading}>Log{loading && "ging"} In</Button>
       <Divider />
       <Box className={classes.footerText}>
         Create an account?&nbsp;

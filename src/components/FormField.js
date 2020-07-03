@@ -70,7 +70,10 @@ const FormField = ({
   placeholder = "",
   inputProps = {},
   validate,
-  errors
+  errors,
+  serverErrors = {},
+  resetOnChange = () => "",
+  defaultValue = ""
 }) => {
   const classes = useStyle();
 
@@ -117,7 +120,7 @@ const FormField = ({
               </Box>
             </> :
             <InputBase
-              className={`${classes.formInput} ${errors[name] && classes.error}`}
+              className={`${classes.formInput} ${(errors[name] || serverErrors[name]) && classes.error}`}
               multiline={multiline}
               rows={rows}
               type={type}
@@ -126,10 +129,12 @@ const FormField = ({
               inputProps={inputProps}
               inputRef={validate}
               fullWidth
+              onChange={resetOnChange}
+              defaultValue={defaultValue}
             />
       }
       <FormHelperText error>
-        {(errors[name] && errors[name].message) || ' '}
+        {(errors[name] && errors[name].message) || serverErrors[name] || ' '}
       </FormHelperText>
     </Box >
   );

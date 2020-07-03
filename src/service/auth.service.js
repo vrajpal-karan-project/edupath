@@ -1,7 +1,6 @@
 import { routes } from "../backend";
 import axios from "axios";
 
-
 export const signup = data => {
 
     return axios.post(routes.signup, data).then(res => res.data).catch(err => err.response.data);
@@ -39,7 +38,7 @@ export const logout = next => {
         next();
 
         return axios.get(routes.logout)
-            .then(res => console.log("Logged Out successfully", res))
+            .then(res => console.log("Log Out:", res.data))
             .catch(err => console.log(err));
     }
 };

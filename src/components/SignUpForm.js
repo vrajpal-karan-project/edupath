@@ -10,7 +10,7 @@ import { Alert, AlertTitle } from '@material-ui/lab';
 import { useForm } from 'react-hook-form';
 import { NavLink } from 'react-router-dom';
 import FormField from './FormField';
-import { signup } from "../helper/auth.helper";
+import { signup } from "../service/auth.service";
 
 const useStyle = makeStyles(theme => ({
   formField: {
@@ -53,8 +53,8 @@ const SignUpForm = ({ handleDialog }) => {
 
   const { register, handleSubmit, errors, reset } = useForm();
 
-  const [message, setMessage] = React.useState({ serverErrors: "", success: false });
-  const { serverErrors, success } = message;
+  const [message, setMessage] = React.useState({ serverErrors: "", loading: false, success: false });
+  const { serverErrors, loading, success } = message;
 
   const onSubmit = data => {
     // axios({
@@ -67,11 +67,15 @@ const SignUpForm = ({ handleDialog }) => {
     // }).catch((error) => {
     //   console.log(error);
     // });
+
+    setMessage({ ...message, serverErrors: false, loading: true });
+
     signup(data).then(response => {
       console.log("Response:", response);
       if (response.errors) {
         setMessage({
           serverErrors: response.errors,
+          loading: false,
           success: false
         });
         // getting serverErrors.email when duplicate eamail is passed, So have to display it properly as well as success message
@@ -95,6 +99,11 @@ const SignUpForm = ({ handleDialog }) => {
       event.preventDefault();
     }
   };
+
+  const resetOnChange = event => {
+    const { name } = event.target;
+    serverErrors[name] && serverErrors[name].length && setMessage({ message, serverErrors: { serverErrors, [name]: "" } });
+  }
 
   const SuccessMessage = () => (
     <Alert severity="success" className={classes.formMessage} style={{ display: success ? "" : "none" }}>
@@ -122,7 +131,7 @@ const SignUpForm = ({ handleDialog }) => {
       <ErrorMessage errors={serverErrors} />
 
       <FormField
-        key="name"
+        key="fullname"
         name="fullname"
         placeholder="Full Name"
         inputProps={{ maxLength: 40 }}
@@ -136,6 +145,8 @@ const SignUpForm = ({ handleDialog }) => {
           }
         })}
         errors={errors}
+        serverErrors={serverErrors}
+        resetOnChange={resetOnChange}
       />
       <FormField
         key="email"
@@ -157,6 +168,8 @@ const SignUpForm = ({ handleDialog }) => {
           }
         })}
         errors={errors}
+        serverErrors={serverErrors}
+        resetOnChange={resetOnChange}
       />
       <FormField
         key="password"
@@ -179,8 +192,10 @@ const SignUpForm = ({ handleDialog }) => {
           }
         })}
         errors={errors}
+        serverErrors={serverErrors}
+        resetOnChange={resetOnChange}
       />
-      <Button className={classes.formButton} type="submit" fullWidth>Sign Up</Button>
+      <Button className={classes.formButton} type="submit" fullWidth disabled={loading}>Sign{loading && "ning"} Up</Button>
       <Divider />
       <Box className={classes.footerText}>
         Already have an account?&nbsp;

@@ -127,6 +127,10 @@ const Profile = () => {
           <Box className={classes.formTitle}>Edit Profile</Box>
           <Divider />
           <Box className={classes.formBody}>
+
+            <SuccessMessage />
+            <ErrorMessage errors={serverErrors} />
+            
             <FormField
               key="avatar"
               type="file"
@@ -153,6 +157,7 @@ const Profile = () => {
                   value: 40, message: "Please enter no more than 40 characters"
                 }
               })}
+              label="Full Name"
               errors={errors}
               serverErrors={serverErrors}
               resetOnChange={resetOnChange}
@@ -177,6 +182,7 @@ const Profile = () => {
                   message: "Please enter no more than 100 characters"
                 }
               })}
+              label="Email"
               errors={errors}
               serverErrors={serverErrors}
               resetOnChange={resetOnChange}
@@ -199,6 +205,7 @@ const Profile = () => {
                   message: "Please enter no more than 150 characters"
                 }
               })}
+              label="About"
               errors={errors}
               serverErrors={serverErrors}
               resetOnChange={resetOnChange}

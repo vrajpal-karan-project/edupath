@@ -2,13 +2,15 @@ import React from 'react';
 import {
   makeStyles,
   Box,
-  InputBase,
+  /* InputBase,
+   InputLabel,*/
   FormHelperText,
   RadioGroup,
   FormControlLabel,
   Radio,
   Avatar,
   fade,
+  TextField,
 } from '@material-ui/core';
 
 const useStyle = makeStyles(theme => ({
@@ -67,6 +69,7 @@ const FormField = ({
   handleUpload,
   handleRemove,
   name,
+  label = "",
   placeholder = "",
   inputProps = {},
   validate,
@@ -119,12 +122,15 @@ const FormField = ({
                 />
               </Box>
             </> :
-            <InputBase
-              className={`${classes.formInput} ${(errors[name] || serverErrors[name]) && classes.error}`}
+            <TextField
+              className={`${classes.formInput + "dontWannaUse"} ${(errors[name] || serverErrors[name]) && classes.error}`}
               multiline={multiline}
               rows={rows}
               type={type}
               name={name}
+              label={label}
+              error={errors[name] || serverErrors[name]}
+              variant="outlined"
               placeholder={placeholder}
               inputProps={inputProps}
               inputRef={validate}
@@ -132,6 +138,7 @@ const FormField = ({
               onChange={resetOnChange}
               defaultValue={defaultValue}
             />
+
       }
       <FormHelperText error>
         {(errors[name] && errors[name].message) || serverErrors[name] || ' '}

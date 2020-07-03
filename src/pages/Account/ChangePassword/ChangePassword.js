@@ -138,6 +138,7 @@ const ChangePassword = () => {
                   message: "Please enter no more than 20 characters"
                 }
               })}
+              label="Old Password"
               errors={errors}
               serverErrors={serverErrors}
               resetOnChange={resetOnChange}
@@ -162,6 +163,7 @@ const ChangePassword = () => {
                   message: "Please enter no more than 20 characters"
                 }
               })}
+              label="New Password"
               errors={errors}
               serverErrors={serverErrors}
               resetOnChange={resetOnChange}

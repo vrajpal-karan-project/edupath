@@ -160,6 +160,7 @@ const LoginForm = ({ handleDialog }) => {
             message: "Please enter no more than 100 characters"
           }
         })}
+        label={"Email"}
         errors={errors}
         serverErrors={serverErrors}
         resetOnChange={resetOnChange}
@@ -184,6 +185,7 @@ const LoginForm = ({ handleDialog }) => {
             message: "Please enter no more than 20 characters"
           }
         })}
+        label={"Password"}
         errors={errors}
         serverErrors={serverErrors}
         resetOnChange={resetOnChange}

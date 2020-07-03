@@ -144,6 +144,7 @@ const SignUpForm = ({ handleDialog }) => {
             value: 40, message: "Please enter no more than 40 characters"
           }
         })}
+        label="Full Name"
         errors={errors}
         serverErrors={serverErrors}
         resetOnChange={resetOnChange}
@@ -167,6 +168,7 @@ const SignUpForm = ({ handleDialog }) => {
             message: "Please enter no more than 100 characters"
           }
         })}
+        label="Email"
         errors={errors}
         serverErrors={serverErrors}
         resetOnChange={resetOnChange}
@@ -191,6 +193,7 @@ const SignUpForm = ({ handleDialog }) => {
             message: "Please enter no more than 20 characters"
           }
         })}
+        label="Password"
         errors={errors}
         serverErrors={serverErrors}
         resetOnChange={resetOnChange}

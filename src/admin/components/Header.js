@@ -70,10 +70,10 @@ const useStyle = makeStyles(theme => ({
   },
 }));
 
-const Header = ({ baseUrl, setDrawer }) => {
+const Header = ({ baseUrl, drawer, setDrawer }) => {
   const theme = useTheme();
   const xs = useMediaQuery(theme.breakpoints.only('xs'));
-  const sm = useMediaQuery(theme.breakpoints.only('sm'));
+  const matches = useMediaQuery(theme.breakpoints.only('sm'));
 
   const classes = useStyle();
 
@@ -90,49 +90,51 @@ const Header = ({ baseUrl, setDrawer }) => {
   return (
     <ThemeProvider theme={newTheme}>
       <AppBar position="sticky" className={classes.header}>
-        <Toolbar variant={xs ? "dense" : "regular"}>
-          <Grid container justify={sm || xs ? "flex-start" : "space-between"} alignItems="center">
-            <Hidden mdUp>
+        <Toolbar variant={matches ? "dense" : "regular"}>
+          <Grid container alignItems="center" justify="space-between">
+            <Grid container alignItems="center" item xs>
               <Grid item>
-                <IconButton edge="start" color="inherit" className={classes.drawerButton} onClick={() => setDrawer(true)}>
+                <IconButton edge="start" color="inherit" className={classes.drawerButton} onClick={() => setDrawer(!drawer)}>
                   <span className="fa fa-bars"></span>
                 </IconButton>
               </Grid>
-            </Hidden>
-            <Grid item className={classes.grow}>
-              <NavLink exact to={`${baseUrl}`}>
-                <img className={classes.logo} src={logo} alt="logo" height={xs ? 48 : 64} />
-              </NavLink>
-            </Grid>
-            <Hidden smDown>
               <Grid item>
-                <Button
-                  className={classes.navDropdown}
-                  onClick={handleMenu('account')}
-                  color="inherit"
-                >
-                  <Avatar src="" className={classes.avatar} />
-                  <Typography>Account</Typography>
-                </Button>
-                <Popper
-                  placement="bottom-end"
-                  anchorEl={menuAnchorEl['account']}
-                  open={Boolean(menuAnchorEl['account'])}
-                  className={classes.dropdownPopper}
-                >
-                  <ClickAwayListener onClickAway={handleMenuClose}>
-                    <List disablePadding>
-                      <ListItem component={NavLink} exact to={`${baseUrl}/profile`} onClick={handleMenuClose}>
-                        <ListItemText primary="Profile" />
-                      </ListItem>
-                      <ListItem component="a" href="/api/logout">
-                        <ListItemText primary="Logout" />
-                      </ListItem>
-                    </List>
-                  </ClickAwayListener>
-                </Popper>
+                <NavLink exact to={`${baseUrl}`}>
+                  <img className={classes.logo} src={logo} alt="logo" height={xs ? 48 : 64} />
+                </NavLink>
               </Grid>
-            </Hidden>
+            </Grid>
+            <Grid container item justify="flex-end" xs>
+              <Hidden smDown>
+                <Grid item>
+                  <Button
+                    className={classes.navDropdown}
+                    onClick={handleMenu('account')}
+                    color="inherit"
+                  >
+                    <Avatar src="" className={classes.avatar} />
+                    <Typography>Account</Typography>
+                  </Button>
+                  <Popper
+                    placement="bottom-end"
+                    anchorEl={menuAnchorEl['account']}
+                    open={Boolean(menuAnchorEl['account'])}
+                    className={classes.dropdownPopper}
+                  >
+                    <ClickAwayListener onClickAway={handleMenuClose}>
+                      <List disablePadding>
+                        <ListItem component={NavLink} exact to={`${baseUrl}/profile`} onClick={handleMenuClose}>
+                          <ListItemText primary="Profile" />
+                        </ListItem>
+                        <ListItem component="a" href="/api/logout">
+                          <ListItemText primary="Logout" />
+                        </ListItem>
+                      </List>
+                    </ClickAwayListener>
+                  </Popper>
+                </Grid>
+              </Hidden>
+            </Grid>
           </Grid>
         </Toolbar>
       </AppBar >

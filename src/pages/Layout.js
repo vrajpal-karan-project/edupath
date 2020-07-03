@@ -16,6 +16,7 @@ import SignUpForm from '../components/SignUpForm';
 import CourseDetail from './CourseDetail/CourseDetail';
 import Account from './Account/Account';
 import { isAuthenticated } from "../service/auth.service";
+import PrivateRoute from '../service/PrivateRoute';
 
 const useStyle = makeStyles(theme => ({
   root: {
@@ -74,10 +75,10 @@ export const Layout = () => {
         <Route exact path="/contact">
           This is CONTACT US page.
         </Route>
-        <Route
+        <PrivateRoute
           exact
           path={["/profile", "/changepassword", "/mycourses"]}
-          render={({ location }) => (<Account location={location} />)}
+          component={({ location }) => (<Account location={location} />)}
         />
         <Route exact path="/courses">
           <Courses />

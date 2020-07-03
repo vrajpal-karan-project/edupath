@@ -11,9 +11,8 @@ import {
 import { Alert, AlertTitle } from '@material-ui/lab';
 import FormField from '../../../components/FormField';
 import { useForm } from 'react-hook-form';
-import { Redirect } from 'react-router-dom';
 import { updateUser } from '../../../service/user.service';
-import { isAuthenticated } from '../../../service/auth.service';
+import { isAuthenticated, authenticate } from '../../../service/auth.service';
 
 const useStyle = makeStyles(theme => ({
   formTitle: {
@@ -85,13 +84,14 @@ const Profile = () => {
           // getting serverErrors.email when duplicate eamail is passed, So have to display it properly as well as success message
           console.log("Errors in Profile Update:", response.errors);
         } else {
-          reset();
-          setMessage({
-            serverErrors: "",
-            success: true
+          // setting Cookie from response=(user,token)
+          authenticate(response, () => {
+            setMessage({
+              serverErrors: "",
+              success: true
+            });
+            console.log("successfully Updated Profile");
           });
-          setTimeout(() => <Redirect to="/" />, 2000);
-          console.log("successfully Updated Profile");
         }
       }).catch(err => console.log("ERROR IN Profile Update", err));
 
@@ -130,7 +130,7 @@ const Profile = () => {
 
             <SuccessMessage />
             <ErrorMessage errors={serverErrors} />
-            
+
             <FormField
               key="avatar"
               type="file"

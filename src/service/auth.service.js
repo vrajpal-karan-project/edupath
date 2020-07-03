@@ -25,6 +25,7 @@ export const login = user => {
     return axios.post(routes.login, user).then(res => res.data).catch(err => err.response.data);
 };
 
+// setting Cookie in localStorage
 export const authenticate = (data, next) => {
     if (typeof window !== "undefined") {
         localStorage.setItem("jwt", JSON.stringify(data));

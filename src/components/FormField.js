@@ -31,8 +31,8 @@ const useStyle = makeStyles(theme => ({
     alignItems: 'center',
     color: theme.palette.background.paper,
     backgroundColor: fade('#25274D', 0.6),
-    height: theme.spacing(8),
-    width: theme.spacing(8),
+    height: theme.spacing(10),
+    width: theme.spacing(10),
     borderRadius: '50%',
     '&:hover': {
       opacity: 1,
@@ -40,8 +40,8 @@ const useStyle = makeStyles(theme => ({
   },
   formAvatar: {
     backgroundColor: '#25274D',
-    height: theme.spacing(8),
-    width: theme.spacing(8),
+    height: theme.spacing(10),
+    width: theme.spacing(10),
   },
   formInput: {
     borderRadius: theme.shape.borderRadius,
@@ -107,7 +107,7 @@ const FormField = ({
               <Box className={classes.avatarWrapper}>
                 <Avatar
                   className={classes.formAvatar}
-                  src={selectedAvatar && URL.createObjectURL(selectedAvatar)}
+                  src={selectedAvatar} 
                 />
                 <label htmlFor="formAvatar" className={classes.avatarOverlay}>
                   <span className={`fa fa-${selectedAvatar ? 'trash' : 'pencil'}`} />

@@ -47,32 +47,42 @@ const useStyle = makeStyles(theme => ({
 const Profile = () => {
   const classes = useStyle();
 
-  const [selectedAvatar, setSelectedAvatar] = useState(undefined);
-
-  const handleUpload = ({ target }) => {
-    const { files } = target;
-    setSelectedAvatar(files[0]);
-  }
-
-  const handleRemove = (event, removing) => {
-    event.target.value = null;
-    setSelectedAvatar(undefined);
-
-    if (removing)
-      event.preventDefault();
-  }
-
   const { user, token } = isAuthenticated();
 
-  const { register, handleSubmit, errors, reset } = useForm();
+  const [selectedAvatar, setSelectedAvatar] = useState(user.avatar);
 
+  const { register, handleSubmit, errors, reset } = useForm();
   const [message, setMessage] = React.useState({ serverErrors: "", loading: false, success: false });
   const { serverErrors, loading, success } = message;
 
+  const formData = new FormData();
+
+  //onChange 
+  const handleUpload = ({ target }) => {
+    const { files } = target;
+    setSelectedAvatar((files[0]));
+  }
+  
+  const handleRemove = (event, removing) => {
+    event.target.value = null;
+    setSelectedAvatar("");
+    
+    if (removing)
+    event.preventDefault();
+  }
+  
   const onSubmit = data => {
     setMessage({ ...message, serverErrors: false, loading: true });
-
-    updateUser(user._id, token, data)
+    const { fullname, email, about } = data;
+    formData.set("fullname", fullname);
+    formData.set("email", email);
+    formData.set("about", about);
+    formData.set("avatar", selectedAvatar);
+    console.log("FORMDATA", formData);
+    for (var key of formData.entries()) {
+      console.log(key[0] + ', ' + key[1])
+    }
+    updateUser(user._id, token, formData)
       .then(response => {
         console.log("Response:", response);
         if (response.errors) {
@@ -94,7 +104,6 @@ const Profile = () => {
           });
         }
       }).catch(err => console.log("ERROR IN Profile Update", err));
-
   };
 
   const resetOnChange = event => {
@@ -135,12 +144,11 @@ const Profile = () => {
               key="avatar"
               type="file"
               name="avatar"
-              selectedAvatar={selectedAvatar}
+              selectedAvatar={typeof selectedAvatar===typeof "kkk"?selectedAvatar:URL.createObjectURL(selectedAvatar)}
               handleUpload={handleUpload}
               handleRemove={handleRemove}
               errors={errors}
               serverErrors={serverErrors}
-              resetOnChange={resetOnChange}
               defaultValue={user.avatar}
             />
             <FormField

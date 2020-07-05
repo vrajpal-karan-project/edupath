@@ -42,6 +42,9 @@ const useStyle = makeStyles(theme => ({
       border: `2px solid ${darken('#5CDB94', 0.3)}`,
     }
   },
+  formMessage: {
+    marginBottom: theme.spacing(2),
+  }
 }));
 
 const Profile = () => {
@@ -61,16 +64,14 @@ const Profile = () => {
   const handleUpload = ({ target }) => {
     const { files } = target;
     setSelectedAvatar((files[0]));
-  }
-  
+  };
+
   const handleRemove = (event, removing) => {
     event.target.value = null;
     setSelectedAvatar("");
-    
-    if (removing)
-    event.preventDefault();
-  }
-  
+    if (removing) event.preventDefault();
+  };
+
   const onSubmit = data => {
     setMessage({ ...message, serverErrors: false, loading: true });
     const { fullname, email, about } = data;
@@ -78,7 +79,7 @@ const Profile = () => {
     formData.set("email", email);
     formData.set("about", about);
     formData.set("avatar", selectedAvatar);
-    console.log("FORMDATA", formData);
+    console.log("FORMDATA", formData); //Can't display have to iterate over
     for (var key of formData.entries()) {
       console.log(key[0] + ', ' + key[1])
     }
@@ -109,7 +110,7 @@ const Profile = () => {
   const resetOnChange = event => {
     const { name } = event.target;
     serverErrors[name] && serverErrors[name].length && setMessage({ message, serverErrors: { serverErrors, [name]: "" } });
-  }
+  };
 
   const SuccessMessage = () => (
     <Alert severity="success" className={classes.formMessage} style={{ display: success ? "" : "none" }}>
@@ -119,9 +120,10 @@ const Profile = () => {
   );
 
   const ErrorMessage = ({ errors }) => (
-    <Alert severity="error" className={classes.formMessage} style={{ display: errors.email || errors.fullname || errors.password ? "" : "none" }}>
+    <Alert severity="error" className={classes.formMessage} style={{ display: errors.email || errors.fullname || errors.password || errors.avatar ? "" : "none" }}>
       <AlertTitle>Error in Updating the Profile&nbsp;!</AlertTitle>
       <strong>
+        <div>{errors.avatar}</div>
         <div>{errors.fullname}</div>
         <div>{errors.email}</div>
         <div>{errors.password}</div>
@@ -144,7 +146,7 @@ const Profile = () => {
               key="avatar"
               type="file"
               name="avatar"
-              selectedAvatar={typeof selectedAvatar===typeof "kkk"?selectedAvatar:URL.createObjectURL(selectedAvatar)}
+              selectedAvatar={typeof selectedAvatar === typeof "kkk" ? selectedAvatar : URL.createObjectURL(selectedAvatar)}
               handleUpload={handleUpload}
               handleRemove={handleRemove}
               errors={errors}

@@ -2,8 +2,8 @@ import React from 'react';
 import {
   makeStyles,
   Box,
-  /* InputBase,
-   InputLabel,*/
+  InputBase,
+  InputLabel,
   FormHelperText,
   RadioGroup,
   FormControlLabel,
@@ -45,6 +45,9 @@ const useStyle = makeStyles(theme => ({
     height: theme.spacing(10),
     width: theme.spacing(10),
   },
+  formInputLabel: {
+    marginBottom: theme.spacing(1),
+  },
   formInput: {
     borderRadius: theme.shape.borderRadius,
     border: '1px solid #25274D',
@@ -71,18 +74,19 @@ const FormField = ({
   handleUpload,
   handleRemove,
   name,
-  label = "",
   placeholder = "",
   inputProps = {},
   validate,
   control,
   rules,
-  errors
+  errors,
+  serverErrors = {},
 }) => {
   const classes = useStyle();
 
   return (
     <Box className={classes.formField}>
+      <InputLabel className={classes.formInputLabel}>{placeholder}</InputLabel>
       {
         type === "radio" ?
           <RadioGroup row={inline} name={name}>
@@ -108,7 +112,7 @@ const FormField = ({
               <Box className={classes.avatarWrapper}>
                 <Avatar
                   className={classes.formAvatar}
-                  src={selectedAvatar} 
+                  src={selectedAvatar}
                 />
                 <label htmlFor="formAvatar" className={classes.avatarOverlay}>
                   <span className={`fa fa-${selectedAvatar ? 'trash' : 'pencil'}`} />

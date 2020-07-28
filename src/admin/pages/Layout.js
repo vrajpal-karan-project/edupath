@@ -126,7 +126,7 @@ export const Layout = ({ match: { url }, location: { pathname } }) => {
           <Grid item>
             <Breadcrumbs className={classes.breadcrumbs}>
               {Object.entries(titlebarData).find((entry) => pathname.includes(entry[0]))[1].breadcrumbs.split('/').map((path) => {
-                return <Typography>{path}</Typography>
+                return <Typography key={path}>{path}</Typography>
               })}
             </Breadcrumbs>
           </Grid>

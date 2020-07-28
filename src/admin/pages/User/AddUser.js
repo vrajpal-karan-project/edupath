@@ -187,6 +187,7 @@ const AddUser = ({ baseUrl }) => {
                   />
                   <FormField
                     key="role"
+                    placeholder="Type"
                     type="radio"
                     inline={true}
                     name="role"

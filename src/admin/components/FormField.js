@@ -3,13 +3,17 @@ import {
   makeStyles,
   Box,
   InputBase,
+  InputLabel,
   FormHelperText,
   RadioGroup,
   FormControlLabel,
   Radio,
   Avatar,
   fade,
+  Select,
+  MenuItem,
 } from '@material-ui/core';
+import { Controller } from 'react-hook-form';
 
 const useStyle = makeStyles(theme => ({
   formField: {
@@ -29,8 +33,8 @@ const useStyle = makeStyles(theme => ({
     alignItems: 'center',
     color: theme.palette.background.paper,
     backgroundColor: fade('#25274D', 0.6),
-    height: theme.spacing(8),
-    width: theme.spacing(8),
+    height: theme.spacing(10),
+    width: theme.spacing(10),
     borderRadius: '50%',
     '&:hover': {
       opacity: 1,
@@ -38,8 +42,11 @@ const useStyle = makeStyles(theme => ({
   },
   formAvatar: {
     backgroundColor: '#25274D',
-    height: theme.spacing(8),
-    width: theme.spacing(8),
+    height: theme.spacing(10),
+    width: theme.spacing(10),
+  },
+  formInputLabel: {
+    marginBottom: theme.spacing(1),
   },
   formInput: {
     borderRadius: theme.shape.borderRadius,
@@ -70,12 +77,16 @@ const FormField = ({
   placeholder = "",
   inputProps = {},
   validate,
-  errors
+  control,
+  rules,
+  errors,
+  serverErrors = {},
 }) => {
   const classes = useStyle();
 
   return (
     <Box className={classes.formField}>
+      <InputLabel className={classes.formInputLabel}>{placeholder}</InputLabel>
       {
         type === "radio" ?
           <RadioGroup row={inline} name={name}>
@@ -101,7 +112,7 @@ const FormField = ({
               <Box className={classes.avatarWrapper}>
                 <Avatar
                   className={classes.formAvatar}
-                  src={selectedAvatar && URL.createObjectURL(selectedAvatar)}
+                  src={selectedAvatar}
                 />
                 <label htmlFor="formAvatar" className={classes.avatarOverlay}>
                   <span className={`fa fa-${selectedAvatar ? 'trash' : 'pencil'}`} />
@@ -116,20 +127,40 @@ const FormField = ({
                 />
               </Box>
             </> :
-            <InputBase
-              className={`${classes.formInput} ${errors[name] && classes.error}`}
-              multiline={multiline}
-              rows={rows}
-              type={type}
-              name={name}
-              placeholder={placeholder}
-              inputProps={inputProps}
-              inputRef={validate}
-              fullWidth
-            />
+            type === "select" ?
+              <Controller
+                name={name}
+                rules={rules}
+                defaultValue=""
+                control={control}
+                as={
+                  <Select
+                    fullWidth
+                    disableUnderline
+                    displayEmpty
+                    className={`${classes.formInput} ${errors[name] && classes.error}`}
+                  >
+                    <MenuItem value="">None</MenuItem>
+                    {values.map((value) => (
+                      <MenuItem key={value[0]} value={value[0]}>{value[1]}</MenuItem>
+                    ))}
+                  </Select>
+                }
+              /> :
+              <InputBase
+                className={`${classes.formInput} ${errors[name] && classes.error}`}
+                multiline={multiline}
+                rows={rows}
+                type={type}
+                name={name}
+                placeholder={placeholder}
+                inputProps={inputProps}
+                inputRef={validate}
+                fullWidth
+              />
       }
       <FormHelperText error>
-        {(errors[name] && errors[name].message) || ' '}
+        {(errors[name] && errors[name].message) || serverErrors[name] || ' '}
       </FormHelperText>
     </Box >
   );

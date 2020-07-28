@@ -9,7 +9,10 @@ import {
   Radio,
   Avatar,
   fade,
+  Select,
+  MenuItem,
 } from '@material-ui/core';
+import { Controller } from 'react-hook-form';
 
 const useStyle = makeStyles(theme => ({
   formField: {
@@ -70,6 +73,8 @@ const FormField = ({
   placeholder = "",
   inputProps = {},
   validate,
+  control,
+  rules,
   errors
 }) => {
   const classes = useStyle();
@@ -116,17 +121,37 @@ const FormField = ({
                 />
               </Box>
             </> :
-            <InputBase
-              className={`${classes.formInput} ${errors[name] && classes.error}`}
-              multiline={multiline}
-              rows={rows}
-              type={type}
-              name={name}
-              placeholder={placeholder}
-              inputProps={inputProps}
-              inputRef={validate}
-              fullWidth
-            />
+            type === "select" ?
+              <Controller
+                name={name}
+                rules={rules}
+                defaultValue=""
+                control={control}
+                as={
+                  <Select
+                    fullWidth
+                    disableUnderline
+                    displayEmpty
+                    className={`${classes.formInput} ${errors[name] && classes.error}`}
+                  >
+                    <MenuItem value="">None</MenuItem>
+                    {values.map((value) => (
+                      <MenuItem key={value[0]} value={value[0]}>{value[1]}</MenuItem>
+                    ))}
+                  </Select>
+                }
+              /> :
+              <InputBase
+                className={`${classes.formInput} ${errors[name] && classes.error}`}
+                multiline={multiline}
+                rows={rows}
+                type={type}
+                name={name}
+                placeholder={placeholder}
+                inputProps={inputProps}
+                inputRef={validate}
+                fullWidth
+              />
       }
       <FormHelperText error>
         {(errors[name] && errors[name].message) || ' '}

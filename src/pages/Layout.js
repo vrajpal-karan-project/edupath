@@ -15,6 +15,8 @@ import LoginForm from '../components/LoginForm';
 import SignUpForm from '../components/SignUpForm';
 import CourseDetail from './CourseDetail/CourseDetail';
 import Account from './Account/Account';
+import Instructors from './Instructors/Instructors';
+import WatchCourse from './Account/WatchCourse/WatchCourse';
 
 const useStyle = makeStyles(theme => ({
   root: {
@@ -75,15 +77,18 @@ export const Layout = () => {
         </Route>
         <Route
           exact
-          path={["/profile", "/changepassword", "/mycourses"]}
+          path={["/profile", "/changepassword", "/mycourses", "/registercourse"]}
           render={({ location }) => (<Account location={location} />)}
         />
         <Route exact path="/courses">
           <Courses />
         </Route>
         <Route exact path="/course/:id" component={CourseDetail} />
+        <Route exact path="/watch/:id">
+          <WatchCourse />
+        </Route>
         <Route exact path="/instructors">
-          This is INSTRUCTORS page.
+          <Instructors />
         </Route>
         <Route>
           <div style={{ textAlign: "center" }}>

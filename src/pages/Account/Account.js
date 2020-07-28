@@ -13,6 +13,7 @@ import Navigation from './Navigation';
 import Profile from './Profile/Profile';
 import ChangePassword from './ChangePassword/ChangePassword';
 import MyCourses from './MyCourses/MyCourses';
+import RegisterCourse from './RegisterCourse/RegisterCourse';
 
 const defaultTheme = createMuiTheme();
 
@@ -60,6 +61,9 @@ const Account = ({ location: { pathname } }) => {
           </Route>
           <Route exact path="/mycourses">
             <MyCourses />
+          </Route>
+          <Route exact path="/registercourse">
+            <RegisterCourse />
           </Route>
         </Switch>
       </Grid>

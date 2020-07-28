@@ -37,6 +37,9 @@ const newTheme = createMuiTheme({
           borderColor: 'transparent',
           boxShadow: defaultTheme.shadows[4],
         },
+        [defaultTheme.breakpoints.down('sm')]: {
+          minWidth: 72,
+        },
       },
     },
     MuiListItem: {
@@ -63,7 +66,7 @@ const newTheme = createMuiTheme({
 
 const Navigation = ({ pathname }) => {
   const theme = useTheme();
-  const xs = useMediaQuery(theme.breakpoints.only('xs'));
+  const xs = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <ThemeProvider theme={newTheme}>
@@ -91,6 +94,14 @@ const Navigation = ({ pathname }) => {
           component={NavLink}
           exact
           to="/mycourses"
+        />
+        <Tab
+          label={xs ? "" : "Register Courses"}
+          icon={xs ? <span className="fa fa-2x fa-graduation-cap"></span> : ""}
+          value="/registercourse"
+          component={NavLink}
+          exact
+          to="/registercourse"
         />
       </Tabs>
     </ThemeProvider>

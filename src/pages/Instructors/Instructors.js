@@ -7,9 +7,9 @@ import {
   Typography,
   makeStyles,
 } from '@material-ui/core';
-import ItemCard from '../../components/ItemCard';
+import InstructorCard from '../../components/InstructorCard';
 import Pagination from '../../components/Pagination';
-import Category from "./Category";
+import Category from "../Courses/Category";
 
 const useStyle = makeStyles(theme => ({
   pageTitle: {
@@ -23,7 +23,7 @@ const useStyle = makeStyles(theme => ({
   }
 }));
 
-const Courses = (props) => {
+const Instructors = (props) => {
   const classes = useStyle();
 
   const [sortBy, setSortBy] = useState("alpha");
@@ -51,7 +51,7 @@ const Courses = (props) => {
       <Grid container>
         <Grid item xs={12}>
           <Typography variant="h5" className={classes.pageTitle}>
-            All Courses
+            All Instructors
           </Typography>
         </Grid>
         <Grid item container xs={12} alignItems="flex-start">
@@ -86,7 +86,7 @@ const Courses = (props) => {
               {
                 [1, 2, 3, 4, 5, 6, 7].map((value, index) =>
                   <Grid item xs={12} sm={6} md={4} key={index}>
-                    <ItemCard tilt={true} tooltip={true} index={index} />
+                    <InstructorCard tilt={true} tooltip={true} index={index} />
                   </Grid>
                 )
               }
@@ -103,4 +103,4 @@ const Courses = (props) => {
   );
 }
 
-export default Courses;
+export default Instructors;

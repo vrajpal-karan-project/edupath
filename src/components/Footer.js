@@ -73,7 +73,7 @@ const Footer = (props) => {
                   <Link link="/instructors" label="Instructors" />
                 </li>
                 <li>
-                  <Link link="/account" label="Account" />
+                  <Link link="/profile" label="Account" />
                 </li>
               </ul>
             </Grid>

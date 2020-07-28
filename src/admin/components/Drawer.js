@@ -57,11 +57,16 @@ const Drawer = ({ style, baseUrl, drawer, setDrawer }) => {
 
   const classes = useStyle();
 
+  const handleDrawer = () => {
+    if (matches)
+      setDrawer(false);
+  };
+
   return (
     <MuiDrawer
-      variant={matches ? "temporary" : "permanent"}
+      variant={matches ? "temporary" : "persistent"}
       open={drawer}
-      onClose={() => setDrawer(false)}
+      onClose={handleDrawer}
       classes={{ paper: style }}
     >
       <Box className={classes.logoWrapper}>
@@ -75,13 +80,13 @@ const Drawer = ({ style, baseUrl, drawer, setDrawer }) => {
           <ListItem className={classes.listHeader}>
             <ListItemText>User Management</ListItemText>
           </ListItem>
-          <ListItem component={NavLink} exact to={`${baseUrl}/user/add`} onClick={() => setDrawer(false)}>
+          <ListItem component={NavLink} exact to={`${baseUrl}/user/add`} onClick={handleDrawer}>
             <ListItemIcon>
               <span className="fa fa-plus"></span>
             </ListItemIcon>
             <ListItemText>Add User</ListItemText>
           </ListItem>
-          <ListItem component={NavLink} exact to={`${baseUrl}/users`} onClick={() => setDrawer(false)}>
+          <ListItem component={NavLink} exact to={`${baseUrl}/users`} onClick={handleDrawer}>
             <ListItemIcon>
               <span className="fa fa-list"></span>
             </ListItemIcon>

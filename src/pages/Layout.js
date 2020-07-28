@@ -15,6 +15,8 @@ import LoginForm from '../components/LoginForm';
 import SignUpForm from '../components/SignUpForm';
 import CourseDetail from './CourseDetail/CourseDetail';
 import Account from './Account/Account';
+import Instructors from './Instructors/Instructors';
+import WatchCourse from './Account/WatchCourse/WatchCourse';
 import { isAuthenticated } from "../service/auth.service";
 import PrivateRoute from '../service/PrivateRoute';
 
@@ -77,15 +79,18 @@ export const Layout = () => {
         </Route>
         <PrivateRoute
           exact
-          path={["/profile", "/changepassword", "/mycourses"]}
+          path={["/profile", "/changepassword", "/mycourses", "/registercourse"]}
           component={({ location }) => (<Account location={location} />)}
         />
         <Route exact path="/courses">
           <Courses />
         </Route>
         <Route exact path="/course/:id" component={CourseDetail} />
+        <Route exact path="/watch/:id">
+          <WatchCourse />
+        </Route>
         <Route exact path="/instructors">
-          This is INSTRUCTORS page.
+          <Instructors />
         </Route>
         <Route>
           <div style={{ textAlign: "center" }}>

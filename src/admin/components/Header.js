@@ -46,9 +46,6 @@ const useStyle = makeStyles(theme => ({
       zIndex: theme.zIndex.drawer + 1,
     },
   },
-  grow: {
-    flexGrow: 1,
-  },
   drawerButton: {
     marginRight: theme.spacing(2),
   },
@@ -73,9 +70,10 @@ const useStyle = makeStyles(theme => ({
   },
 }));
 
-const Header = ({ baseUrl, setDrawer }) => {
+const Header = ({ baseUrl, drawer, setDrawer }) => {
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.only('xs'));
+  const xs = useMediaQuery(theme.breakpoints.only('xs'));
+  const matches = useMediaQuery(theme.breakpoints.only('sm'));
 
   const classes = useStyle();
 
@@ -93,48 +91,50 @@ const Header = ({ baseUrl, setDrawer }) => {
     <ThemeProvider theme={newTheme}>
       <AppBar position="sticky" className={classes.header}>
         <Toolbar variant={matches ? "dense" : "regular"}>
-          <Grid container alignItems="center">
-            <Hidden mdUp>
+          <Grid container alignItems="center" justify="space-between">
+            <Grid container alignItems="center" item xs>
               <Grid item>
-                <IconButton edge="start" color="inherit" className={classes.drawerButton} onClick={() => setDrawer(true)}>
+                <IconButton edge="start" color="inherit" className={classes.drawerButton} onClick={() => setDrawer(!drawer)}>
                   <span className="fa fa-bars"></span>
                 </IconButton>
               </Grid>
-            </Hidden>
-            <Grid item className={classes.grow}>
-              <NavLink exact to={`${baseUrl}`}>
-                <img className={classes.logo} src={logo} alt="logo" height={matches ? 48 : 64} />
-              </NavLink>
-            </Grid>
-            <Hidden smDown>
               <Grid item>
-                <Button
-                  className={classes.navDropdown}
-                  onClick={handleMenu('account')}
-                  color="inherit"
-                >
-                  <Avatar src="" className={classes.avatar} />
-                  <Typography>Account</Typography>
-                </Button>
-                <Popper
-                  placement="bottom-end"
-                  anchorEl={menuAnchorEl['account']}
-                  open={Boolean(menuAnchorEl['account'])}
-                  className={classes.dropdownPopper}
-                >
-                  <ClickAwayListener onClickAway={handleMenuClose}>
-                    <List disablePadding>
-                      <ListItem component={NavLink} exact to={`${baseUrl}/profile`} onClick={handleMenuClose}>
-                        <ListItemText primary="Profile" />
-                      </ListItem>
-                      <ListItem component="a" href="/api/logout">
-                        <ListItemText primary="Logout" />
-                      </ListItem>
-                    </List>
-                  </ClickAwayListener>
-                </Popper>
+                <NavLink exact to={`${baseUrl}`}>
+                  <img className={classes.logo} src={logo} alt="logo" height={xs ? 48 : 64} />
+                </NavLink>
               </Grid>
-            </Hidden>
+            </Grid>
+            <Grid container item justify="flex-end" xs>
+              <Hidden smDown>
+                <Grid item>
+                  <Button
+                    className={classes.navDropdown}
+                    onClick={handleMenu('account')}
+                    color="inherit"
+                  >
+                    <Avatar src="" className={classes.avatar} />
+                    <Typography>Account</Typography>
+                  </Button>
+                  <Popper
+                    placement="bottom-end"
+                    anchorEl={menuAnchorEl['account']}
+                    open={Boolean(menuAnchorEl['account'])}
+                    className={classes.dropdownPopper}
+                  >
+                    <ClickAwayListener onClickAway={handleMenuClose}>
+                      <List disablePadding>
+                        <ListItem component={NavLink} exact to={`${baseUrl}/profile`} onClick={handleMenuClose}>
+                          <ListItemText primary="Profile" />
+                        </ListItem>
+                        <ListItem component="a" href="/api/logout">
+                          <ListItemText primary="Logout" />
+                        </ListItem>
+                      </List>
+                    </ClickAwayListener>
+                  </Popper>
+                </Grid>
+              </Hidden>
+            </Grid>
           </Grid>
         </Toolbar>
       </AppBar >

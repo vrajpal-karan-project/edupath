@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Grid,
   Container,
@@ -10,6 +10,7 @@ import {
 import InstructorCard from '../../components/InstructorCard';
 import Pagination from '../../components/Pagination';
 import Category from "../Courses/Category";
+import { getAllCategories, getAllSubCategories } from '../../service/user.service';
 
 const useStyle = makeStyles(theme => ({
   pageTitle: {
@@ -28,6 +29,27 @@ const Instructors = (props) => {
 
   const [sortBy, setSortBy] = useState("alpha");
   const [checkedItems, setCheckedItems] = useState({});
+
+  const [category, setCategory] = useState([]);
+  const [subcategory, setSubCategory] = useState([]);
+
+  useEffect(() => {
+    getAllCategories()
+      .then((response) => {
+        setCategory(response);
+      })
+      .catch(() => {
+
+      });
+
+    getAllSubCategories()
+      .then((response) => {
+        setSubCategory(response);
+      })
+      .catch(() => {
+
+      });
+  }, [])
 
   const handleSortBy = (e) => {
     setSortBy(e.target.value);
@@ -58,8 +80,8 @@ const Instructors = (props) => {
           <Grid container item xs={12} md={3} style={{ padding: "12px" }}>
             <Grid item xs={12}>
               {
-                ["IT", "Programming", "Software", "Hardware", "Android"].map((cat, i) =>
-                  <Category category={cat} selected={["IT", "Software"]} checkedItems={checkedItems} handleCheck={handleCheck} key={i} />
+                category.map(({ _id, name }, i) =>
+                  <Category subCategories={subcategory.filter(({ parent }) => _id === parent)} category={name} selected={["IT", "Software"]} checkedItems={checkedItems} handleCheck={handleCheck} key={i} />
                 )
               }
             </Grid>

@@ -17,7 +17,7 @@ import FormField from '../../../components/FormField';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useDropzone } from 'react-dropzone';
-import { getAllCategoies, getSubcategoriesByCategoryId } from '../../../service/user.service';
+import { getAllCategories, getSubcategoriesByCategoryId } from '../../../service/user.service';
 
 const defaultTheme = createMuiTheme({
   overrides: {
@@ -112,7 +112,7 @@ const RegisterCourse = () => {
   const steps = getSteps();
 
   useEffect(() => {
-    getAllCategoies()
+    getAllCategories()
       .then((response) => {
         setCategories([['IT', 'IT'], ['Science', 'Science']]);
       })

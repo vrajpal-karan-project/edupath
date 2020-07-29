@@ -17,6 +17,8 @@ import Drawer from '../components/Drawer';
 import Dashboard from './Dashboard/Dashboard';
 import AddUser from './User/AddUser';
 import ManageUsers from './User/ManageUsers';
+import AddCategory from './Category/AddCategory';
+import ManageCategories from './Category/ManageCategories';
 
 // keep parent path in the end otherwise that'll match first instead of child path
 const titlebarData = {
@@ -35,6 +37,18 @@ const titlebarData = {
   "/admin/users": {
     heading: "User Management",
     breadcrumbs: "User Management/Manage Users",
+  },
+  "/admin/categories": {
+    heading: "Category Management",
+    breadcrumbs: "Category Management/Manage Categories",
+  },
+  "/admin/category/add": {
+    heading: "Category Management",
+    breadcrumbs: "Category Management/Add Category",
+  },
+  "/admin/category/update": {
+    heading: "Category Management",
+    breadcrumbs: "Category Management/Update Category",
   },
   "/admin": {
     heading: "Dashboard",
@@ -145,6 +159,15 @@ export const Layout = ({ match: { url }, location: { pathname } }) => {
               </Route>
               <Route exact path={`${url}/users`}>
                 <ManageUsers baseUrl={url} />
+              </Route>
+              <Route exact path={`${url}/category/add`}>
+                <AddCategory baseUrl={url} />
+              </Route>
+              <Route exact path={`${url}/category/update/:categoryId`}>
+                <AddCategory baseUrl={url} />
+              </Route>
+              <Route exact path={`${url}/categories`}>
+                <ManageCategories baseUrl={url} />
               </Route>
               <Route exact path={`${url}/*`}>
                 <div style={{ textAlign: "center" }}>

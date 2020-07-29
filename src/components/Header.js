@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   fade,
   makeStyles,
@@ -28,6 +28,7 @@ import {
 import logo from '../assets/logo.png';
 import { NavLink } from 'react-router-dom';
 import { logout } from '../service/auth.service';
+import { getAllCategories, getAllSubCategories } from '../service/user.service';
 
 const defaultTheme = createMuiTheme();
 
@@ -218,6 +219,9 @@ const Header = ({ setDrawer, searching, setSearching, handleDialog, isAuthentica
 
   const [menuAnchorEl, setMenuAnchorEl] = useState({});
 
+  const [category, setCategory] = useState([]);
+  const [subCategory, setSubCategory] = useState([]);
+
   const handleMenu = (type) => (event) => {
     setMenuAnchorEl({ [type]: event.currentTarget });
   };
@@ -230,6 +234,24 @@ const Header = ({ setDrawer, searching, setSearching, handleDialog, isAuthentica
     handleDialog(type);
     event.preventDefault();
   }
+
+  useEffect(() => {
+    getAllCategories()
+      .then((response) => {
+        setCategory(response);
+      })
+      .catch(() => {
+
+      });
+
+    getAllSubCategories()
+      .then((response) => {
+        setSubCategory(response);
+      })
+      .catch(() => {
+
+      });
+  }, [])
 
   return (
     <ThemeProvider theme={newTheme}>
@@ -267,23 +289,24 @@ const Header = ({ setDrawer, searching, setSearching, handleDialog, isAuthentica
                   >
                     <Box>
                       <List disablePadding>
-                        {["1", "2", "3", "4"].map((value, index) =>
+                        {category.map(({ _id: parentId, name }, index) =>
                           <React.Fragment key={index}>
                             <ListItem>
                               <ListItemText
-                                primary={`This is some long text of Course Name ${value}`}
+                                primary={name}
                               />
                               <span className="fa fa-angle-right"></span>
                               <List disablePadding className={`${classes.courseNestedMenu}`}>
-                                {["1", "2", "3", "4"].map((value, index) =>
+                                {subCategory.map(({ _id, name, parent }, index) =>
+                                  parent === parentId &&
                                   <React.Fragment key={index}>
                                     <ListItem
                                       component={NavLink}
                                       exact
-                                      to={`/${value}`}
+                                      to={`/courses/${_id}`}
                                       onClick={handleMenuClose}
                                     >
-                                      <ListItemText primary={`This is some long text of Topic Name ${value}`}></ListItemText>
+                                      <ListItemText primary={name}></ListItemText>
                                     </ListItem>
                                   </React.Fragment>
                                 )}
@@ -291,7 +314,7 @@ const Header = ({ setDrawer, searching, setSearching, handleDialog, isAuthentica
                                 <ListItem
                                   component={NavLink}
                                   exact
-                                  to={`/${value}`}
+                                  to={`/courses/${parentId}`}
                                   onClick={handleMenuClose}
                                 >
                                   <ListItemText className={classes.seeAllTopics}>See All In Field</ListItemText>

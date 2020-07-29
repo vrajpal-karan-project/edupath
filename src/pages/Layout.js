@@ -85,6 +85,9 @@ export const Layout = () => {
         <Route exact path="/courses">
           <Courses />
         </Route>
+        <Route exact path="/courses/:id">
+          <Courses />
+        </Route>
         <Route exact path="/course/:id" component={CourseDetail} />
         <Route exact path="/watch/:id">
           <WatchCourse />

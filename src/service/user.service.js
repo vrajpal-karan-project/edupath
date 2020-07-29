@@ -32,8 +32,14 @@ export const getUserById = (token, userId) => {
     .catch(err => err.response.data);
 }
 
-export const getAllCategoies = () => {
+export const getAllCategories = () => {
   return axios.get(`${routes.categories}`)
+    .then(res => res.data)
+    .catch(err => err.response.data);
+}
+
+export const getAllSubCategories = () => {
+  return axios.get(`${routes.subcategories}`)
     .then(res => res.data)
     .catch(err => err.response.data);
 }

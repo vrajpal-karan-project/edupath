@@ -6,7 +6,7 @@ import {
 
 const theme = createMuiTheme({
   overrides: {
-    MuiExpansionPanelDetails:{
+    MuiExpansionPanelDetails: {
       root: {
         paddingTop: 0,
       },
@@ -35,9 +35,9 @@ const Categories = (props) => {
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
           <List disablePadding>
-            {[1, 2, 3].map((value, index) => {
-              const labelId = `checkbox-list-label-${value}`;
-              const subcategory = "sub" + category + value;
+            {props.subCategories.map(({ name }, index) => {
+              const labelId = `checkbox-list-label-${name}`;
+              const subcategory = name;
 
               return (
                 <ListItem key={index} role={undefined} dense button onClick={() => handleCheck(subcategory)}>

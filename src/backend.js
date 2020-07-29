@@ -8,5 +8,8 @@ export const routes = {
   changePassword: `${API}/user/password`,
   users: `${API}/users`,
   categories: `${API}/categories`,
-  subcategory: `${API}/subcategory`
+  subcategories: `${API}/subcategories`,
+  subcategory: `${API}/subcategory`,
+  addCategory: `${API}/category/create`,
+  addSubCategory: `${API}/subcategory/create`,
 };

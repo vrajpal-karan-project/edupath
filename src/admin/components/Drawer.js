@@ -93,6 +93,22 @@ const Drawer = ({ style, baseUrl, drawer, setDrawer }) => {
             <ListItemText>Manage User</ListItemText>
           </ListItem>
           <Divider />
+          <ListItem className={classes.listHeader}>
+            <ListItemText>Category Management</ListItemText>
+          </ListItem>
+          <ListItem component={NavLink} exact to={`${baseUrl}/category/add`} onClick={handleDrawer}>
+            <ListItemIcon>
+              <span className="fa fa-plus"></span>
+            </ListItemIcon>
+            <ListItemText>Add Category</ListItemText>
+          </ListItem>
+          <ListItem component={NavLink} exact to={`${baseUrl}/categories`} onClick={handleDrawer}>
+            <ListItemIcon>
+              <span className="fa fa-list"></span>
+            </ListItemIcon>
+            <ListItemText>Manage Category</ListItemText>
+          </ListItem>
+          <Divider />
           <ListItem component="a" href="/api/logout">
             <ListItemIcon>
               <span className="fa fa-sign-out"></span>

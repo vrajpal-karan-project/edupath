@@ -11,8 +11,7 @@ import {
 } from '@material-ui/core';
 import MaterialTable from 'material-table';
 import { NavLink } from 'react-router-dom';
-import { getAllUsers } from '../../../service/user.service';
-import { isAuthenticated } from '../../../service/auth.service';
+import { getAllCategories } from '../../../service/user.service';
 
 const defaultTheme = createMuiTheme();
 
@@ -67,10 +66,8 @@ const icons = {
   ViewColumn: forwardRef((props, ref) => <span className='fa fa-fw fa-columns' {...props} ref={ref} />)
 };
 
-const ManageUsers = ({ baseUrl }) => {
+const ManageCategories = ({ baseUrl }) => {
   const classes = useStyle();
-
-  const { user, token } = isAuthenticated();
 
   return (
     <Grid container justify="center">
@@ -81,16 +78,13 @@ const ManageUsers = ({ baseUrl }) => {
               Container: props => <Paper {...props} elevation={4} />,
             }}
             icons={icons}
-            title="Manage User"
+            title="Manage Category"
             columns={[
-              { title: 'Fullname', field: 'fullname' },
-              { title: 'Email', field: 'email' },
-              { title: 'Type', field: 'role' },
-              { title: 'About', field: 'about' },
+              { title: 'Category Name', field: 'name' },
               {
                 title: 'Edit', field: '_id', render: rowData => (
                   <Box className={classes.rowActions}>
-                    <IconButton component={NavLink} to={`${baseUrl}/user/update/${rowData._id}`}>
+                    <IconButton component={NavLink} to={`${baseUrl}/category/update/${rowData._id}`}>
                       <span className="fa fa-fw fa-pencil" />
                     </IconButton>
                     <IconButton onClick={() => { }}>
@@ -101,14 +95,8 @@ const ManageUsers = ({ baseUrl }) => {
               },
             ]}
             data={query =>
-              getAllUsers(token)
+              getAllCategories()
                 .then(response => {
-                  response = response.map(({ role, ...rest }) => {
-                    return {
-                      ...rest,
-                      role: role === 0 ? 'Student' : role === 1 ? 'Instructor' : 'Admin',
-                    }
-                  })
                   return {
                     data: response,
                     page: 0,
@@ -126,4 +114,4 @@ const ManageUsers = ({ baseUrl }) => {
   );
 };
 
-export default ManageUsers;
+export default ManageCategories;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Grid, Container, Typography, makeStyles } from '@material-ui/core';
 import ItemCard from '../../components/ItemCard';
 import Slider from '../../components/Slider';
@@ -6,6 +6,7 @@ import Banner from './Banner';
 import InstructorCard from '../../components/InstructorCard';
 import Mockup from '../../assets/mockup.png';
 import { NavLink } from 'react-router-dom';
+import { getUsersByRole } from '../../service/user.service';
 
 const useStyle = makeStyles(theme => ({
   section: {
@@ -53,6 +54,17 @@ const useStyle = makeStyles(theme => ({
 
 const Home = () => {
   const classes = useStyle();
+  const [instructors, setInstructors] = useState([]);
+
+  useEffect(() => {
+    getUsersByRole('1')
+      .then((response) => {
+        setInstructors(response);
+      })
+      .catch(() => {
+
+      });
+  }, [])
 
   return (<>
     <Banner />
@@ -96,10 +108,10 @@ const Home = () => {
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <Slider>
+          <Slider slides={3}>
             {
-              [1, 2, 3, 4, 5, 6, 7].map((value, index) =>
-                <InstructorCard key={index} />
+              instructors.map((value, index) =>
+                <InstructorCard key={index} data={value} />
               )
             }
           </Slider>
@@ -115,43 +127,29 @@ const Home = () => {
         </Grid>
         <Grid item xs={12} container className={classes.sectionBody}>
           <Grid item xs={12} md={3} className={classes.categoryColumn}>
-            <Typography variant="h6">Category 1</Typography>
+            <Typography variant="h6">IT</Typography>
             <div className={classes.smallRuler}></div>
-            <Typography variant="body1" color="textSecondary"><NavLink to="/courses">Category 1</NavLink></Typography>
-            <Typography variant="body1" color="textSecondary"><NavLink to="/courses">Category 1</NavLink></Typography>
-            <Typography variant="body1" color="textSecondary"><NavLink to="/courses">Category 1</NavLink></Typography>
-            <Typography variant="body1" color="textSecondary"><NavLink to="/courses">Category 1</NavLink></Typography>
-            <Typography variant="body1" color="textSecondary"><NavLink to="/courses">Category 1</NavLink></Typography>
+            <Typography variant="body1" color="textSecondary"><NavLink to="/courses">AI</NavLink></Typography>
+            <Typography variant="body1" color="textSecondary"><NavLink to="/courses">ML</NavLink></Typography>
+            <Typography variant="body1" color="textSecondary"><NavLink to="/courses">Cyber Security</NavLink></Typography>
+            <Typography variant="body1" color="textSecondary"><NavLink to="/courses">Data Admin</NavLink></Typography>
             <NavLink to="/courses">More</NavLink>
           </Grid>
           <Grid item xs={12} md={3} className={classes.categoryColumn}>
-            <Typography variant="h6">Category 2</Typography>
+            <Typography variant="h6">Web Development</Typography>
             <div className={classes.smallRuler}></div>
-            <Typography variant="body1" color="textSecondary"><NavLink to="/courses">Category 1</NavLink></Typography>
-            <Typography variant="body1" color="textSecondary"><NavLink to="/courses">Category 1</NavLink></Typography>
-            <Typography variant="body1" color="textSecondary"><NavLink to="/courses">Category 1</NavLink></Typography>
-            <Typography variant="body1" color="textSecondary"><NavLink to="/courses">Category 1</NavLink></Typography>
-            <Typography variant="body1" color="textSecondary"><NavLink to="/courses">Category 1</NavLink></Typography>
+            <Typography variant="body1" color="textSecondary"><NavLink to="/courses">React</NavLink></Typography>
+            <Typography variant="body1" color="textSecondary"><NavLink to="/courses">Angular</NavLink></Typography>
+            <Typography variant="body1" color="textSecondary"><NavLink to="/courses">Java</NavLink></Typography>
+            <Typography variant="body1" color="textSecondary"><NavLink to="/courses">Node JS</NavLink></Typography>
             <NavLink to="/courses">More</NavLink>
           </Grid>
           <Grid item xs={12} md={3} className={classes.categoryColumn}>
-            <Typography variant="h6">Category 3</Typography>
+            <Typography variant="h6">Mobile Apps</Typography>
             <div className={classes.smallRuler}></div>
-            <Typography variant="body1" color="textSecondary"><NavLink to="/courses">Category 1</NavLink></Typography>
-            <Typography variant="body1" color="textSecondary"><NavLink to="/courses">Category 1</NavLink></Typography>
-            <Typography variant="body1" color="textSecondary"><NavLink to="/courses">Category 1</NavLink></Typography>
-            <Typography variant="body1" color="textSecondary"><NavLink to="/courses">Category 1</NavLink></Typography>
-            <Typography variant="body1" color="textSecondary"><NavLink to="/courses">Category 1</NavLink></Typography>
-            <NavLink to="/courses">More</NavLink>
-          </Grid>
-          <Grid item xs={12} md={3} className={classes.categoryColumn}>
-            <Typography variant="h6">Category 4</Typography>
-            <div className={classes.smallRuler}></div>
-            <Typography variant="body1" color="textSecondary"><NavLink to="/courses">Category 1</NavLink></Typography>
-            <Typography variant="body1" color="textSecondary"><NavLink to="/courses">Category 1</NavLink></Typography>
-            <Typography variant="body1" color="textSecondary"><NavLink to="/courses">Category 1</NavLink></Typography>
-            <Typography variant="body1" color="textSecondary"><NavLink to="/courses">Category 1</NavLink></Typography>
-            <Typography variant="body1" color="textSecondary"><NavLink to="/courses">Category 1</NavLink></Typography>
+            <Typography variant="body1" color="textSecondary"><NavLink to="/courses">React Native</NavLink></Typography>
+            <Typography variant="body1" color="textSecondary"><NavLink to="/courses">Flutter</NavLink></Typography>
+            <Typography variant="body1" color="textSecondary"><NavLink to="/courses">Kotlin</NavLink></Typography>
             <NavLink to="/courses">More</NavLink>
           </Grid>
         </Grid>

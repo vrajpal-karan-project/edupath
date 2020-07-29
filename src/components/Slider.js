@@ -60,7 +60,7 @@ const useStyle = makeStyles(theme => ({
   }
 }));
 
-const Slider = ({ children }) => {
+const Slider = ({ children, slides }) => {
   const classes = useStyle();
 
   const slider = useRef();
@@ -70,8 +70,8 @@ const Slider = ({ children }) => {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToShow: slides || 4,
+    slidesToScroll: slides || 4,
     dotsClass: classes.sliderDots,
     responsive: [
       {

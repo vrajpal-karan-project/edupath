@@ -10,7 +10,7 @@ import {
 import InstructorCard from '../../components/InstructorCard';
 import Pagination from '../../components/Pagination';
 import Category from "../Courses/Category";
-import { getAllCategories, getAllSubCategories } from '../../service/user.service';
+import { getAllCategories, getAllSubCategories, getUsersByRole } from '../../service/user.service';
 
 const useStyle = makeStyles(theme => ({
   pageTitle: {
@@ -32,6 +32,7 @@ const Instructors = (props) => {
 
   const [category, setCategory] = useState([]);
   const [subcategory, setSubCategory] = useState([]);
+  const [instructors, setInstructors] = useState([]);
 
   useEffect(() => {
     getAllCategories()
@@ -49,6 +50,15 @@ const Instructors = (props) => {
       .catch(() => {
 
       });
+
+    getUsersByRole('1')
+      .then((response) => {
+        setInstructors(response);
+      })
+      .catch(() => {
+
+      });
+
   }, [])
 
   const handleSortBy = (e) => {
@@ -106,18 +116,18 @@ const Instructors = (props) => {
             </Grid>
             <Grid container item xs={12}>
               {
-                [1, 2, 3, 4, 5, 6, 7].map((value, index) =>
+                instructors.map((value, index) =>
                   <Grid item xs={12} sm={6} md={4} key={index}>
-                    <InstructorCard tilt={true} tooltip={true} index={index} />
+                    <InstructorCard data={value || {}} />
                   </Grid>
                 )
               }
             </Grid>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <Pagination
                 count={10}
               />
-            </Grid>
+            </Grid> */}
           </Grid>
         </Grid>
       </Grid>

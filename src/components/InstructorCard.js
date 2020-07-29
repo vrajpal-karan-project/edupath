@@ -35,7 +35,7 @@ const useStyle = makeStyles(theme => ({
   }
 }));
 
-const InstructorCard = () => {
+const InstructorCard = (props) => {
   const classes = useStyle();
 
   return (
@@ -53,13 +53,12 @@ const InstructorCard = () => {
             R
           </Avatar>
         </div>
-        <Typography variant="h6" className={classes.heading}>John Doe</Typography>
+        <Typography variant="h6" className={classes.heading}>{props.data.fullname}</Typography>
         <Typography variant="body2" component="p" color="textSecondary" className={classes.cardContent}>
-          This impressive paella is a perfect party dish and a fun meal to cook together with your
-          guests. Add 1 cup of frozen peas along with the mussels, if you like.
+          {props.data.about}
         </Typography>
-        <Typography variant="h6" className={classes.heading}>No of Courses: 10</Typography>
-        <Typography variant="h6" className={classes.heading}>No of Students: 100</Typography>
+        <Typography variant="h6" className={classes.heading}>No of Courses: {props.data.published_courses.length}</Typography>
+        <Typography variant="h6" className={classes.heading}>No of Students: 0</Typography>
       </CardContent>
     </Card>
   );

@@ -26,6 +26,12 @@ export const getAllUsers = (token) => {
     .catch(err => err.response.data);
 }
 
+export const getUsersByRole = (role) => {
+  return axios.get(`${routes.users}/${role}`,)
+    .then(res => res.data)
+    .catch(err => err.response.data);
+}
+
 export const getUserById = (token, userId) => {
   return axios.get(`${routes.user}/${userId}`, headers(token))
     .then(res => res.data)

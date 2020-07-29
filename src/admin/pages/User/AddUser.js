@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, NavLink } from 'react-router-dom';
 import {
   Grid,
@@ -12,6 +12,8 @@ import {
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import FormField from '../../components/FormField';
+import { getUserById } from '../../../service/user.service';
+import { isAuthenticated } from '../../../service/auth.service';
 
 const useStyle = makeStyles(theme => ({
   title: {
@@ -69,6 +71,8 @@ const AddUser = ({ baseUrl }) => {
 
   const { userId } = useParams();
 
+  const { token } = isAuthenticated();
+
   const [selectedAvatar, setSelectedAvatar] = useState(undefined);
 
   const handleUpload = ({ target }) => {
@@ -84,7 +88,22 @@ const AddUser = ({ baseUrl }) => {
       event.preventDefault();
   }
 
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit, reset, errors } = useForm();
+
+  useEffect(() => {
+    getUserById(token, userId)
+      .then(({ role, ...rest }) => {
+        const res = {
+          ...rest,
+          role: role === 0 ? 'student' : role === 1 ? 'instructor' : 'admin',
+        };
+        console.log(res);
+
+        reset(res);
+      })
+      .catch(() => {
+      });
+  }, [token, userId, reset]);
 
   const onSubmit = data => {
     data.avatar = selectedAvatar;
@@ -163,28 +182,30 @@ const AddUser = ({ baseUrl }) => {
                     })}
                     errors={errors}
                   />
-                  <FormField
-                    key="password"
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    inputProps={{ maxLength: 20 }}
-                    validate={register({
-                      required: {
-                        value: true,
-                        message: "This field is required"
-                      },
-                      minLength: {
-                        value: 8,
-                        message: "Password should be atleast 8 characters long"
-                      },
-                      maxLength: {
-                        value: 20,
-                        message: "Please enter no more than 20 characters"
-                      }
-                    })}
-                    errors={errors}
-                  />
+                  {!userId &&
+                    <FormField
+                      key="password"
+                      type="password"
+                      name="password"
+                      placeholder="Password"
+                      inputProps={{ maxLength: 20 }}
+                      validate={register({
+                        required: {
+                          value: true,
+                          message: "This field is required"
+                        },
+                        minLength: {
+                          value: 8,
+                          message: "Password should be atleast 8 characters long"
+                        },
+                        maxLength: {
+                          value: 20,
+                          message: "Please enter no more than 20 characters"
+                        }
+                      })}
+                      errors={errors}
+                    />
+                  }
                   <FormField
                     key="role"
                     placeholder="Type"

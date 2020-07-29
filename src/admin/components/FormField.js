@@ -74,6 +74,7 @@ const FormField = ({
   handleUpload,
   handleRemove,
   name,
+  defaultValue = "",
   placeholder = "",
   inputProps = {},
   validate,
@@ -89,7 +90,7 @@ const FormField = ({
       <InputLabel className={classes.formInputLabel}>{placeholder}</InputLabel>
       {
         type === "radio" ?
-          <RadioGroup row={inline} name={name}>
+          <RadioGroup row={inline} name={name} defaultValue={defaultValue}>
             {
               values.map(({ value, label }) =>
                 <FormControlLabel
@@ -123,6 +124,7 @@ const FormField = ({
                   name={name}
                   onClick={(event) => handleRemove(event, selectedAvatar)}
                   onChange={handleUpload}
+                  defaultValue={defaultValue}
                   hidden
                 />
               </Box>
@@ -137,6 +139,7 @@ const FormField = ({
                   <Select
                     fullWidth
                     disableUnderline
+                    defaultValue={defaultValue}
                     displayEmpty
                     className={`${classes.formInput} ${errors[name] && classes.error}`}
                   >
@@ -153,6 +156,7 @@ const FormField = ({
                 rows={rows}
                 type={type}
                 name={name}
+                defaultValue={defaultValue}
                 placeholder={placeholder}
                 inputProps={inputProps}
                 inputRef={validate}

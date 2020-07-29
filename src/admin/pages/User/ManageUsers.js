@@ -11,6 +11,8 @@ import {
 } from '@material-ui/core';
 import MaterialTable from 'material-table';
 import { NavLink } from 'react-router-dom';
+import { getAllUsers } from '../../../service/user.service';
+import { isAuthenticated } from '../../../service/auth.service';
 
 const defaultTheme = createMuiTheme();
 
@@ -68,6 +70,8 @@ const icons = {
 const ManageUsers = ({ baseUrl }) => {
   const classes = useStyle();
 
+  const { user, token } = isAuthenticated();
+
   return (
     <Grid container justify="center">
       <Grid item xs={12}>
@@ -79,15 +83,14 @@ const ManageUsers = ({ baseUrl }) => {
             icons={icons}
             title="Manage User"
             columns={[
-              { title: 'Id', field: 'id' },
-              { title: 'URL', field: 'url' },
-              { title: 'Name', field: 'name' },
-              { title: 'Type', field: 'type' },
-              { title: 'Language', field: 'language' },
+              { title: 'Fullname', field: 'fullname' },
+              { title: 'Email', field: 'email' },
+              { title: 'Type', field: 'role' },
+              { title: 'About', field: 'about' },
               {
-                title: 'Edit', field: 'id', render: rowData => (
+                title: 'Edit', field: '_id', render: rowData => (
                   <Box className={classes.rowActions}>
-                    <IconButton component={NavLink} to={`${baseUrl}/user/update/${rowData.id}`}>
+                    <IconButton component={NavLink} to={`${baseUrl}/user/update/${rowData._id}`}>
                       <span className="fa fa-fw fa-pencil" />
                     </IconButton>
                     <IconButton onClick={() => { }}>
@@ -98,18 +101,23 @@ const ManageUsers = ({ baseUrl }) => {
               },
             ]}
             data={query =>
-              new Promise((resolve, reject) => {
-                let url = `https://api.tvmaze.com/shows?page=${query.page}`
-                fetch(url)
-                  .then(response => response.json())
-                  .then(result => {
-                    resolve({
-                      data: result,
-                      page: 0,
-                      totalCount: result.length / query.pageSize,
-                    })
+              getAllUsers(token)
+                .then(response => {
+                  response = response.map(({ role, ...rest }) => {
+                    return {
+                      ...rest,
+                      role: role === 0 ? 'Student' : role === 1 ? 'Instructor' : 'Admin',
+                    }
                   })
-              })
+                  return {
+                    data: response,
+                    page: 0,
+                    totalCount: response.length / query.pageSize,
+                  }
+                })
+                .catch(error => {
+                  console.log(error);
+                })
             }
           />
         </ThemeProvider>

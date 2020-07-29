@@ -1,4 +1,4 @@
-import React, { useState, useCallback, Fragment } from 'react';
+import React, { useState, useCallback, Fragment, useEffect } from 'react';
 import {
   Grid,
   makeStyles,
@@ -17,6 +17,7 @@ import FormField from '../../../components/FormField';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useDropzone } from 'react-dropzone';
+import { getAllCategoies, getSubcategoriesByCategoryId } from '../../../service/user.service';
 
 const defaultTheme = createMuiTheme({
   overrides: {
@@ -93,42 +94,92 @@ const RegisterCourse = () => {
   const { register, handleSubmit, control, errors } = useForm();
 
   const [activeStep, setActiveStep] = useState(0);
+  const [categories, setCategories] = useState([]);
+  const [subCategories, setSubCategories] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const [acceptedFiles, setAcceptedFiles] = useState([]);
 
   const onDrop = useCallback(acceptedFiles => {
     acceptedFiles.forEach((file) => {
       selectedFiles.push(file.name);
     });
     setSelectedFiles(selectedFiles);
-
-    console.log(acceptedFiles);
+    setAcceptedFiles(acceptedFiles);
   }, [selectedFiles]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   const steps = getSteps();
 
+  useEffect(() => {
+    getAllCategoies()
+      .then((response) => {
+        setCategories([['IT', 'IT'], ['Science', 'Science']]);
+      })
+      .catch(() => {
+
+      });
+  }, []);
+
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    if (activeStep + 1 < 3)
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  const handleChange = (e) => {
+    getSubcategoriesByCategoryId(e[1].props.value)
+      .then((response) => {
+        setSubCategories([['AI', 'AI'], ['ML', 'ML']]);
+      })
+      .catch(() => {
+
+      });
+  }
+
+  const formData = new FormData();
+
   const onSubmit = data => {
-    console.log(data);
+    const titles = [];
+    Object.keys(data).forEach((key) => {
+      if (key.startsWith('videoTitle')) {
+        titles.push(data[key]);
+      } else {
+        formData.set(key, data[key]);
+      }
+    });
+
+    if (titles.length > 0) {
+      const videos = titles.map((title, index) => {
+        return {
+          title,
+          video: acceptedFiles[index],
+        }
+      });
+      formData.set('videos', videos);
+    }
+
+    for (var key of formData.entries()) {
+      console.log(key[0] + ', ' + key[1])
+    }
+
     handleNext();
-    // axios({
-    //   method: 'POST',
-    //   url: '/api/signup',
-    //   data,
-    //   responseType: 'JSON'
-    // }).then((response) => {
-    //   console.log(response);
-    // }).catch((error) => {
-    //   console.log(error);
-    // });
+
+    if (activeStep + 1 === 3) {
+      axios({
+        method: 'POST',
+        url: '/course/register/:userId',
+        data,
+        responseType: 'JSON'
+      }).then((response) => {
+        console.log(response);
+      }).catch((error) => {
+        console.log(error);
+      });
+    }
   };
 
   return (
@@ -214,11 +265,12 @@ const RegisterCourse = () => {
                   name="category"
                   placeholder="Category"
                   control={control}
-                  values={[]}
+                  values={[['IT', 'IT'], ['Science', 'Science']]}
                   rules={{
                     required: "This field is required"
                   }}
                   errors={errors}
+                // handleChange={handleChange}
                 />
                 <FormField
                   key="subcat"
@@ -226,11 +278,12 @@ const RegisterCourse = () => {
                   name="subcategory"
                   placeholder="Sub-Category"
                   control={control}
-                  values={[]}
+                  values={[['AI', 'AI'], ['ML', 'ML']]}
                   rules={{
                     required: "This field is required"
                   }}
                   errors={errors}
+                // handleChange={() => { }}
                 />
                 <FormField
                   key="description"
@@ -266,6 +319,7 @@ const RegisterCourse = () => {
                     required: "This field is required"
                   }}
                   errors={errors}
+                // handleChange={() => { }}
                 />
                 <FormField
                   key="requirements"
@@ -321,7 +375,9 @@ const RegisterCourse = () => {
                     )}
                   </div>
                 </> :
-                <></>
+                <Grid container justify="center" alignItems="center">
+                  <h2>You have successfully created a course. Want to publish?</h2>
+                </Grid>
           }
         </Box>
         <Divider />
@@ -330,7 +386,7 @@ const RegisterCourse = () => {
             <Button className={classes.backButton} type="button" onClick={handleBack} disabled={activeStep === 0}>Back</Button>
           </Grid>
           <Grid item>
-            <Button className={classes.submitButton} type="submit" onClick={handleSubmit(onSubmit)}>{activeStep === steps.length - 1 ? 'Finish' : 'Next'}</Button>
+            <Button className={classes.submitButton} type="submit" onClick={handleSubmit(onSubmit)}>{activeStep === steps.length - 1 ? 'Publish' : 'Next'}</Button>
           </Grid>
         </Grid>
       </Paper>
